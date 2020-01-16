@@ -36,7 +36,7 @@ class Photo extends ModelBase {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
-  final Urls urls;
+  final PhotoUrls urls;
   final int width;
   final int height;
   final String color;
@@ -83,7 +83,7 @@ class Photo extends ModelBase {
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         urls: (json['urls'] as Map<String, dynamic>)
-            ?.let((it) => Urls.fromJson(it)),
+            ?.let((it) => PhotoUrls.fromJson(it)),
         width: json['width'] as int,
         height: json['height'] as int,
         color: json['color'] as String,
@@ -209,8 +209,8 @@ class Exif extends ModelBase {
 }
 
 /// Photo urls for a [Photo].
-class Urls extends ModelBase {
-  const Urls({
+class PhotoUrls extends ModelBase {
+  const PhotoUrls({
     @required this.raw,
     @required this.full,
     @required this.regular,
@@ -235,8 +235,8 @@ class Urls extends ModelBase {
     };
   }
 
-  factory Urls.fromJson(Map<String, dynamic> json) {
-    return Urls(
+  factory PhotoUrls.fromJson(Map<String, dynamic> json) {
+    return PhotoUrls(
       raw: (json['raw'] as String).let(Uri.parse),
       full: (json['full'] as String).let(Uri.parse),
       regular: (json['regular'] as String).let(Uri.parse),
