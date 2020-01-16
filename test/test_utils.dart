@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:unsplash_client/client.dart';
+import 'package:unsplash_client/unsplash_client.dart';
 
 // ignore_for_file: avoid_catches_without_on_clauses
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:test/test.dart';
-import 'package:unsplash_client/client.dart';
+import 'package:unsplash_client/unsplash_client.dart';
 
 import 'test_utils.dart';
 

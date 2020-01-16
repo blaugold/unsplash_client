@@ -8,7 +8,7 @@ implemented.
 A simple usage example:
 
 ```dart
-import 'package:unsplash_client/client.dart';
+import 'package:unsplash_client/unsplash_client.dart';
 
 void main() async {
   // Create a client.

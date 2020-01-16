@@ -1,8 +1,7 @@
 import 'package:http/http.dart' as http;
-import 'package:unsplash_client/client.dart';
 
 import 'client.dart';
-import 'model/photo.dart';
+import 'model/model.dart';
 import 'utils.dart';
 
 /// How to sort the photos.

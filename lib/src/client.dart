@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-import '../client.dart';
+import '../unsplash_client.dart';
 import 'app_credentials.dart';
 import 'exception.dart';
 import 'photos.dart';
