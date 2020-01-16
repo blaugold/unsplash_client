@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:test/test.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
@@ -9,8 +7,7 @@ void main() {
   UnsplashClient client;
 
   setUpAll(() async {
-    final credentialsFile = File('./test-unsplash-credentials.json');
-    final credentials = await readAppCredentials(credentialsFile);
+    final credentials = await getTestAppCredentials();
 
     client = UnsplashClient(settings: ClientSettings(credentials: credentials));
   });

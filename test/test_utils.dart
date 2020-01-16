@@ -23,3 +23,20 @@ Future<dynamic> _readJsonFile(File file) async {
     throw Exception('Could not read $file as json: $e');
   }
 }
+
+/// Loads [AppCredentials] for tests, either from env variables
+/// (UNSPLASH_ACCESS_KEY, UNSPLASH_SECRET_KEY)
+/// or a file ('.test-unsplash-credentials.json').
+Future<AppCredentials> getTestAppCredentials() async {
+  final accessKey = String.fromEnvironment('UNSPLASH_ACCESS_KEY');
+  final secretKey = String.fromEnvironment('UNSPLASH_SECRET_KEY');
+
+  if (accessKey != null || secretKey != null) {
+    return AppCredentials(
+      accessKey: accessKey,
+      secretKey: secretKey,
+    );
+  }
+
+  return readAppCredentials(File('.test-unsplash-credentials.json'));
+}
