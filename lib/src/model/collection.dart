@@ -78,6 +78,7 @@ class Collection extends ModelBase {
   }
 }
 
+/// Links for a [Collection].
 class CollectionLinks extends ModelBase {
   final Uri self;
   final Uri html;

@@ -120,6 +120,7 @@ class User extends ModelBase {
   }
 }
 
+/// The profile image of a [User].
 class ProfileImage extends ModelBase {
   const ProfileImage({
     @required this.small,
@@ -149,6 +150,7 @@ class ProfileImage extends ModelBase {
   }
 }
 
+/// A badge of a [User].
 class UserBadge extends ModelBase {
   const UserBadge({
     @required this.title,
@@ -182,6 +184,7 @@ class UserBadge extends ModelBase {
   }
 }
 
+/// Links for a [User].
 class UserLinks extends ModelBase {
   const UserLinks({
     @required this.self,
