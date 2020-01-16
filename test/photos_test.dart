@@ -19,17 +19,40 @@ void main() {
     test('list', () async {
       final photos = await client.photos.list(perPage: 2).go();
 
-      print(photos.data);
-
       expect(photos.data, hasLength(2));
+    });
+
+    test('get', () async {
+      final listResponse = await client.photos.list(perPage: 1).go();
+
+      final id = listResponse.data.first.id;
+      final getResponse = await client.photos.get(id).go();
+
+      expect(getResponse.data.id, equals(id));
     });
 
     test('random', () async {
       final photos = await client.photos.random(count: 2).go();
 
-      print(photos.data);
-
       expect(photos.data, hasLength(2));
+    });
+
+    test('statistics', () async {
+      final listResponse = await client.photos.list(perPage: 1).go();
+
+      final id = listResponse.data.first.id;
+      final statisticsResponse = await client.photos.statistics(id).go();
+
+      expect(statisticsResponse.data.id, equals(id));
+    });
+
+    test('download', () async {
+      final listResponse = await client.photos.list(perPage: 1).go();
+
+      final id = listResponse.data.first.id;
+      final downloadResponse = await client.photos.download(id).go();
+
+      expect(downloadResponse.hasData, isTrue);
     });
   });
 }

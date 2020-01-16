@@ -19,15 +19,11 @@ void main() {
     test('total', () async {
       final response = await client.stats.total().go();
 
-      print(response.data);
-
       expect(response.hasData, isTrue);
     });
 
     test('month', () async {
       final response = await client.stats.month().go();
-
-      print(response.data);
 
       expect(response.hasData, isTrue);
     });

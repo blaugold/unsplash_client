@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:unsplash_client/src/model/model.dart';
 
 import '../utils.dart';
 import 'collection.dart';
@@ -78,38 +79,38 @@ class Photo extends ModelBase {
 
   factory Photo.fromJson(Map<String, dynamic> json) {
     return Photo(
-      id: json['id'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      updatedAt: DateTime.parse(json['updated_at'] as String),
-      urls: (json['urls'] as Map<String, dynamic>)
-          ?.let((it) => Urls.fromJson(it)),
-      width: json['width'] as int,
-      height: json['height'] as int,
-      color: json['color'] as String,
-      downloads: json['downloads'] as int,
-      likes: json['likes'] as int,
-      likedByUser: json['liked_by_user'] as bool,
-      description: json['description'] as String,
-      exif: (json['exif'] as Map<String, dynamic>)
-          ?.let((it) => Exif.fromJson(it)),
-      location: (json['location'] as Map<String, dynamic>)
-          ?.let((it) => GeoLocation.fromJson(it)),
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
-      currentUserCollections:
-          (json['current_user_collections'] as List<dynamic>)
-              ?.cast<Map<String, dynamic>>()
-              ?.map((it) => Collection.fromJson(it))
-              ?.toList(),
-      links: (json['links'] as Map<String, dynamic>)
-          ?.let((it) => PhotoLinks.fromJson(it)),
-      tags: (json['tags'] as List<dynamic>)
-        ?.cast<Map<String, dynamic>>()
-        ?.map((json) => Tag.fromJson(json))
-        ?.toList()
-    );
+        id: json['id'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        urls: (json['urls'] as Map<String, dynamic>)
+            ?.let((it) => Urls.fromJson(it)),
+        width: json['width'] as int,
+        height: json['height'] as int,
+        color: json['color'] as String,
+        downloads: json['downloads'] as int,
+        likes: json['likes'] as int,
+        likedByUser: json['liked_by_user'] as bool,
+        description: json['description'] as String,
+        exif: (json['exif'] as Map<String, dynamic>)
+            ?.let((it) => Exif.fromJson(it)),
+        location: (json['location'] as Map<String, dynamic>)
+            ?.let((it) => GeoLocation.fromJson(it)),
+        user: User.fromJson(json['user'] as Map<String, dynamic>),
+        currentUserCollections:
+            (json['current_user_collections'] as List<dynamic>)
+                ?.cast<Map<String, dynamic>>()
+                ?.map((it) => Collection.fromJson(it))
+                ?.toList(),
+        links: (json['links'] as Map<String, dynamic>)
+            ?.let((it) => PhotoLinks.fromJson(it)),
+        tags: (json['tags'] as List<dynamic>)
+            ?.cast<Map<String, dynamic>>()
+            ?.map((json) => Tag.fromJson(json))
+            ?.toList());
   }
 }
 
+/// Tag for a [Photo].
 class Tag extends ModelBase {
   const Tag({
     @required this.title,
@@ -131,6 +132,7 @@ class Tag extends ModelBase {
   }
 }
 
+/// Links for a [Photo].
 class PhotoLinks extends ModelBase {
   const PhotoLinks({
     @required this.self,
@@ -164,6 +166,7 @@ class PhotoLinks extends ModelBase {
   }
 }
 
+/// Exif metadata for a [Photo].
 class Exif extends ModelBase {
   const Exif({
     @required this.make,
@@ -205,6 +208,7 @@ class Exif extends ModelBase {
   }
 }
 
+/// Photo urls for a [Photo].
 class Urls extends ModelBase {
   const Urls({
     @required this.raw,
@@ -238,6 +242,151 @@ class Urls extends ModelBase {
       regular: (json['regular'] as String).let(Uri.parse),
       small: (json['small'] as String).let(Uri.parse),
       thumb: (json['thumb'] as String).let(Uri.parse),
+    );
+  }
+}
+
+/// Statistics for a [Photo].
+class PhotoStatistics extends ModelBase {
+  const PhotoStatistics({
+    @required this.id,
+    @required this.downloads,
+    @required this.views,
+    @required this.likes,
+  });
+
+  final String id;
+  final PhotoStatistic downloads;
+  final PhotoStatistic views;
+  final PhotoStatistic likes;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'downloads': downloads.toJson(),
+      'views': views.toJson(),
+      'likes': likes.toJson(),
+    };
+  }
+
+  factory PhotoStatistics.fromJson(Map<String, dynamic> json) {
+    return PhotoStatistics(
+      id: json['id'] as String,
+      downloads:
+      PhotoStatistic.fromMap(json['downloads'] as Map<String, dynamic>),
+      views: PhotoStatistic.fromMap(json['views'] as Map<String, dynamic>),
+      likes: PhotoStatistic.fromMap(json['likes'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// A single statistic for a [Photo].
+class PhotoStatistic extends ModelBase {
+  const PhotoStatistic({
+    @required this.total,
+    @required this.historical,
+  });
+
+  final int total;
+  final HistoricalData historical;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'total': total,
+      'historical': historical.toJson(),
+    };
+  }
+
+  factory PhotoStatistic.fromMap(Map<String, dynamic> json) {
+    return PhotoStatistic(
+      total: json['total'] as int,
+      historical: HistoricalData.fromJson(
+          json['historical'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// Historical data for a statistic for a [Photo].
+class HistoricalData extends ModelBase {
+  const HistoricalData({
+    @required this.change,
+    @required this.resolution,
+    @required this.quantity,
+    @required this.values,
+  });
+
+  final int change;
+  final String resolution;
+  final int quantity;
+  final List<HistoricalValue> values;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'change': change,
+      'resolution': resolution,
+      'quantity': quantity,
+      'values': values.map((it) => it.toJson()).toList(),
+    };
+  }
+
+  factory HistoricalData.fromJson(Map<String, dynamic> json) {
+    return HistoricalData(
+      change: json['change'] as int,
+      resolution: json['resolution'] as String,
+      quantity: json['quantity'] as int,
+      values: (json['values'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .map((it) => HistoricalValue.fromJson(it))
+          .toList(),
+    );
+  }
+}
+
+/// Historical data point in a [HistoricalData].
+class HistoricalValue extends ModelBase {
+  const HistoricalValue({
+    @required this.date,
+    @required this.value,
+  });
+
+  final DateTime date;
+  final num value;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'date': date?.toIso8601String(),
+      'value': value,
+    };
+  }
+
+  factory HistoricalValue.fromJson(Map<String, dynamic> json) {
+    return HistoricalValue(
+      date: DateTime.parse(json['date'] as String),
+      value: json['value'] as num,
+    );
+  }
+}
+
+/// Response to request to track photo download.
+class TrackPhotoDownload extends ModelBase {
+  const TrackPhotoDownload({
+    @required this.url,
+  });
+
+  final Uri url;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'url': url.toString(),
+    };
+  }
+
+  factory TrackPhotoDownload.fromJson(Map<String, dynamic> json) {
+    return TrackPhotoDownload(
+      url: Uri.parse(json['url'] as String),
     );
   }
 }
