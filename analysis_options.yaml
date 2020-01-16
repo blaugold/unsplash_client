@@ -1,0 +1,10 @@
+include: package:effective_dart/analysis_options.1.2.0.yaml
+
+linter:
+  rules:
+    - prefer_relative_imports
+
+analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
