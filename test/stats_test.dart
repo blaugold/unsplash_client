@@ -15,21 +15,21 @@ void main() {
     client = UnsplashClient(settings: ClientSettings(credentials: credentials));
   });
 
-  group('Photos', () {
-    test('list', () async {
-      final photos = await client.photos.list(perPage: 2).go();
+  group('Stats', () {
+    test('total', () async {
+      final response = await client.stats.total().go();
 
-      print(photos.data);
+      print(response.data);
 
-      expect(photos.data, hasLength(2));
+      expect(response.hasData, isTrue);
     });
 
-    test('random', () async {
-      final photos = await client.photos.random(count: 2).go();
+    test('month', () async {
+      final response = await client.stats.month().go();
 
-      print(photos.data);
+      print(response.data);
 
-      expect(photos.data, hasLength(2));
+      expect(response.hasData, isTrue);
     });
   });
 }

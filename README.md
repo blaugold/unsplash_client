@@ -3,8 +3,11 @@ An unofficial client to for the [unsplash](https://unsplash.com) api.
 The client is platform independent, since it uses [http](https://pub.dev/packages/http) to make
 requests.
 
-This is a work in progress. At the moment only **Photos.list** and **Photos.random** are
-implemented.
+This is a work in progress. The following endpoints are implemented:
+ - Photos.list 
+ - Photos.random
+ - Stats.total
+ - Stats.month
 
 ## Usage
 
