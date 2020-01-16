@@ -28,10 +28,10 @@ Future<dynamic> _readJsonFile(File file) async {
 /// (UNSPLASH_ACCESS_KEY, UNSPLASH_SECRET_KEY)
 /// or a file ('.test-unsplash-credentials.json').
 Future<AppCredentials> getTestAppCredentials() async {
-  final accessKey = String.fromEnvironment('UNSPLASH_ACCESS_KEY');
-  final secretKey = String.fromEnvironment('UNSPLASH_SECRET_KEY');
+  final accessKey = Platform.environment['UNSPLASH_ACCESS_KEY'];
+  final secretKey = Platform.environment['UNSPLASH_SECRET_KEY'];
 
-  if (accessKey != null || secretKey != null) {
+  if (accessKey != null && secretKey != null) {
     return AppCredentials(
       accessKey: accessKey,
       secretKey: secretKey,
