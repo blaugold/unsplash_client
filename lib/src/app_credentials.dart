@@ -58,6 +58,7 @@ class AppCredentials {
 
   @override
   String toString() {
+    // TODO hide secret key
     return 'Credentials{accessKey: $accessKey, secretKey: $secretKey}';
   }
 }

@@ -5,78 +5,139 @@ import 'package:meta/meta.dart';
 
 import '../unsplash_client.dart';
 import 'app_credentials.dart';
-import 'exception.dart';
 import 'photos.dart';
 
+/// The settings for the [UnsplashClient].
+@immutable
 class ClientSettings {
+  /// Creates new [ClientSettings].
+  ///
+  /// [credentials] must not be `null`.
   const ClientSettings({
     @required this.credentials,
-  });
+  }) : assert(credentials != null);
 
+  /// The credentials used by the [UnsplashClient] to authenticate the app.
   final AppCredentials credentials;
+
+  /// The maximum number of items a list request can return.
+  ///
+  /// Used by the [UnsplashClient] to check request parameters.
   final int maxPageSize = 30;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ClientSettings &&
+          runtimeType == other.runtimeType &&
+          credentials == other.credentials &&
+          maxPageSize == other.maxPageSize;
+
+  @override
+  int get hashCode => credentials.hashCode ^ maxPageSize.hashCode;
+
+  @override
+  String toString() {
+    return 'ClientSettings{credentials: $credentials, '
+        'maxPageSize: $maxPageSize}';
+  }
 }
 
+/// A client for accessing the unsplash api.
+///
+/// Http calls are made through the [http](https://pub.dev/packages/http)
+/// package, which provides a platform independent client, making the
+/// [UnsplashClient] platform independent as well.
 class UnsplashClient {
-  UnsplashClient({@required this.settings}) : _http = http.Client();
+  /// Creates a new instance of the [UnsplashClient].
+  ///
+  /// [settings] must not be `null`.
+  ///
+  /// If no [httpClient] is provided, one is created.
+  UnsplashClient({
+    @required this.settings,
+    http.Client httpClient,
+  })  : assert(settings != null),
+        _http = httpClient ?? http.Client();
 
-  final baseUrl = Uri.parse('https://api.unsplash.com/');
+  /// The base url of the unsplash api.
+  final Uri baseUrl = Uri.parse('https://api.unsplash.com/');
 
-  final http.Client _http;
-
+  /// The [ClientSettings] used by this client.
   final ClientSettings settings;
 
+  /// Provides access to the [Photo] resource.
   Photos get photos => Photos(this);
+
+  final http.Client _http;
 }
 
 typedef BodyDeserializer<T> = T Function(dynamic body);
 
+/// A request holds all the information necessary to make a request to the api.
+///
+/// [T] is the type of the deserialized body.
+///
+/// A request is immutable and can be executed multiple times, each time
+/// returning a new [Response]. To execute it and receive a [Response], call
+/// [go].
+///
+/// The internal state of [httpRequest] and [jsonBody] should not be mutated.
+@immutable
 class Request<T> {
+  /// Creates a new request.
   const Request({
     @required this.client,
-    @required this.request,
-    this.json,
+    @required this.httpRequest,
+    this.jsonBody,
     @required this.isPublicAction,
     this.bodyDeserializer,
   });
 
+  /// The [UnsplashClient] this request was created with.
   final UnsplashClient client;
-  final http.Request request;
-  final dynamic json;
+
+  /// The [http.Request], as built by the endpoint, which created this request.
+  ///
+  /// The [http.Request] actually sent, might be different and is available
+  /// through [Response.httpRequest].
+  final http.Request httpRequest;
+
+  /// The common dart json representation of the request body.
+  ///
+  /// This value will be encoded with [JsonEncoder].
+  final dynamic jsonBody;
+
+  /// Whether this is a [public action](https://unsplash.com/documentation#public-actions).
   final bool isPublicAction;
+
+  /// The function used to transform the json response into [T].
   final BodyDeserializer<T> bodyDeserializer;
 
+  /// Execute this [Request] and return its [Response].
+  ///
+  /// Might reject with [http.ClientException] during a network failure.
   Future<Response<T>> go() async {
-    final request = _prepareRequest();
-    http.StreamedResponse response;
+    final httpRequest = _prepareRequest();
+    http.StreamedResponse httpResponse;
     String body;
     dynamic json;
     T data;
-    dynamic error;
 
-    try {
-      response = await client._http.send(request);
+    httpResponse = await client._http.send(httpRequest);
 
-      body = await response.stream.bytesToString();
+    body = await httpResponse.stream.bytesToString();
 
-      json = jsonDecode(body);
+    json = jsonDecode(body);
 
-      if (bodyDeserializer != null) {
-        data = bodyDeserializer(json);
-      }
-    } catch (e, stackTrace) {
-      // ignore: avoid_catches_without_on_clauses
-      error = UnsplashClientException(
-        message: 'Failure while making request: $e',
-        cause: e,
-        stackTrace: stackTrace,
-      );
+    if (bodyDeserializer != null) {
+      data = bodyDeserializer(json);
     }
 
     return Response(
       request: this,
-      response: response,
-      error: error,
+      httpRequest: httpRequest,
+      httpResponse: httpResponse,
       body: body,
       json: json,
       data: data,
@@ -86,8 +147,8 @@ class Request<T> {
   http.Request _prepareRequest() {
     final request = _copyRequest();
 
-    if (json != null) {
-      request.body = jsonEncode(json);
+    if (jsonBody != null) {
+      request.body = jsonEncode(jsonBody);
     }
 
     request.headers.addAll(_createHeaders());
@@ -96,60 +157,123 @@ class Request<T> {
   }
 
   http.Request _copyRequest() {
-    final request = http.Request(this.request.method, this.request.url);
-    request.headers.addAll(this.request.headers);
-    request.maxRedirects = this.request.maxRedirects;
-    request.followRedirects = this.request.followRedirects;
-    request.persistentConnection = this.request.persistentConnection;
-    request.encoding = this.request.encoding;
-    request.bodyBytes = this.request.bodyBytes;
+    final request = http.Request(httpRequest.method, httpRequest.url);
+    request.headers.addAll(httpRequest.headers);
+    request.maxRedirects = httpRequest.maxRedirects;
+    request.followRedirects = httpRequest.followRedirects;
+    request.persistentConnection = httpRequest.persistentConnection;
+    request.encoding = httpRequest.encoding;
+    request.bodyBytes = httpRequest.bodyBytes;
     return request;
   }
 
   Map<String, String> _createHeaders() {
     final headers = <String, String>{};
 
-    // API Version
+    // Api Version https://unsplash.com/documentation#version
     headers.addAll({'Accept-Version': 'v1'});
 
     // Auth
+    // TODO implement oauth
     assert(isPublicAction);
     headers.addAll(_publicActionAuthHeader(client.settings.credentials));
 
     return headers;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Request &&
+              runtimeType == other.runtimeType &&
+              client == other.client &&
+              httpRequest == other.httpRequest &&
+              jsonBody == other.jsonBody &&
+              isPublicAction == other.isPublicAction &&
+              bodyDeserializer == other.bodyDeserializer;
+
+  @override
+  int get hashCode =>
+      client.hashCode ^
+      httpRequest.hashCode ^
+      jsonBody.hashCode ^
+      isPublicAction.hashCode ^
+      bodyDeserializer.hashCode;
+
+  @override
+  String toString() {
+    return 'Request{method: ${httpRequest.method}, url: ${httpRequest.url}}';
+  }
 }
 
+/// The response to a [Request].
+///
+/// [T] is the type of the deserialized body.
+///
+/// Before using [data] check that the response [hasData].
+@immutable
 class Response<T> {
-  Response({
+  /// Creates a new response.
+  const Response({
     this.request,
-    this.response,
-    this.error,
+    this.httpRequest,
+    this.httpResponse,
     this.body,
     this.json,
     this.data,
   });
 
+  /// The [Request] which created this response.
   final Request<T> request;
 
-  final dynamic error;
+  /// The [http.Request] send to the server.
+  final http.Request httpRequest;
 
-  final http.BaseResponse response;
+  /// The [http.BaseResponse] received from the server.
+  final http.BaseResponse httpResponse;
 
+  /// The as utf8 decoded body of the response.
   final String body;
 
+  /// The as json decoded body of the response.
   final dynamic json;
 
+  /// The deserialized body of the response.
   final T data;
 
-  bool get isOk => error == null && response.statusCode < 400;
+  /// The status code of [httpResponse].
+  int get statusCode => httpResponse?.statusCode;
 
+  /// Whether [statusCode] is bellow 400.
+  bool get isOk => statusCode < 400;
+
+  /// Whether this response [isOk] and [data] is not `null`.
   bool get hasData => isOk && data != null;
 
   @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Response &&
+              runtimeType == other.runtimeType &&
+              request == other.request &&
+              httpRequest == other.httpRequest &&
+              httpResponse == other.httpResponse &&
+              body == other.body &&
+              json == other.json &&
+              data == other.data;
+
+  @override
+  int get hashCode =>
+      request.hashCode ^
+      httpRequest.hashCode ^
+      httpResponse.hashCode ^
+      body.hashCode ^
+      json.hashCode ^
+      data.hashCode;
+
+  @override
   String toString() {
-    return 'Response{isOk: $isOk, error: $error, '
-        'status: ${response?.statusCode}';
+    return 'Response{isOk: $isOk, status: $statusCode}';
   }
 }
 
@@ -157,6 +281,3 @@ Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
   return {'Authorization': 'Client-ID ${credentials.accessKey}'};
 }
 
-Map<String, String> _publicActionQueryParam(AppCredentials credentials) {
-  return {'client_id': credentials.accessKey};
-}

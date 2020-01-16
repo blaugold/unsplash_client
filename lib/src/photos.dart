@@ -28,7 +28,7 @@ enum PhotoOrientation {
   squarish,
 }
 
-/// Provides access to the [Photo] endpoints.
+/// Provides access to the [Photo] resource.
 class Photos {
   /// Creates a new instance which belongs to [client].
   Photos(this.client)
@@ -68,7 +68,7 @@ class Photos {
 
     return Request(
       client: client,
-      request: http.Request('GET', url),
+      httpRequest: http.Request('GET', url),
       isPublicAction: true,
       bodyDeserializer: _deserializePhotos,
     );
@@ -103,7 +103,7 @@ class Photos {
 
     return Request(
       client: client,
-      request: http.Request('GET', url),
+      httpRequest: http.Request('GET', url),
       isPublicAction: true,
       bodyDeserializer: _deserializePhotos,
     );
@@ -111,5 +111,5 @@ class Photos {
 }
 
 List<Photo> _deserializePhotos(dynamic body) {
-  return deserializeList(body, (json) => Photo.fromJson(json));
+  return deserializeObjectList(body, (json) => Photo.fromJson(json));
 }
