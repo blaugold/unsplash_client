@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
 
 import '../utils.dart';
-import 'base_model.dart';
+import 'model_base.dart';
 import 'photo.dart';
 import 'user.dart';
 

@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
 
 import '../utils.dart';
-import 'base_model.dart';
 import 'collection.dart';
 import 'location.dart';
+import 'model_base.dart';
 import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
