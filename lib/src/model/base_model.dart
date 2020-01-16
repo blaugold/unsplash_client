@@ -8,16 +8,16 @@ import 'package:meta/meta.dart';
 @immutable
 /// Base class for all models.
 ///
-/// [==] and [hashCode] is implemented based on the json representation,
+/// [==] and [hashCode] are implemented based on the json representation,
 /// returned by [toJson].
 ///
 /// [toString] returns a pretty json representation based on [toJson].
-abstract class BaseModel {
+abstract class ModelBase {
   /// Equality used to implement json representation of all models.
   static const jsonEquality = DeepCollectionEquality();
 
   /// Const constructor to allow sub classes to have const constructors.
-  const BaseModel();
+  const ModelBase();
 
   /// Returns the json representation of this model in the unsplash api.
   Map<String, dynamic> toJson();
@@ -25,7 +25,7 @@ abstract class BaseModel {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is BaseModel &&
+        other is ModelBase &&
             runtimeType == other.runtimeType &&
             jsonEquality.equals(toJson(), other.toJson());
   }

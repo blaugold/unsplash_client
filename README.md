@@ -33,7 +33,7 @@ void main() async {
   // Do something with the photos.
   final photos = response.data;
   
-  // Create a dynamically resized url.
+  // Create a dynamically resizing url.
   final resizedUrl = photos.first.urls.raw.resize(
     width: 400,
     height: 400,

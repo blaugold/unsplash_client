@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 
-/// Credentials for accessing the unsplash api, as a registered app.
+/// Credentials for accessing the unsplash api as a registered app.
 ///
 /// You need to [register](https://unsplash.com/developers) as a developer
 /// and create an usnplash app to get credentials.

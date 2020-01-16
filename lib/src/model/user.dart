@@ -5,7 +5,7 @@ import 'base_model.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class User extends BaseModel {
+class User extends ModelBase {
   const User({
     @required this.id,
     @required this.updatedAt,
@@ -118,7 +118,7 @@ class User extends BaseModel {
   }
 }
 
-class ProfileImage extends BaseModel {
+class ProfileImage extends ModelBase {
   const ProfileImage({
     @required this.small,
     @required this.medium,
@@ -147,7 +147,7 @@ class ProfileImage extends BaseModel {
   }
 }
 
-class UserBadge extends BaseModel {
+class UserBadge extends ModelBase {
   const UserBadge({
     @required this.title,
     @required this.primary,
@@ -180,7 +180,7 @@ class UserBadge extends BaseModel {
   }
 }
 
-class UserLinks extends BaseModel {
+class UserLinks extends ModelBase {
   const UserLinks({
     @required this.self,
     @required this.html,

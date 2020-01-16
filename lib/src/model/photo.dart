@@ -8,7 +8,7 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class Photo extends BaseModel {
+class Photo extends ModelBase {
   const Photo({
     @required this.id,
     @required this.createdAt,
@@ -107,7 +107,7 @@ class Photo extends BaseModel {
   }
 }
 
-class Tag extends BaseModel {
+class Tag extends ModelBase {
   const Tag({
     @required this.title,
   });
@@ -128,7 +128,7 @@ class Tag extends BaseModel {
   }
 }
 
-class PhotoLinks extends BaseModel {
+class PhotoLinks extends ModelBase {
   const PhotoLinks({
     @required this.self,
     @required this.html,
@@ -161,7 +161,7 @@ class PhotoLinks extends BaseModel {
   }
 }
 
-class Exif extends BaseModel {
+class Exif extends ModelBase {
   const Exif({
     @required this.make,
     @required this.model,
@@ -202,7 +202,7 @@ class Exif extends BaseModel {
   }
 }
 
-class Urls extends BaseModel {
+class Urls extends ModelBase {
   const Urls({
     @required this.raw,
     @required this.full,

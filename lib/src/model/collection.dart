@@ -7,7 +7,7 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
-class Collection extends BaseModel {
+class Collection extends ModelBase {
   final int id;
   final String title;
   final String description;
@@ -75,7 +75,7 @@ class Collection extends BaseModel {
   }
 }
 
-class CollectionLinks extends BaseModel {
+class CollectionLinks extends ModelBase {
   final Uri self;
   final Uri html;
   final Uri photos;

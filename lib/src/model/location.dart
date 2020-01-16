@@ -6,7 +6,7 @@ import 'base_model.dart';
 // ignore_for_file: public_member_api_docs
 
 /// A geographical location.
-class GeoLocation extends BaseModel {
+class GeoLocation extends ModelBase {
   const GeoLocation({
     @required this.name,
     @required this.city,
@@ -41,7 +41,7 @@ class GeoLocation extends BaseModel {
 }
 
 /// A precise geographical position on earth, in [latitude] and [longitude].
-class GeoPosition extends BaseModel {
+class GeoPosition extends ModelBase {
   const GeoPosition({
     @required this.latitude,
     @required this.longitude,
