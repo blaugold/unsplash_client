@@ -5,23 +5,46 @@ import 'client.dart';
 import 'model/photo.dart';
 import 'utils.dart';
 
-enum PhotoOrder { latest, oldest, popular }
-enum PhotoOrientation { landscape, portrait, squarish }
+/// How to sort the photos.
+enum PhotoOrder {
+  /// Sort from new to old.
+  latest,
 
+  /// Sort from old to new.
+  oldest,
+
+  /// Sort from most to least popular.
+  popular,
+}
+
+/// Filter search results by photo orientation.
+enum PhotoOrientation {
+  /// Find photos which are wider than tall.
+  landscape,
+
+  /// Find photos which are taller than wide.
+  portrait,
+
+  /// Find photos with similar width and height.
+  squarish,
+}
+
+/// Provides access to the [Photo] endpoints.
 class Photos {
+  /// Creates a new instance which belongs to [client].
   Photos(this.client)
       : assert(client != null),
         baseUrl = client.baseUrl.resolve('photos/');
 
+  /// The parent [UnsplashClient].
   final UnsplashClient client;
 
+  /// The base url for all endpoints for [Photos].
   final Uri baseUrl;
 
   /// Get a single page from the list of all photos.
   ///
-  /// See:
-  ///
-  ///   - [Unsplash docs](https://unsplash.com/documentation#list-photos)
+  /// See: [Unsplash docs](https://unsplash.com/documentation#list-photos)
   Request<List<Photo>> list({
     int page,
     int perPage,
@@ -54,9 +77,7 @@ class Photos {
 
   /// Retrieve a one or more random photos, given optional filters.
   ///
-  /// See:
-  ///
-  ///  - [Unsplash docs](https://unsplash.com/documentation#list-photos)
+  /// See: [Unsplash docs](https://unsplash.com/documentation#list-photos)
   Request<List<Photo>> random({
     String query,
     String username,
