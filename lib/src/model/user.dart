@@ -5,6 +5,9 @@ import 'model_base.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// A user registered with unsplash.
+///
+/// See: [Unsplash docs](https://unsplash.com/documentation#users)
 class User extends ModelBase {
   const User({
     @required this.id,
@@ -95,8 +98,7 @@ class User extends ModelBase {
       lastName: json['last_name'] as String,
       email: json['email'] as String,
       uploadsRemaining: json['uploads_remaining'] as int,
-      portfolioUrl:
-          (json['portfolio_url'] as String)?.let(Uri.parse),
+      portfolioUrl: (json['portfolio_url'] as String)?.let(Uri.parse),
       bio: json['bio'] as String,
       location: json['location'] as String,
       totalLikes: json['total_likes'] as int,

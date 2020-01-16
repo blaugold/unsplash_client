@@ -29,6 +29,8 @@ enum PhotoOrientation {
 }
 
 /// Provides access to the [Photo] resource.
+///
+/// See: [Unsplash docs](https://unsplash.com/documentation#photos)
 class Photos {
   /// Creates a new instance which belongs to [client].
   Photos(this.client)

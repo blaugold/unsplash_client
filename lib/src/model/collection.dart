@@ -7,6 +7,9 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// A collection of [Photo]s.
+///
+/// See: [Unsplash docs](https://unsplash.com/documentation#collections)
 class Collection extends ModelBase {
   final int id;
   final String title;

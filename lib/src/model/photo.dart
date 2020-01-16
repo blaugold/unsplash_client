@@ -8,6 +8,9 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// A photo uploaded to unsplash.
+///
+/// See: [Unsplash docs](https://unsplash.com/documentation#photos)
 class Photo extends ModelBase {
   const Photo({
     @required this.id,

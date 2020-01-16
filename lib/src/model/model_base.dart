@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-// TODO document models
-
 @immutable
 /// Base class for all models.
 ///
