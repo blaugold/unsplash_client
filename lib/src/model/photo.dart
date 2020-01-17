@@ -1,9 +1,9 @@
 import 'package:meta/meta.dart';
-import 'package:unsplash_client/src/model/model.dart';
 
 import '../utils.dart';
 import 'collection.dart';
 import 'location.dart';
+import 'model.dart';
 import 'model_base.dart';
 import 'user.dart';
 
@@ -273,7 +273,7 @@ class PhotoStatistics extends ModelBase {
     return PhotoStatistics(
       id: json['id'] as String,
       downloads:
-      PhotoStatistic.fromMap(json['downloads'] as Map<String, dynamic>),
+          PhotoStatistic.fromMap(json['downloads'] as Map<String, dynamic>),
       views: PhotoStatistic.fromMap(json['views'] as Map<String, dynamic>),
       likes: PhotoStatistic.fromMap(json['likes'] as Map<String, dynamic>),
     );
@@ -301,8 +301,8 @@ class PhotoStatistic extends ModelBase {
   factory PhotoStatistic.fromMap(Map<String, dynamic> json) {
     return PhotoStatistic(
       total: json['total'] as int,
-      historical: HistoricalData.fromJson(
-          json['historical'] as Map<String, dynamic>),
+      historical:
+      HistoricalData.fromJson(json['historical'] as Map<String, dynamic>),
     );
   }
 }
