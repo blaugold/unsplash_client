@@ -8,12 +8,12 @@ This is a work in progress:
  - [ ] Get the user’s profile
  - [ ] Update the current user’s profile
  
- - [ ] Get a user’s public profile
- - [ ] Get a user’s portfolio link
- - [ ] List a user’s photos
- - [ ] List a user’s liked photos
- - [ ] List a user’s collections
- - [ ] Get a user’s statistics
+ - [x] Get a user’s public profile
+ - [x] Get a user’s portfolio link
+ - [x] List a user’s photos
+ - [x] List a user’s liked photos
+ - [x] List a user’s collections
+ - [x] Get a user’s statistics
  
  - [x] List photos 
  - [x] Get a photo

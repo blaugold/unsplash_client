@@ -7,6 +7,7 @@ import '../unsplash_client.dart';
 import 'app_credentials.dart';
 import 'photos.dart';
 import 'stats.dart';
+import 'users.dart';
 
 /// The settings for the [UnsplashClient].
 @immutable
@@ -72,7 +73,10 @@ class UnsplashClient {
   /// The [ClientSettings] used by this client.
   final ClientSettings settings;
 
-  /// Provides access to the [Photo] resource.
+  /// Provides access to resources related to [User].
+  Users get users => Users(this);
+
+  /// Provides access to resources related to [Photo].
   Photos get photos => Photos(this);
 
   /// Provides access to the [TotalStats] and [MonthStats] resources.

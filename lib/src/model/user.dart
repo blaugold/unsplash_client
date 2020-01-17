@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 
 import '../utils.dart';
 import 'model_base.dart';
+import 'stats.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -226,6 +227,60 @@ class UserLinks extends ModelBase {
       portfolio: (json['portfolio'] as String)?.let(Uri.parse),
       followers: (json['followers'] as String)?.let(Uri.parse),
       following: (json['following'] as String)?.let(Uri.parse),
+    );
+  }
+}
+
+/// Statistics for a [User]s [Photo]s.
+class UserStatistics extends ModelBase {
+  const UserStatistics({
+    @required this.username,
+    @required this.downloads,
+    @required this.views,
+    @required this.likes,
+  });
+
+  final String username;
+  final Statistic downloads;
+  final Statistic views;
+  final Statistic likes;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': username,
+      'downloads': downloads.toJson(),
+      'views': views.toJson(),
+      'likes': likes.toJson(),
+    };
+  }
+
+  factory UserStatistics.fromJson(Map<String, dynamic> json) {
+    return UserStatistics(
+      username: json['id'] as String,
+      downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
+      views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
+      likes: Statistic.fromMap(json['likes'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// Response to request get a [User]s portfolio link.
+class UserPortfolioLink extends ModelBase {
+  const UserPortfolioLink({
+    @required this.url,
+  });
+
+  final Uri url;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'url': url.toString(),
+    };
+  }
+
+  factory UserPortfolioLink.fromJson(Map<String, dynamic> json) {
+    return UserPortfolioLink(
+      url: Uri.parse(json['url'] as String),
     );
   }
 }

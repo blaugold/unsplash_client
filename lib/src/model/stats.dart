@@ -4,6 +4,106 @@ import 'model_base.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// The frequency of the stats.
+enum StatisticsResolution {
+  /// Return a value for each day.
+  days,
+}
+
+/// A statistical metric.
+class Statistic extends ModelBase {
+  const Statistic({
+    @required this.total,
+    @required this.historical,
+  });
+
+  final int total;
+  final HistoricalData historical;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'total': total,
+      'historical': historical.toJson(),
+    };
+  }
+
+  factory Statistic.fromMap(Map<String, dynamic> json) {
+    return Statistic(
+      total: json['total'] as int,
+      historical:
+          HistoricalData.fromJson(json['historical'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// Historical data for a statistic for a [Photo].
+class HistoricalData extends ModelBase {
+  const HistoricalData({
+    @required this.change,
+    @required this.average,
+    @required this.resolution,
+    @required this.quantity,
+    @required this.values,
+  });
+
+  final int change;
+  final int average;
+  final String resolution;
+  final int quantity;
+  final List<HistoricalValue> values;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'change': change,
+      'average': average,
+      'resolution': resolution,
+      'quantity': quantity,
+      'values': values.map((it) => it.toJson()).toList(),
+    };
+  }
+
+  factory HistoricalData.fromJson(Map<String, dynamic> json) {
+    return HistoricalData(
+      change: json['change'] as int,
+      average: json['average'] as int,
+      resolution: json['resolution'] as String,
+      quantity: json['quantity'] as int,
+      values: (json['values'] as List<dynamic>)
+          .cast<Map<String, dynamic>>()
+          .map((it) => HistoricalValue.fromJson(it))
+          .toList(),
+    );
+  }
+}
+
+/// Historical data point in a [HistoricalData].
+class HistoricalValue extends ModelBase {
+  const HistoricalValue({
+    @required this.date,
+    @required this.value,
+  });
+
+  final DateTime date;
+  final num value;
+
+  @override
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'date': date?.toIso8601String(),
+      'value': value,
+    };
+  }
+
+  factory HistoricalValue.fromJson(Map<String, dynamic> json) {
+    return HistoricalValue(
+      date: DateTime.parse(json['date'] as String),
+      value: json['value'] as num,
+    );
+  }
+}
+
 /// Total statistics for all of Unsplash.
 ///
 /// See: [Unsplash docs](https://unsplash.com/documentation#stats)

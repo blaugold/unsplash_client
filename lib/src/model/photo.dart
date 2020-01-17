@@ -9,6 +9,30 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// How to sort the photos.
+enum PhotoOrder {
+  /// Sort from new to old.
+  latest,
+
+  /// Sort from old to new.
+  oldest,
+
+  /// Sort from most to least popular.
+  popular,
+}
+
+/// Filter search results by photo orientation.
+enum PhotoOrientation {
+  /// Find photos which are wider than tall.
+  landscape,
+
+  /// Find photos which are taller than wide.
+  portrait,
+
+  /// Find photos with similar width and height.
+  squarish,
+}
+
 /// A photo uploaded to unsplash.
 ///
 /// See: [Unsplash docs](https://unsplash.com/documentation#photos)
@@ -256,9 +280,9 @@ class PhotoStatistics extends ModelBase {
   });
 
   final String id;
-  final PhotoStatistic downloads;
-  final PhotoStatistic views;
-  final PhotoStatistic likes;
+  final Statistic downloads;
+  final Statistic views;
+  final Statistic likes;
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -272,100 +296,9 @@ class PhotoStatistics extends ModelBase {
   factory PhotoStatistics.fromJson(Map<String, dynamic> json) {
     return PhotoStatistics(
       id: json['id'] as String,
-      downloads:
-          PhotoStatistic.fromMap(json['downloads'] as Map<String, dynamic>),
-      views: PhotoStatistic.fromMap(json['views'] as Map<String, dynamic>),
-      likes: PhotoStatistic.fromMap(json['likes'] as Map<String, dynamic>),
-    );
-  }
-}
-
-/// A single statistic for a [Photo].
-class PhotoStatistic extends ModelBase {
-  const PhotoStatistic({
-    @required this.total,
-    @required this.historical,
-  });
-
-  final int total;
-  final HistoricalData historical;
-
-  @override
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'total': total,
-      'historical': historical.toJson(),
-    };
-  }
-
-  factory PhotoStatistic.fromMap(Map<String, dynamic> json) {
-    return PhotoStatistic(
-      total: json['total'] as int,
-      historical:
-      HistoricalData.fromJson(json['historical'] as Map<String, dynamic>),
-    );
-  }
-}
-
-/// Historical data for a statistic for a [Photo].
-class HistoricalData extends ModelBase {
-  const HistoricalData({
-    @required this.change,
-    @required this.resolution,
-    @required this.quantity,
-    @required this.values,
-  });
-
-  final int change;
-  final String resolution;
-  final int quantity;
-  final List<HistoricalValue> values;
-
-  @override
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'change': change,
-      'resolution': resolution,
-      'quantity': quantity,
-      'values': values.map((it) => it.toJson()).toList(),
-    };
-  }
-
-  factory HistoricalData.fromJson(Map<String, dynamic> json) {
-    return HistoricalData(
-      change: json['change'] as int,
-      resolution: json['resolution'] as String,
-      quantity: json['quantity'] as int,
-      values: (json['values'] as List<dynamic>)
-          .cast<Map<String, dynamic>>()
-          .map((it) => HistoricalValue.fromJson(it))
-          .toList(),
-    );
-  }
-}
-
-/// Historical data point in a [HistoricalData].
-class HistoricalValue extends ModelBase {
-  const HistoricalValue({
-    @required this.date,
-    @required this.value,
-  });
-
-  final DateTime date;
-  final num value;
-
-  @override
-  Map<String, dynamic> toJson() {
-    return <String, dynamic>{
-      'date': date?.toIso8601String(),
-      'value': value,
-    };
-  }
-
-  factory HistoricalValue.fromJson(Map<String, dynamic> json) {
-    return HistoricalValue(
-      date: DateTime.parse(json['date'] as String),
-      value: json['value'] as num,
+      downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
+      views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
+      likes: Statistic.fromMap(json['likes'] as Map<String, dynamic>),
     );
   }
 }

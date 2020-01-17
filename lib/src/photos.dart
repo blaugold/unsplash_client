@@ -4,37 +4,7 @@ import 'client.dart';
 import 'model/model.dart';
 import 'utils.dart';
 
-/// How to sort the photos.
-enum PhotoOrder {
-  /// Sort from new to old.
-  latest,
-
-  /// Sort from old to new.
-  oldest,
-
-  /// Sort from most to least popular.
-  popular,
-}
-
-/// Filter search results by photo orientation.
-enum PhotoOrientation {
-  /// Find photos which are wider than tall.
-  landscape,
-
-  /// Find photos which are taller than wide.
-  portrait,
-
-  /// Find photos with similar width and height.
-  squarish,
-}
-
-/// The frequency of the stats.
-enum PhotoStatisticsResolution {
-  /// Return a value for each day.
-  days,
-}
-
-/// Provides access to the [Photo] resource.
+/// Provides access to resources related to [Photo].
 ///
 /// See: [Unsplash docs](https://unsplash.com/documentation#photos)
 class Photos {
@@ -66,13 +36,11 @@ class Photos {
       assert(perPage >= 0 && perPage <= client.settings.maxPageSize);
     }
 
-    final params = {
-      'page': page?.toString(),
-      'per_page': perPage?.toString(),
+    final params = queryParams({
+      'page': page,
+      'per_page': perPage,
       'order_by': orderBy?.let(enumName),
-    };
-
-    params.removeWhereValue(isNull);
+    });
 
     final url = baseUrl.replace(queryParameters: params);
 
@@ -119,16 +87,14 @@ class Photos {
     assert(count != null);
     assert(count >= 0 && count <= client.settings.maxPageSize);
 
-    final params = {
+    final params = queryParams({
       'query': query,
       'username': username,
-      'featured': featured?.toString(),
+      'featured': featured,
       'collections': collections?.join(','),
       'orientation': orientation?.let(enumName),
-      'count': count.toString(),
-    };
-
-    params.removeWhereValue(isNull);
+      'count': count,
+    });
 
     final url = baseUrl.resolve('random').replace(queryParameters: params);
 
@@ -149,21 +115,19 @@ class Photos {
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-photos-statistics)
   Request<PhotoStatistics> statistics(
     String id, {
-    PhotoStatisticsResolution resolution,
+    StatisticsResolution resolution,
     int quantity,
   }) {
     assert(id != null);
     assert(quantity == null || quantity >= 1 && quantity <= 30);
 
-    final params = <String, dynamic>{
+    final params = queryParams({
       'resolution': resolution?.let(enumName),
-      'quantity': quantity?.toString(),
-    };
-
-    params.removeWhereValue(isNull);
+      'quantity': quantity,
+    });
 
     final url =
-        baseUrl.resolve('$id/statistics').replace(queryParameters: params);
+    baseUrl.resolve('$id/statistics').replace(queryParameters: params);
 
     return Request(
       client: client,

@@ -80,7 +80,7 @@ void main() {
       final req = client.photos.statistics(
         'id',
         quantity: 5,
-        resolution: PhotoStatisticsResolution.days,
+        resolution: StatisticsResolution.days,
       );
 
       expect(

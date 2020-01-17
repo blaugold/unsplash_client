@@ -34,3 +34,24 @@ List<T> deserializeObjectList<T>(
 ) {
   return (json as List<dynamic>).cast<Map<String, dynamic>>().map(f).toList();
 }
+
+/// Helper to create query parameters map.
+///
+/// `null` values are removed.
+///
+/// `num` values are turned into strings with [num.toString].
+///
+/// `bool` values are turned into strings with [bool.toString].
+Map<String, String> queryParams(Map<String, Object> queryParams) {
+  return (Map<String, dynamic>.of(queryParams)..removeWhereValue(isNull))
+      .map((key, dynamic value) {
+    return MapEntry(key, _queryParamValueToString(value));
+  });
+}
+
+String _queryParamValueToString(Object value) {
+  if (value is String) return value;
+  if (value is num) return value.toString();
+  if (value is bool) return value.toString();
+  throw UnimplementedError('Converting $value to string is not implemented.');
+}
