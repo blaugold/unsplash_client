@@ -12,17 +12,19 @@ void main() {
     client = UnsplashClient(settings: ClientSettings(credentials: credentials));
   });
 
-  group('Stats', () {
-    test('total', () async {
-      final response = await client.stats.total().go();
+  group('Integration', () {
+    group('Stats', () {
+      test('total', () async {
+        final response = await client.stats.total().go();
 
-      expect(response.hasData, isTrue);
-    });
+        expect(response.hasData, isTrue);
+      });
 
-    test('month', () async {
-      final response = await client.stats.month().go();
+      test('month', () async {
+        final response = await client.stats.month().go();
 
-      expect(response.hasData, isTrue);
+        expect(response.hasData, isTrue);
+      });
     });
   });
 }
