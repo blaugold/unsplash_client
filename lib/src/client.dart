@@ -16,10 +16,15 @@ class ClientSettings {
   /// [credentials] must not be `null`.
   const ClientSettings({
     @required this.credentials,
-  }) : assert(credentials != null);
+    this.debug = false,
+  })  : assert(credentials != null),
+        assert(debug != null);
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
   final AppCredentials credentials;
+
+  /// Whether to log debug information.
+  final bool debug;
 
   /// The maximum number of items a list request can return.
   ///
@@ -128,7 +133,15 @@ class Request<T> {
     dynamic json;
     T data;
 
+    if (client.settings.debug) {
+      print('Sending request:\n${_printRequest(httpRequest)}\n');
+    }
+
     httpResponse = await client._http.send(httpRequest);
+
+    if (client.settings.debug) {
+      print('Received response:\n${_printResponse(httpResponse)}\n');
+    }
 
     body = await httpResponse.stream.bytesToString();
 
@@ -288,4 +301,31 @@ class Response<T> {
 
 Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
   return {'Authorization': 'Client-ID ${credentials.accessKey}'};
+}
+
+Map<String, String> _sanitizeHeaders(Map<String, String> headers) {
+  return headers.map((key, value) {
+    final isAuthorization = key.toLowerCase() == 'authorization';
+    return MapEntry(key, isAuthorization ? 'HIDDEN' : value);
+  });
+}
+
+String _printRequest(http.Request request) {
+  return '''
+${request.method} ${request.url}
+${_printHeaders(_sanitizeHeaders(request.headers))}
+''';
+}
+
+String _printResponse(http.BaseResponse response) {
+  return '''
+${response.statusCode} ${response.reasonPhrase}
+${_printHeaders(response.headers)}
+''';
+}
+
+String _printHeaders(Map<String, String> headers) {
+  return headers.entries
+      .map((header) => '${header.key}: ${header.value}')
+      .join('\n');
 }
