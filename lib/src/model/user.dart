@@ -192,6 +192,8 @@ class UserLinks extends ModelBase {
     @required this.photos,
     @required this.likes,
     @required this.portfolio,
+    @required this.followers,
+    @required this.following,
   });
 
   final Uri self;
@@ -199,6 +201,8 @@ class UserLinks extends ModelBase {
   final Uri photos;
   final Uri likes;
   final Uri portfolio;
+  final Uri followers;
+  final Uri following;
 
   @override
   Map<String, dynamic> toJson() {
@@ -207,7 +211,9 @@ class UserLinks extends ModelBase {
       'html': html?.toString(),
       'photos': photos?.toString(),
       'likes': likes?.toString(),
-      'portfolio': portfolio?.toString(),
+      'likes': likes?.toString(),
+      'followers': followers?.toString(),
+      'following': following?.toString(),
     };
   }
 
@@ -218,6 +224,8 @@ class UserLinks extends ModelBase {
       photos: (json['photos'] as String)?.let(Uri.parse),
       likes: (json['likes'] as String)?.let(Uri.parse),
       portfolio: (json['portfolio'] as String)?.let(Uri.parse),
+      followers: (json['followers'] as String)?.let(Uri.parse),
+      following: (json['following'] as String)?.let(Uri.parse),
     );
   }
 }
