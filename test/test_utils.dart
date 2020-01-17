@@ -38,5 +38,5 @@ Future<AppCredentials> getTestAppCredentials() async {
     );
   }
 
-  return readAppCredentials(File('.test-unsplash-credentials.json'));
+  return readAppCredentials(File('./test-unsplash-credentials.json'));
 }
