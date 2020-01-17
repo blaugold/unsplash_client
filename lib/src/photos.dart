@@ -69,7 +69,7 @@ class Photos {
     final params = {
       'page': page?.toString(),
       'per_page': perPage?.toString(),
-      'oder_by': orderBy?.let(enumName),
+      'order_by': orderBy?.let(enumName),
     };
 
     params.removeWhereValue(isNull);
@@ -157,7 +157,7 @@ class Photos {
 
     final params = <String, dynamic>{
       'resolution': resolution?.let(enumName),
-      'quantity': quantity,
+      'quantity': quantity?.toString(),
     };
 
     params.removeWhereValue(isNull);

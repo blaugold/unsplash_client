@@ -4,52 +4,112 @@ import 'package:unsplash_client/unsplash_client.dart';
 import 'test_utils.dart';
 
 void main() {
-  UnsplashClient client;
-
-  setUpAll(() async {
-    final credentials = await getTestAppCredentials();
-
-    client = UnsplashClient(settings: ClientSettings(credentials: credentials));
-  });
+  final client = UnsplashClient(
+    settings: ClientSettings(
+      credentials: AppCredentials(
+        secretKey: '',
+        accessKey: '',
+      ),
+    ),
+  );
 
   group('Photos', () {
     test('list', () async {
-      final photos = await client.photos.list(perPage: 2).go();
+      final req = client.photos.list(
+        page: 1,
+        perPage: 2,
+        orderBy: PhotoOrder.popular,
+      );
 
-      expect(photos.data, hasLength(2));
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl.path,
+          queryParameters: {
+            'page': '1',
+            'per_page': '2',
+            'order_by': 'popular',
+          },
+        ),
+      );
     });
 
     test('get', () async {
-      final listResponse = await client.photos.list(perPage: 1).go();
+      final req = client.photos.get('a');
 
-      final id = listResponse.data.first.id;
-      final getResponse = await client.photos.get(id).go();
-
-      expect(getResponse.data.id, equals(id));
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl.resolve('a').path,
+        ),
+      );
     });
 
     test('random', () async {
-      final photos = await client.photos.random(count: 2).go();
+      final req = client.photos.random(
+        count: 2,
+        username: 'username',
+        query: 'query',
+        collections: ['a', 'b'],
+        featured: true,
+        orientation: PhotoOrientation.portrait,
+      );
 
-      expect(photos.data, hasLength(2));
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl
+              .resolve('random')
+              .path,
+          queryParameters: {
+            'count': '2',
+            'username': 'username',
+            'query': 'query',
+            'collections': 'a,b',
+            'featured': 'true',
+            'orientation': 'portrait',
+          },
+        ),
+      );
     });
 
     test('statistics', () async {
-      final listResponse = await client.photos.list(perPage: 1).go();
+      final req = client.photos.statistics(
+        'id',
+        quantity: 5,
+        resolution: PhotoStatisticsResolution.days,
+      );
 
-      final id = listResponse.data.first.id;
-      final statisticsResponse = await client.photos.statistics(id).go();
-
-      expect(statisticsResponse.data.id, equals(id));
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl
+              .resolve('id/statistics')
+              .path,
+          queryParameters: {
+            'quantity': '5',
+            'resolution': 'days',
+          },
+        ),
+      );
     });
 
     test('download', () async {
-      final listResponse = await client.photos.list(perPage: 1).go();
+      final req = client.photos.download('id');
 
-      final id = listResponse.data.first.id;
-      final downloadResponse = await client.photos.download(id).go();
-
-      expect(downloadResponse.hasData, isTrue);
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl
+              .resolve('id/download')
+              .path,
+        ),
+      );
     });
   });
 }
