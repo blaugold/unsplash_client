@@ -1,5 +1,5 @@
 name: unsplash_client
-description: An unofficial client to for the unsplash api.
+description: An unofficial client for the unsplash api.
 version: 0.1.0
 
 environment:

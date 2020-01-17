@@ -1,4 +1,4 @@
-An unofficial client to for the [unsplash](https://unsplash.com) api.
+An unofficial client for the [unsplash](https://unsplash.com) api.
 
 The client is platform independent, since it uses [http](https://pub.dev/packages/http) to make
 requests.
