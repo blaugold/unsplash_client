@@ -172,10 +172,15 @@ class Request<T> {
   }
 
   Map<String, String> _createHeaders() {
-    final headers = <String, String>{};
+    final headers = <String, String>{
+      // Api Version https://unsplash.com/documentation#version
+      'Accept-Version': 'v1',
+      'Accept': 'application/json',
+    };
 
-    // Api Version https://unsplash.com/documentation#version
-    headers.addAll({'Accept-Version': 'v1'});
+    if (jsonBody != null) {
+      headers.addAll({'Content-Type': 'application/json; charset=utf-8'});
+    }
 
     // Auth
     // TODO implement oauth
@@ -188,13 +193,13 @@ class Request<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Request &&
-              runtimeType == other.runtimeType &&
-              client == other.client &&
-              httpRequest == other.httpRequest &&
-              jsonBody == other.jsonBody &&
-              isPublicAction == other.isPublicAction &&
-              bodyDeserializer == other.bodyDeserializer;
+      other is Request &&
+          runtimeType == other.runtimeType &&
+          client == other.client &&
+          httpRequest == other.httpRequest &&
+          jsonBody == other.jsonBody &&
+          isPublicAction == other.isPublicAction &&
+          bodyDeserializer == other.bodyDeserializer;
 
   @override
   int get hashCode =>
@@ -284,4 +289,3 @@ class Response<T> {
 Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
   return {'Authorization': 'Client-ID ${credentials.accessKey}'};
 }
-
