@@ -24,9 +24,9 @@ This is a work in progress:
  - [ ] Like a photo
  - [ ] Unlike a photo
  
- - [ ] Search photos
- - [ ] Search collections
- - [ ] Search users
+ - [x] Search photos
+ - [x] Search collections
+ - [x] Search users
  
  - [ ] List collections
  - [ ] List featured collections

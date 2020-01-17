@@ -29,12 +29,9 @@ class Photos {
     int perPage,
     PhotoOrder orderBy,
   }) {
-    if (page != null) {
-      assert(page >= 0);
-    }
-    if (perPage != null) {
-      assert(perPage >= 0 && perPage <= client.settings.maxPageSize);
-    }
+    assert(page == null || page >= 0);
+    assert(perPage == null ||
+        perPage >= 0 && perPage <= client.settings.maxPageSize);
 
     final params = queryParams({
       'page': page,

@@ -74,8 +74,8 @@ class Users {
   }) {
     assert(username != null);
     assert(page == null || page >= 0);
-    assert(
-        page == null || perPage >= 0 && perPage <= client.settings.maxPageSize);
+    assert(perPage == null ||
+        perPage >= 0 && perPage <= client.settings.maxPageSize);
     assert(quantity == null || quantity >= 0);
 
     final params = queryParams({
@@ -115,8 +115,8 @@ class Users {
   }) {
     assert(username != null);
     assert(page == null || page >= 0);
-    assert(
-        page == null || perPage >= 0 && perPage <= client.settings.maxPageSize);
+    assert(perPage == null ||
+        perPage >= 0 && perPage <= client.settings.maxPageSize);
 
     final params = queryParams({
       'page': page,
@@ -148,8 +148,8 @@ class Users {
   }) {
     assert(username != null);
     assert(page == null || page >= 0);
-    assert(
-        page == null || perPage >= 0 && perPage <= client.settings.maxPageSize);
+    assert(perPage == null ||
+        perPage >= 0 && perPage <= client.settings.maxPageSize);
 
     final params = queryParams({
       'page': page,
