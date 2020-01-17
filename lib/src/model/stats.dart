@@ -78,7 +78,7 @@ class HistoricalData extends ModelBase {
   }
 }
 
-/// Historical data point in a [HistoricalData].
+/// Historical data point in [HistoricalData].
 class HistoricalValue extends ModelBase {
   const HistoricalValue({
     @required this.date,
