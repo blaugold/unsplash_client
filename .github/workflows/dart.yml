@@ -19,3 +19,8 @@ jobs:
       env:
         UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         UNSPLASH_SECRET_KEY: ${{ secrets.UNSPLASH_SECRET_KEY }}
+    - name: Run example
+      run: dart example/lib/main.dart
+      env:
+        UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+        UNSPLASH_SECRET_KEY: ${{ secrets.UNSPLASH_SECRET_KEY }}

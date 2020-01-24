@@ -1,0 +1,5 @@
+name: example
+
+dependencies:
+  unsplash_client:
+    path: ../
