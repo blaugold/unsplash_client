@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
-@immutable
 /// Base class for all models.
 ///
 /// [==] and [hashCode] are implemented based on the json representation,
 /// returned by [toJson].
 ///
 /// [toString] returns a pretty json representation based on [toJson].
+@immutable
 abstract class ModelBase {
   /// Equality used to implement json representation of all models.
   static const jsonEquality = DeepCollectionEquality();

@@ -124,7 +124,7 @@ class Photos {
     });
 
     final url =
-    baseUrl.resolve('$id/statistics').replace(queryParameters: params);
+        baseUrl.resolve('$id/statistics').replace(queryParameters: params);
 
     return Request(
       client: client,

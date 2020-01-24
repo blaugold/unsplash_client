@@ -283,14 +283,14 @@ class Response<T> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is Response &&
-              runtimeType == other.runtimeType &&
-              request == other.request &&
-              httpRequest == other.httpRequest &&
-              httpResponse == other.httpResponse &&
-              body == other.body &&
-              json == other.json &&
-              data == other.data;
+      other is Response &&
+          runtimeType == other.runtimeType &&
+          request == other.request &&
+          httpRequest == other.httpRequest &&
+          httpResponse == other.httpResponse &&
+          body == other.body &&
+          json == other.json &&
+          data == other.data;
 
   @override
   int get hashCode =>

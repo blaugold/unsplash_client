@@ -1,4 +1,3 @@
-
 /// Returns the name of the instance of an enum.
 String enumName(dynamic e) => e.toString().split('.')[1];
 
