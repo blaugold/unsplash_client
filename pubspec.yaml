@@ -1,5 +1,5 @@
 name: unsplash_client
-description: An unofficial client for the unsplash api.
+description: An unofficial, platform independent client for accessing the Unsplash.com REST api.
 version: 0.1.0
 repository: https://github.com/blaugold/unsplash_client
 issue_tracker: https://github.com/blaugold/unsplash_client/issues
