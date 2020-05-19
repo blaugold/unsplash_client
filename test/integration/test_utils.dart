@@ -26,7 +26,7 @@ Future<dynamic> _readJsonFile(File file) async {
 
 /// Loads [AppCredentials] for tests, either from env variables
 /// (UNSPLASH_ACCESS_KEY, UNSPLASH_SECRET_KEY)
-/// or a file ('.test-unsplash-credentials.json').
+/// or a file ('./test-unsplash-credentials.json').
 Future<AppCredentials> getTestAppCredentials() async {
   final accessKey = Platform.environment['UNSPLASH_ACCESS_KEY'];
   final secretKey = Platform.environment['UNSPLASH_SECRET_KEY'];

@@ -12,6 +12,15 @@ void main() {
     client = UnsplashClient(settings: ClientSettings(credentials: credentials));
   });
 
+  Future<Photo> getSinglePhoto() async {
+    final resp = await client.photos.random().go();
+
+    expect(resp.isOk, isTrue);
+    expect(resp.data, hasLength(1));
+
+    return resp.data.first;
+  }
+
   group('Integration', () {
     group('Photos', () {
       test('list', () async {
@@ -21,9 +30,9 @@ void main() {
       });
 
       test('get', () async {
-        final listResponse = await client.photos.list(perPage: 1).go();
+        final photo = await getSinglePhoto();
+        final id = photo.id;
 
-        final id = listResponse.data.first.id;
         final getResponse = await client.photos.get(id).go();
 
         expect(getResponse.data.id, equals(id));
@@ -36,19 +45,18 @@ void main() {
       });
 
       test('statistics', () async {
-        final listResponse = await client.photos.list(perPage: 1).go();
+        final photo = await getSinglePhoto();
+        final id = photo.id;
 
-        final id = listResponse.data.first.id;
         final statisticsResponse = await client.photos.statistics(id).go();
 
         expect(statisticsResponse.data.id, equals(id));
       });
 
       test('download', () async {
-        final listResponse = await client.photos.list(perPage: 1).go();
+        final photo = await getSinglePhoto();
 
-        final id = listResponse.data.first.id;
-        final downloadResponse = await client.photos.download(id).go();
+        final downloadResponse = await client.photos.download(photo.id).go();
 
         expect(downloadResponse.hasData, isTrue);
       });
