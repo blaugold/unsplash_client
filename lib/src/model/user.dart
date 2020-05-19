@@ -212,7 +212,7 @@ class UserLinks extends ModelBase {
       'html': html?.toString(),
       'photos': photos?.toString(),
       'likes': likes?.toString(),
-      'likes': likes?.toString(),
+      'portfolio': portfolio?.toString(),
       'followers': followers?.toString(),
       'following': following?.toString(),
     };
