@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 
 import '../unsplash_client.dart';
 import 'app_credentials.dart';
+import 'collections.dart';
 import 'photos.dart';
 import 'search.dart';
 import 'stats.dart';
@@ -79,6 +80,9 @@ class UnsplashClient {
 
   /// Provides access to resources related to [Photo].
   Photos get photos => Photos(this);
+
+  /// Provides access to resources related to [Collection].
+  Collections get collections => Collections(this);
 
   /// Search for resources.
   Search get search => Search(this);

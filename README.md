@@ -28,11 +28,11 @@ This is a work in progress:
  - [x] Search collections
  - [x] Search users
  
- - [ ] List collections
- - [ ] List featured collections
- - [ ] Get a collection
- - [ ] Get a collection’s photos
- - [ ] List a collection’s related collections
+ - [x] List collections
+ - [x] List featured collections
+ - [x] Get a collection
+ - [x] Get a collection’s photos
+ - [x] List a collection’s related collections
  - [ ] Create a new collection
  - [ ] Update an existing collection
  - [ ] Delete a collection

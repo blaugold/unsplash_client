@@ -83,12 +83,13 @@ class CollectionLinks extends ModelBase {
   final Uri self;
   final Uri html;
   final Uri photos;
+  final Uri related;
 
-  const CollectionLinks({
-    @required this.self,
-    @required this.html,
-    @required this.photos,
-  });
+  const CollectionLinks(
+      {@required this.self,
+      @required this.html,
+      @required this.photos,
+      @required this.related});
 
   @override
   Map<String, dynamic> toJson() {
@@ -96,6 +97,7 @@ class CollectionLinks extends ModelBase {
       'self': self?.toString(),
       'html': html?.toString(),
       'photos': photos?.toString(),
+      'related': related?.toString(),
     };
   }
 
@@ -104,6 +106,7 @@ class CollectionLinks extends ModelBase {
       self: (json['self'] as String)?.let(Uri.parse),
       html: (json['html'] as String)?.let(Uri.parse),
       photos: (json['photos'] as String)?.let(Uri.parse),
+      related: (json['related'] as String)?.let(Uri.parse),
     );
   }
 }
