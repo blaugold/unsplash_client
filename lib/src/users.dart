@@ -70,6 +70,7 @@ class Users {
     PhotoOrder orderBy,
     bool stats,
     StatisticsResolution resolution,
+    PhotoOrientation orientation,
     int quantity,
   }) {
     assert(username != null);
@@ -84,6 +85,7 @@ class Users {
       'order_by': orderBy?.let(enumName),
       'stats': stats,
       'resolution': resolution?.let(enumName),
+      'orientation': orientation?.let(enumName),
       'quantity': quantity,
     });
 
@@ -112,6 +114,7 @@ class Users {
     int page,
     int perPage,
     PhotoOrder orderBy,
+    PhotoOrientation orientation,
   }) {
     assert(username != null);
     assert(page == null || page >= 0);
@@ -122,6 +125,7 @@ class Users {
       'page': page,
       'per_page': perPage,
       'order_by': orderBy?.let(enumName),
+      'orientation': orientation?.let(enumName),
     });
 
     final url =

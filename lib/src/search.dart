@@ -33,7 +33,10 @@ class Search {
     int page,
     int perPage,
     Iterable<String> collections,
+    PhotoColor color,
     PhotoOrientation orientation,
+    PhotoOrder orderBy,
+    ContentFilter contentFilter,
   }) {
     assert(query != null);
     assert(page == null || page >= 0);
@@ -46,6 +49,9 @@ class Search {
       'per_page': perPage,
       'collections': collections?.join(','),
       'orientation': orientation?.let(enumName),
+      'order_by': orderBy?.let(enumName),
+      'color': color?.let(enumName),
+      'content_filter': contentFilter?.let(enumName),
     });
 
     final url = baseUrl.resolve('photos').replace(queryParameters: params);

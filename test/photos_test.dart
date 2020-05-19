@@ -55,15 +55,14 @@ void main() {
         collections: ['a', 'b'],
         featured: true,
         orientation: PhotoOrientation.portrait,
+        contentFilter: ContentFilter.high,
       );
 
       expect(
         req.httpRequest,
         matchHttpRequest(
           method: 'GET',
-          path: client.photos.baseUrl
-              .resolve('random')
-              .path,
+          path: client.photos.baseUrl.resolve('random').path,
           queryParameters: {
             'count': '2',
             'username': 'username',
@@ -71,6 +70,7 @@ void main() {
             'collections': 'a,b',
             'featured': 'true',
             'orientation': 'portrait',
+            'content_filter': 'high',
           },
         ),
       );
@@ -87,9 +87,7 @@ void main() {
         req.httpRequest,
         matchHttpRequest(
           method: 'GET',
-          path: client.photos.baseUrl
-              .resolve('id/statistics')
-              .path,
+          path: client.photos.baseUrl.resolve('id/statistics').path,
           queryParameters: {
             'quantity': '5',
             'resolution': 'days',
@@ -105,9 +103,7 @@ void main() {
         req.httpRequest,
         matchHttpRequest(
           method: 'GET',
-          path: client.photos.baseUrl
-              .resolve('id/download')
-              .path,
+          path: client.photos.baseUrl.resolve('id/download').path,
         ),
       );
     });

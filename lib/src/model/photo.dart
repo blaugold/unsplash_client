@@ -19,6 +19,9 @@ enum PhotoOrder {
 
   /// Sort from most to least popular.
   popular,
+
+  /// Sort from most to least relevant.
+  relevant,
 }
 
 /// Filter search results by photo orientation.
@@ -31,6 +34,22 @@ enum PhotoOrientation {
 
   /// Find photos with similar width and height.
   squarish,
+}
+
+/// Filter results by color.
+enum PhotoColor {
+  // ignore: constant_identifier_names
+  black_and_white,
+  black,
+  white,
+  yellow,
+  orange,
+  red,
+  purple,
+  magenta,
+  green,
+  teal,
+  blue
 }
 
 /// A photo uploaded to unsplash.

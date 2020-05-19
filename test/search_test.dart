@@ -21,6 +21,9 @@ void main() {
         perPage: 3,
         collections: ['a', 'b'],
         orientation: PhotoOrientation.squarish,
+        orderBy: PhotoOrder.relevant,
+        color: PhotoColor.red,
+        contentFilter: ContentFilter.high,
       );
 
       expect(
@@ -34,6 +37,9 @@ void main() {
             'per_page': '3',
             'collections': 'a,b',
             'orientation': 'squarish',
+            'order_by': 'relevant',
+            'color': 'red',
+            'content_filter': 'high',
           },
         ),
       );

@@ -80,6 +80,7 @@ class Photos {
     Iterable<String> collections,
     PhotoOrientation orientation,
     int count = 1,
+    ContentFilter contentFilter,
   }) {
     assert(count != null);
     assert(count >= 0 && count <= client.settings.maxPageSize);
@@ -91,6 +92,7 @@ class Photos {
       'collections': collections?.join(','),
       'orientation': orientation?.let(enumName),
       'count': count,
+      'content_filter': contentFilter?.let(enumName),
     });
 
     final url = baseUrl.resolve('random').replace(queryParameters: params);

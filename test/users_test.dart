@@ -46,6 +46,7 @@ void main() {
         orderBy: PhotoOrder.popular,
         stats: true,
         resolution: StatisticsResolution.days,
+        orientation: PhotoOrientation.landscape,
         quantity: 5,
       );
 
@@ -60,6 +61,7 @@ void main() {
             'order_by': 'popular',
             'stats': 'true',
             'resolution': 'days',
+            'orientation': 'landscape',
             'quantity': '5',
           },
         ),
@@ -72,6 +74,7 @@ void main() {
         page: 2,
         perPage: 3,
         orderBy: PhotoOrder.popular,
+        orientation: PhotoOrientation.landscape,
       );
 
       expect(
@@ -83,6 +86,7 @@ void main() {
             'page': '2',
             'per_page': '3',
             'order_by': 'popular',
+            'orientation': 'landscape',
           },
         ),
       );
