@@ -24,41 +24,41 @@ void main() {
   group('Integration', () {
     group('Photos', () {
       test('list', () async {
-        final photos = await client.photos.list(perPage: 2).go();
+        final photos = await client.photos.list(perPage: 2).goAndGet();
 
-        expect(photos.data, hasLength(2));
+        expect(photos, hasLength(2));
       });
 
       test('get', () async {
         final photo = await getSinglePhoto();
         final id = photo.id;
 
-        final getResponse = await client.photos.get(id).go();
+        final data = await client.photos.get(id).goAndGet();
 
-        expect(getResponse.data.id, equals(id));
+        expect(data.id, equals(id));
       });
 
       test('random', () async {
-        final photos = await client.photos.random(count: 2).go();
+        final photos = await client.photos.random(count: 2).goAndGet();
 
-        expect(photos.data, hasLength(2));
+        expect(photos, hasLength(2));
       });
 
       test('statistics', () async {
         final photo = await getSinglePhoto();
         final id = photo.id;
 
-        final statisticsResponse = await client.photos.statistics(id).go();
+        final stats = await client.photos.statistics(id).goAndGet();
 
-        expect(statisticsResponse.data.id, equals(id));
+        expect(stats.id, equals(id));
       });
 
       test('download', () async {
         final photo = await getSinglePhoto();
 
-        final downloadResponse = await client.photos.download(photo.id).go();
+        final response = await client.photos.download(photo.id).go();
 
-        expect(downloadResponse.hasData, isTrue);
+        expect(response.hasData, isTrue);
       });
     });
   });

@@ -157,9 +157,12 @@ class Request<T> {
 
     body = await httpResponse.stream.bytesToString();
 
-    json = jsonDecode(body);
+    try {
+      json = jsonDecode(body);
+      // ignore: avoid_catches_without_on_clauses
+    } catch (e) {}
 
-    if (bodyDeserializer != null) {
+    if (json != null && bodyDeserializer != null) {
       data = bodyDeserializer(json);
     }
 
@@ -284,6 +287,20 @@ class Response<T> {
   /// Whether this response [isOk] and [data] is not `null`.
   bool get hasData => isOk && data != null;
 
+  /// Returns [data] if this request [hasData]. If the request has no data a
+  /// [StateError] is thrown.
+  T get() {
+    if (!isOk) {
+      throw StateError('Request is not OK: $statusCode\n$body');
+    }
+
+    if (!hasData) {
+      throw StateError('Request has no data: $statusCode\n$body');
+    }
+
+    return data;
+  }
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -308,6 +325,16 @@ class Response<T> {
   @override
   String toString() {
     return 'Response{isOk: $isOk, status: $statusCode}';
+  }
+}
+
+/// Extensions on [Request].
+extension RequestExtentions<T> on Request<T> {
+  /// Executes this request and returns the response's data, in one call.
+  ///
+  /// See: [Request.go], [Response.get]
+  Future<T> goAndGet() async {
+    return (await go()).get();
   }
 }
 
