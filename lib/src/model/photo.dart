@@ -303,6 +303,7 @@ class PhotoStatistics extends ModelBase {
   final Statistic views;
   final Statistic likes;
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
@@ -330,6 +331,7 @@ class TrackPhotoDownload extends ModelBase {
 
   final Uri url;
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'url': url.toString(),

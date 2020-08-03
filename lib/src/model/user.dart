@@ -245,6 +245,7 @@ class UserStatistics extends ModelBase {
   final Statistic views;
   final Statistic likes;
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': username,
@@ -272,6 +273,7 @@ class UserPortfolioLink extends ModelBase {
 
   final Uri url;
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'url': url.toString(),

@@ -16,6 +16,7 @@ class SearchResults<T extends ModelBase> extends ModelBase {
   final int totalPages;
   final List<T> results;
 
+  @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'total': total,

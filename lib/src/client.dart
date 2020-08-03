@@ -159,8 +159,9 @@ class Request<T> {
 
     try {
       json = jsonDecode(body);
+    } catch (e) {
       // ignore: avoid_catches_without_on_clauses
-    } catch (e) {}
+    }
 
     if (json != null && bodyDeserializer != null) {
       data = bodyDeserializer(json);

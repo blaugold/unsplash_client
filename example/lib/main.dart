@@ -9,7 +9,7 @@ void main(List<String> args) async {
 
   if (appCredentials == null) {
     if (args.length != 1) {
-      throw "Please provide a credentials file as the first and only argument.";
+      throw 'Please provide a credentials file as the first and only argument.';
     }
 
     appCredentials = await loadAppCredentialsFromFile(args.first);
@@ -30,9 +30,9 @@ void main(List<String> args) async {
 
   // Do something with the photos.
   final photos = response.data;
-  print("--- Photos");
+  print('--- Photos');
   print(photos);
-  print("---\n");
+  print('---\n');
 
   // Create a dynamically resizing url.
   final resizedUrl = photos.first.urls.raw.resizePhoto(
@@ -41,7 +41,7 @@ void main(List<String> args) async {
     fit: ResizeFitMode.clamp,
     format: ImageFormat.webp,
   );
-  print("--- Resized Url");
+  print('--- Resized Url');
   print(resizedUrl);
 }
 
