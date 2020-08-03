@@ -1,3 +1,8 @@
+## 0.2.1
+
+- bump dependencies
+- move to pedantic code style
+
 ## 0.2.0
 
 - feat(): improve client
