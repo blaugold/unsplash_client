@@ -1,3 +1,7 @@
+## 0.3.0+1
+
+- docs: update description
+
 ## 0.3.0
 
 - feat: add `UnsplashClient.close` method
