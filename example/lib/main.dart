@@ -21,7 +21,7 @@ void main(List<String> args) async {
   );
 
   // Fetch 5 random photos.
-  final response = await client.photos.random(count: 2).go();
+  final response = await client.photos.random(count: 5).go();
 
   // Check that the request was successful.
   if (!response.isOk) {
