@@ -1,3 +1,11 @@
+## 0.3.0
+
+- feat: add `UnsplashClient.close` method
+- fix: change type of `Collection.id` to `String` (unsplash API changed)
+- build(deps): upgrade dependencies
+- docs: improve README
+- fix: fix typos
+
 ## 0.2.1
 
 - bump dependencies
