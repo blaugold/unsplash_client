@@ -5,7 +5,8 @@
 
 # unsplash_client
 
-An unofficial client for the [unsplash](https://unsplash.com) api.
+An unofficial, platform independent, client for the [Unsplash](https://unsplash.com) API.
+Unsplash provides royalty-free images.
 
 The client is platform independent, since it uses [http](https://pub.dev/packages/http) to make
 requests.
