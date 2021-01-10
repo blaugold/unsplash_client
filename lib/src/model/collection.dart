@@ -11,7 +11,7 @@ import 'user.dart';
 ///
 /// See: [Unsplash docs](https://unsplash.com/documentation#collections)
 class Collection extends ModelBase {
-  final int id;
+  final String id;
   final String title;
   final String description;
   final DateTime publishedAt;
@@ -59,7 +59,7 @@ class Collection extends ModelBase {
 
   factory Collection.fromJson(Map<String, dynamic> json) {
     return Collection(
-      id: json['id'] as int,
+      id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       publishedAt: (json['published_at'] as String)?.let(DateTime.parse),
