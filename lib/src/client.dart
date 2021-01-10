@@ -91,6 +91,18 @@ class UnsplashClient {
   Stats get stats => Stats(this);
 
   final http.Client _http;
+
+  var _closed = false;
+
+  /// Closes this client and frees allocated resources.
+  ///
+  /// Failure to close this a client might cause the dart process to hang.
+  ///
+  /// After this method has been called this instance must not be used any more.
+  void close() {
+    _closed = true;
+    _http.close();
+  }
 }
 
 typedef BodyDeserializer<T> = T Function(dynamic body);
@@ -139,6 +151,13 @@ class Request<T> {
   ///
   /// Might reject with [http.ClientException] during a network failure.
   Future<Response<T>> go() async {
+    if (client._closed) {
+      throw StateError(
+        'Cannot execute request because UnsplashClient has already been '
+        'closed.',
+      );
+    }
+
     final httpRequest = _prepareRequest();
     http.StreamedResponse httpResponse;
     String body;

@@ -25,6 +25,8 @@ final client = UnsplashClient(
 );
 ```
 
+> :warning: When you are done using a client instance, make sure to call it's `close` method.
+
 ## Usage
 
 ### Get a random photo

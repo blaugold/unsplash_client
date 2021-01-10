@@ -43,6 +43,10 @@ void main(List<String> args) async {
   );
   print('--- Resized Url');
   print(resizedUrl);
+
+  // Close the client when it is done being used to clean up allocated
+  // resources.
+  client.close();
 }
 
 /// Loads [AppCredentials] from environment variables
