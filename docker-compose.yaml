@@ -1,0 +1,6 @@
+version: "3.7"
+services:
+  mockserver:
+    image: mockserver/mockserver
+    ports:
+      - 1080:1080

@@ -1,16 +1,9 @@
 import 'package:test/test.dart';
-import 'package:unsplash_client/unsplash_client.dart';
 
-import 'test_utils.dart';
+import 'integration_test_utils.dart';
 
 void main() {
-  UnsplashClient client;
-
-  setUpAll(() async {
-    final credentials = await getTestAppCredentials();
-
-    client = UnsplashClient(settings: ClientSettings(credentials: credentials));
-  });
+  setupIntegrationTests('stats');
 
   group('Integration', () {
     group('Stats', () {
@@ -26,7 +19,7 @@ void main() {
           final response = await client.stats.month().go();
           expect(response.hasData, isTrue);
         },
-        // TODO getting 404 from api
+        // TODO: getting 404 from api
         skip: true,
       );
     });
