@@ -2,6 +2,7 @@
 [![](https://badgen.net/pub/license/unsplash_client)](./LICENSE)
 ![](https://badgen.net/pub/dart-platform/unsplash_client)
 ![](https://badgen.net/pub/flutter-platform/unsplash_client)
+[![CI](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml/badge.svg)](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml)
 
 # unsplash_client
 
