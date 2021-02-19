@@ -7,12 +7,11 @@ void main() {
   setupIntegrationTests('photos');
 
   Future<Photo> getSinglePhoto() async {
-    final resp = await client.photos.random().go();
+    final resp = await client.photos.random().goAndGet();
 
-    expect(resp.isOk, isTrue);
-    expect(resp.data, hasLength(1));
+    expect(resp, hasLength(1));
 
-    return resp.data.first;
+    return resp.first;
   }
 
   group('Integration', () {
@@ -50,9 +49,7 @@ void main() {
       test('download', () async {
         final photo = await getSinglePhoto();
 
-        final response = await client.photos.download(photo.id).go();
-
-        expect(response.hasData, isTrue);
+        await client.photos.download(photo.id).goAndGet();
       });
     });
   });
