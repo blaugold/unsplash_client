@@ -8,11 +8,11 @@ issue_tracker: https://github.com/blaugold/unsplash_client/issues
 homepage: https://github.com/blaugold/unsplash_client
 
 environment:
-  sdk: '>=2.7.0 <3.0.0'
+  sdk: '>=2.12.0-0 <3.0.0'
 
 dependencies:
   meta: ^1.2.4
-  http: ^0.12.2
+  http: ^0.13.0
   collection: ^1.14.13
 
 dev_dependencies:

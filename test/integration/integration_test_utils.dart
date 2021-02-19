@@ -31,9 +31,9 @@ bool get _updateRecordedExpectations =>
 
 final _recordedExpectationsDir =
     Directory('test/fixtures/recorded_expectations');
-File _recordedExpectations;
+late File _recordedExpectations;
 
-MockServer mockServer;
+late MockServer mockServer;
 
 void _setupRecordedExpectationsTestHooks() {
   setUpAll(() async {
@@ -91,7 +91,7 @@ void _setupRecordedExpectationsTestHooks() {
           .writeAsString(jsonEncoder.convert(recordedExpectations));
     }
 
-    mockServer?.close();
+    mockServer.close();
   });
 }
 
@@ -123,7 +123,7 @@ Future<AppCredentials> getTestAppCredentials() async {
   final accessKey = Platform.environment['UNSPLASH_ACCESS_KEY'];
   final secretKey = Platform.environment['UNSPLASH_SECRET_KEY'];
 
-  if (accessKey != null && secretKey != null) {
+  if (accessKey != null) {
     return AppCredentials(
       accessKey: accessKey,
       secretKey: secretKey,
@@ -135,7 +135,7 @@ Future<AppCredentials> getTestAppCredentials() async {
 
 // === UnsplashClient ==========================================================
 
-UnsplashClient client;
+late UnsplashClient client;
 
 void _setupTestClientTestHooks() {
   setUpAll(() async {
@@ -152,6 +152,6 @@ void _setupTestClientTestHooks() {
   });
 
   tearDownAll(() {
-    client?.close();
+    client.close();
   });
 }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-import '../unsplash_client.dart';
 import 'app_credentials.dart';
 import 'collections.dart';
 import 'photos.dart';
@@ -18,10 +17,9 @@ class ClientSettings {
   ///
   /// [credentials] must not be `null`.
   const ClientSettings({
-    @required this.credentials,
+    required this.credentials,
     this.debug = false,
-  })  : assert(credentials != null),
-        assert(debug != null);
+  });
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
   final AppCredentials credentials;
@@ -64,10 +62,9 @@ class UnsplashClient {
   ///
   /// If no [httpClient] is provided, one is created.
   UnsplashClient({
-    @required this.settings,
-    http.Client httpClient,
-  })  : assert(settings != null),
-        _http = httpClient ?? http.Client();
+    required this.settings,
+    http.Client? httpClient,
+  }) : _http = httpClient ?? http.Client();
 
   /// The base url of the unsplash api.
   final Uri baseUrl = Uri.parse('https://api.unsplash.com/');
@@ -120,10 +117,10 @@ typedef BodyDeserializer<T> = T Function(dynamic body);
 class Request<T> {
   /// Creates a new request.
   const Request({
-    @required this.client,
-    @required this.httpRequest,
+    required this.client,
+    required this.httpRequest,
     this.jsonBody,
-    @required this.isPublicAction,
+    required this.isPublicAction,
     this.bodyDeserializer,
   });
 
@@ -145,7 +142,7 @@ class Request<T> {
   final bool isPublicAction;
 
   /// The function used to transform the json response into [T].
-  final BodyDeserializer<T> bodyDeserializer;
+  final BodyDeserializer<T>? bodyDeserializer;
 
   /// Execute this [Request] and return its [Response].
   ///
@@ -162,7 +159,7 @@ class Request<T> {
     http.StreamedResponse httpResponse;
     String body;
     dynamic json;
-    T data;
+    T? data;
 
     if (client.settings.debug) {
       print('Sending request:\n${_printRequest(httpRequest)}\n');
@@ -185,7 +182,7 @@ class Request<T> {
     if (httpResponse.statusCode < 400 &&
         json != null &&
         bodyDeserializer != null) {
-      data = bodyDeserializer(json);
+      data = bodyDeserializer!(json);
     }
 
     return Response(
@@ -274,10 +271,10 @@ class Request<T> {
 class Response<T> {
   /// Creates a new response.
   const Response({
-    this.request,
-    this.httpRequest,
-    this.httpResponse,
-    this.body,
+    required this.request,
+    required this.httpRequest,
+    required this.httpResponse,
+    required this.body,
     this.json,
     this.data,
   });
@@ -298,10 +295,10 @@ class Response<T> {
   final dynamic json;
 
   /// The deserialized body of the response.
-  final T data;
+  final T? data;
 
   /// The status code of [httpResponse].
-  int get statusCode => httpResponse?.statusCode;
+  int get statusCode => httpResponse.statusCode;
 
   /// Whether [statusCode] is bellow 400.
   bool get isOk => statusCode < 400;
@@ -320,7 +317,7 @@ class Response<T> {
       throw StateError('Request has no data: $statusCode\n$body');
     }
 
-    return data;
+    return data!;
   }
 
   @override

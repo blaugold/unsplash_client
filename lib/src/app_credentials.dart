@@ -8,20 +8,20 @@ import 'package:meta/meta.dart';
 class AppCredentials {
   /// Creates [AppCredentials] from the given arguments.
   const AppCredentials({
-    @required this.accessKey,
+    required this.accessKey,
     this.secretKey,
-  }) : assert(accessKey != null);
+  });
 
   /// The access key of the app these [AppCredentials] belong to.
   final String accessKey;
 
   /// The secret key of the app these [AppCredentials] belong to.
-  final String secretKey;
+  final String? secretKey;
 
   /// Creates a copy of this instance, replacing non `null` fields.
   AppCredentials copyWith({
-    String accessKey,
-    String secretKey,
+    String? accessKey,
+    String? secretKey,
   }) {
     return AppCredentials(
       accessKey: accessKey ?? this.accessKey,
@@ -41,7 +41,7 @@ class AppCredentials {
   factory AppCredentials.fromJson(Map<String, dynamic> json) {
     return AppCredentials(
       accessKey: json['accessKey'] as String,
-      secretKey: json['secretKey'] as String,
+      secretKey: json['secretKey'] as String?,
     );
   }
 

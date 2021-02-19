@@ -10,9 +10,7 @@ import 'utils.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#users)
 class Users {
   /// Creates a new instance which belongs to [client].
-  Users(this.client)
-      : assert(client != null),
-        baseUrl = client.baseUrl.resolve('users/');
+  Users(this.client) : baseUrl = client.baseUrl.resolve('users/');
 
   /// The parent [UnsplashClient].
   final UnsplashClient client;
@@ -26,8 +24,6 @@ class Users {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-users-public-profile)
   Request<User> get(String username) {
-    assert(username != null);
-
     final url = baseUrl.resolve(username);
 
     return Request(
@@ -45,8 +41,6 @@ class Users {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-users-portfolio-link)
   Request<UserPortfolioLink> portfolio(String username) {
-    assert(username != null);
-
     final url = baseUrl.resolve('$username/portfolio');
 
     return Request(
@@ -65,15 +59,14 @@ class Users {
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-a-users-photos)
   Request<List<Photo>> photos(
     String username, {
-    int page,
-    int perPage,
-    PhotoOrder orderBy,
-    bool stats,
-    StatisticsResolution resolution,
-    PhotoOrientation orientation,
-    int quantity,
+    int? page,
+    int? perPage,
+    PhotoOrder? orderBy,
+    bool? stats,
+    StatisticsResolution? resolution,
+    PhotoOrientation? orientation,
+    int? quantity,
   }) {
-    assert(username != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);
@@ -111,12 +104,11 @@ class Users {
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-a-users-liked-photos)
   Request<List<Photo>> likedPhotos(
     String username, {
-    int page,
-    int perPage,
-    PhotoOrder orderBy,
-    PhotoOrientation orientation,
+    int? page,
+    int? perPage,
+    PhotoOrder? orderBy,
+    PhotoOrientation? orientation,
   }) {
-    assert(username != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);
@@ -147,10 +139,9 @@ class Users {
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-a-users-collections)
   Request<List<Collection>> collections(
     String username, {
-    int page,
-    int perPage,
+    int? page,
+    int? perPage,
   }) {
-    assert(username != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);
@@ -177,15 +168,14 @@ class Users {
   ///
   /// Retrieve the consolidated number of downloads, views and likes of all
   /// user’s photos, as well as the historical breakdown and average of these
-  /// stats in a specific timeframe (default is 30 days).
+  /// stats in a specific time frame (default is 30 days).
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-users-statistics)
   Request<UserStatistics> statistics(
     String username, {
-    StatisticsResolution resolution,
-    int quantity,
+    StatisticsResolution? resolution,
+    int? quantity,
   }) {
-    assert(username != null);
     assert(quantity == null || quantity >= 0);
 
     final params = queryParams({

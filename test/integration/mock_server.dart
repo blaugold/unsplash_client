@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
 /// Certificate used by MockServer for TLS
 final _mockServerCertificate = '''
@@ -50,9 +49,9 @@ void removeRequestHeaderFromExpectations(
   header = header.toLowerCase();
 
   for (final expectation in expectations) {
-    final request = expectation['httpRequest'] as Map<String, dynamic>;
+    final request = expectation['httpRequest'] as Map<String, dynamic>?;
     if (request != null) {
-      final headers = request['headers'] as Map<String, dynamic>;
+      final headers = request['headers'] as Map<String, dynamic>?;
       headers?.removeWhere((key, dynamic _) => key.toLowerCase() == header);
     }
   }
@@ -65,9 +64,9 @@ void removeResponseHeaderFromExpectations(
   header = header.toLowerCase();
 
   for (final expectation in expectations) {
-    final request = expectation['httpResponse'] as Map<String, dynamic>;
+    final request = expectation['httpResponse'] as Map<String, dynamic>?;
     if (request != null) {
-      final headers = request['headers'] as Map<String, dynamic>;
+      final headers = request['headers'] as Map<String, dynamic>?;
       headers?.removeWhere((key, dynamic _) => key.toLowerCase() == header);
     }
   }
@@ -78,8 +77,8 @@ List<Map<String, dynamic>> decodeExpectations(String json) =>
 
 class MockServer {
   MockServer({
-    @required this.host,
-    @required this.port,
+    required this.host,
+    required this.port,
   });
 
   final String host;
@@ -99,7 +98,8 @@ class MockServer {
 
   Future<List<Map<String, dynamic>>> recordedExpectations() async {
     final response = await _client
-        .put('$_serverBaseUrl/retrieve?type=RECORDED_EXPECTATIONS&format=JSON')
+        .put(Uri.parse(
+            '$_serverBaseUrl/retrieve?type=RECORDED_EXPECTATIONS&format=JSON'))
         .assertIsOk();
 
     return decodeExpectations(response.body);
@@ -109,14 +109,15 @@ class MockServer {
     List<Map<String, dynamic>> expectations,
   ) =>
       _client.put(
-        '$_serverBaseUrl/expectation',
+        Uri.parse('$_serverBaseUrl/expectation'),
         body: jsonEncode(expectations),
         headers: {
           'Content-Type': 'application/json',
         },
       ).assertIsOk();
 
-  Future<void> reset() => _client.put('$_serverBaseUrl/reset').assertIsOk();
+  Future<void> reset() =>
+      _client.put(Uri.parse('$_serverBaseUrl/reset')).assertIsOk();
 
   void close() {
     _client.close();

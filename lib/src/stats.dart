@@ -1,15 +1,14 @@
 import 'package:http/http.dart' as http;
 
-import '../unsplash_client.dart';
+import 'client.dart';
+import 'model/model.dart';
 
 /// Provides access to the [TotalStats] and [MonthStats] resources.
 ///
 /// See: [Unsplash docs](https://unsplash.com/documentation#totals)
 class Stats {
   /// Creates a new instance which belongs to [client].
-  Stats(this.client)
-      : assert(client != null),
-        baseUrl = client.baseUrl.resolve('stats/');
+  Stats(this.client) : baseUrl = client.baseUrl.resolve('stats/');
 
   /// The parent [UnsplashClient].
   final UnsplashClient client;

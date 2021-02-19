@@ -1,10 +1,9 @@
 import 'package:collection/collection.dart';
 import 'package:http/http.dart' as http;
 import 'package:matcher/matcher.dart';
-import 'package:meta/meta.dart';
 
 Matcher matchHttpRequest({
-  String method,
+  required String method,
   String path = '',
   Map<String, String> queryParameters = const {},
 }) {
@@ -20,9 +19,9 @@ class MatchRequest extends Matcher {
       DeepCollectionEquality.unordered();
 
   const MatchRequest({
-    @required this.method,
-    @required this.path,
-    @required this.queryParameters,
+    required this.method,
+    required this.path,
+    required this.queryParameters,
   });
 
   final String method;

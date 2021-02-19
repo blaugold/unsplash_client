@@ -45,19 +45,19 @@ enum ResizeFitMode {
 // depending on user browser
 Uri resizePhotoUrl(
   Uri photoUrl, {
-  int quality,
-  int width,
-  int height,
-  int devicePixelRatio,
-  ImageFormat format,
-  ResizeFitMode fit,
-  Map<String, String> imgixParams,
+  int? quality,
+  int? width,
+  int? height,
+  int? devicePixelRatio,
+  ImageFormat? format,
+  ResizeFitMode? fit,
+  Map<String, String>? imgixParams,
 }) {
-  assert(quality.isNull || quality >= 0 && quality <= 100);
-  assert(width.isNull || width >= 0);
-  assert(height.isNull || height >= 0);
+  assert(quality.isNull || quality! >= 0 && quality <= 100);
+  assert(width.isNull || width! >= 0);
+  assert(height.isNull || height! >= 0);
   assert(devicePixelRatio.isNull ||
-      devicePixelRatio >= 0 && devicePixelRatio <= 8);
+      devicePixelRatio! >= 0 && devicePixelRatio <= 8);
 
   // The officially supported params.
   final params = {
@@ -112,13 +112,13 @@ extension DynamicResizeUrl on Uri {
   /// See: [Unsplash docs](https://unsplash.com/documentation#supported-parameters)
   /// {@endtemplate}
   Uri resizePhoto({
-    int quality,
-    int width,
-    int height,
-    int devicePixelRatio,
-    ImageFormat format,
-    ResizeFitMode fit,
-    Map<String, String> imgixParams,
+    int? quality,
+    int? width,
+    int? height,
+    int? devicePixelRatio,
+    ImageFormat? format,
+    ResizeFitMode? fit,
+    Map<String, String>? imgixParams,
   }) =>
       resizePhotoUrl(
         this,

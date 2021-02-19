@@ -11,7 +11,7 @@ import 'utils.dart';
 class Search {
   /// Creates a new instance which belongs to [client].
   Search(this.client)
-      : assert(client != null),
+      :
         baseUrl = client.baseUrl.resolve('search/');
 
   /// The parent [UnsplashClient].
@@ -30,15 +30,14 @@ class Search {
   /// See: [Unsplash docs](https://unsplash.com/documentation#search-photos)
   Request<SearchResults<Photo>> photos(
     String query, {
-    int page,
-    int perPage,
-    Iterable<String> collections,
-    PhotoColor color,
-    PhotoOrientation orientation,
-    PhotoOrder orderBy,
-    ContentFilter contentFilter,
+    int? page,
+    int? perPage,
+    Iterable<String>? collections,
+    PhotoColor? color,
+    PhotoOrientation? orientation,
+    PhotoOrder? orderBy,
+    ContentFilter? contentFilter,
   }) {
-    assert(query != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);
@@ -72,10 +71,9 @@ class Search {
   /// See: [Unsplash docs](https://unsplash.com/documentation#search-collections)
   Request<SearchResults<Collection>> collections(
     String query, {
-    int page,
-    int perPage,
+    int? page,
+    int? perPage,
   }) {
-    assert(query != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);
@@ -104,10 +102,9 @@ class Search {
   /// See: [Unsplash docs](https://unsplash.com/documentation#search-users)
   Request<SearchResults<User>> users(
     String query, {
-    int page,
-    int perPage,
+    int? page,
+    int? perPage,
   }) {
-    assert(query != null);
     assert(page == null || page >= 0);
     assert(perPage == null ||
         perPage >= 0 && perPage <= client.settings.maxPageSize);

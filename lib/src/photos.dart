@@ -10,7 +10,7 @@ import 'utils.dart';
 class Photos {
   /// Creates a new instance which belongs to [client].
   Photos(this.client)
-      : assert(client != null),
+      : 
         baseUrl = client.baseUrl.resolve('photos/');
 
   /// The parent [UnsplashClient].
@@ -25,9 +25,9 @@ class Photos {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-photos)
   Request<List<Photo>> list({
-    int page,
-    int perPage,
-    PhotoOrder orderBy,
+    int? page,
+    int? perPage,
+    PhotoOrder? orderBy,
   }) {
     assert(page == null || page >= 0);
     assert(perPage == null ||
@@ -55,8 +55,6 @@ class Photos {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-photo)
   Request<Photo> get(String id) {
-    assert(id != null);
-
     final url = baseUrl.resolve(id);
 
     return Request(
@@ -74,15 +72,14 @@ class Photos {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-photos)
   Request<List<Photo>> random({
-    String query,
-    String username,
-    bool featured,
-    Iterable<String> collections,
-    PhotoOrientation orientation,
+    String? query,
+    String? username,
+    bool? featured,
+    Iterable<String>? collections,
+    PhotoOrientation? orientation,
     int count = 1,
-    ContentFilter contentFilter,
+    ContentFilter? contentFilter,
   }) {
-    assert(count != null);
     assert(count >= 0 && count <= client.settings.maxPageSize);
 
     final params = queryParams({
@@ -114,10 +111,9 @@ class Photos {
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-photos-statistics)
   Request<PhotoStatistics> statistics(
     String id, {
-    StatisticsResolution resolution,
-    int quantity,
+    StatisticsResolution? resolution,
+    int? quantity,
   }) {
-    assert(id != null);
     assert(quantity == null || quantity >= 1 && quantity <= 30);
 
     final params = queryParams({
@@ -153,8 +149,6 @@ class Photos {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#track-a-photo-download)
   Request<TrackPhotoDownload> download(String id) {
-    assert(id != null);
-
     final url = baseUrl.resolve('$id/download');
 
     return Request(

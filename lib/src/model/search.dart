@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'model_base.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -7,9 +5,9 @@ import 'model_base.dart';
 /// Results returned from a search request.
 class SearchResults<T extends ModelBase> extends ModelBase {
   const SearchResults({
-    @required this.total,
-    @required this.totalPages,
-    @required this.results,
+    required this.total,
+    required this.totalPages,
+    required this.results,
   });
 
   final int total;

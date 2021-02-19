@@ -30,9 +30,8 @@ extension MapUtils<K, V> on Map<K, V> {
 List<T> deserializeObjectList<T>(
   dynamic json,
   T Function(Map<String, dynamic> json) f,
-) {
-  return (json as List<dynamic>).cast<Map<String, dynamic>>().map(f).toList();
-}
+) =>
+    (json as List<dynamic>).cast<Map<String, dynamic>>().map(f).toList();
 
 /// Helper to create query parameters map.
 ///
@@ -41,12 +40,9 @@ List<T> deserializeObjectList<T>(
 /// `num` values are turned into strings with [num.toString].
 ///
 /// `bool` values are turned into strings with [bool.toString].
-Map<String, String> queryParams(Map<String, Object> queryParams) {
-  return (Map<String, dynamic>.of(queryParams)..removeWhereValue(isNull))
-      .map((key, dynamic value) {
-    return MapEntry(key, _queryParamValueToString(value));
-  });
-}
+Map<String, String> queryParams(Map<String, Object?> queryParams) =>
+    (Map.of(queryParams)..removeWhereValue(isNull))
+        .map((key, value) => MapEntry(key, _queryParamValueToString(value!)));
 
 String _queryParamValueToString(Object value) {
   if (value is String) return value;

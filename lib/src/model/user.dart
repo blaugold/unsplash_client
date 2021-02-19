@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import '../utils.dart';
 import 'model_base.dart';
 import 'stats.dart';
@@ -11,29 +9,29 @@ import 'stats.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#users)
 class User extends ModelBase {
   const User({
-    @required this.id,
-    @required this.updatedAt,
-    @required this.username,
-    @required this.name,
-    @required this.firstName,
-    @required this.lastName,
-    @required this.email,
-    @required this.uploadsRemaining,
-    @required this.portfolioUrl,
-    @required this.bio,
-    @required this.location,
-    @required this.totalLikes,
-    @required this.totalPhotos,
-    @required this.totalCollections,
-    @required this.followedByUser,
-    @required this.followerCount,
-    @required this.followingCount,
-    @required this.downloads,
-    @required this.instagramUsername,
-    @required this.twitterUsername,
-    @required this.profileImage,
-    @required this.badge,
-    @required this.links,
+    required this.id,
+    required this.updatedAt,
+    required this.username,
+    required this.name,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.uploadsRemaining,
+    required this.portfolioUrl,
+    required this.bio,
+    required this.location,
+    required this.totalLikes,
+    required this.totalPhotos,
+    required this.totalCollections,
+    required this.followedByUser,
+    required this.followerCount,
+    required this.followingCount,
+    required this.downloads,
+    required this.instagramUsername,
+    required this.twitterUsername,
+    required this.profileImage,
+    required this.badge,
+    required this.links,
   });
 
   final String id;
@@ -41,37 +39,37 @@ class User extends ModelBase {
   final String username;
   final String name;
   final String firstName;
-  final String lastName;
-  final String email;
-  final int uploadsRemaining;
-  final Uri portfolioUrl;
-  final String bio;
-  final String location;
+  final String? lastName;
+  final String? email;
+  final int? uploadsRemaining;
+  final Uri? portfolioUrl;
+  final String? bio;
+  final String? location;
   final int totalLikes;
   final int totalPhotos;
   final int totalCollections;
-  final bool followedByUser;
-  final int followerCount;
-  final int followingCount;
-  final int downloads;
-  final String instagramUsername;
-  final String twitterUsername;
+  final bool? followedByUser;
+  final int? followerCount;
+  final int? followingCount;
+  final int? downloads;
+  final String? instagramUsername;
+  final String? twitterUsername;
   final ProfileImage profileImage;
-  final UserBadge badge;
+  final UserBadge? badge;
   final UserLinks links;
 
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': id,
-      'updated_at': updatedAt?.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
       'username': username,
       'name': name,
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
       'uploads_remaining': uploadsRemaining,
-      'portfolio_url': portfolioUrl?.toString(),
+      'portfolio_url': portfolioUrl.toString(),
       'bio': bio,
       'location': location,
       'total_likes': totalLikes,
@@ -83,9 +81,9 @@ class User extends ModelBase {
       'downloads': downloads,
       'instagram_username': instagramUsername,
       'twitter_username': twitterUsername,
-      'profile_image': profileImage?.toJson(),
+      'profile_image': profileImage.toJson(),
       'badge': badge?.toJson(),
-      'links': links?.toJson(),
+      'links': links.toJson(),
     };
   }
 
@@ -96,27 +94,27 @@ class User extends ModelBase {
       username: json['username'] as String,
       name: json['name'] as String,
       firstName: json['first_name'] as String,
-      lastName: json['last_name'] as String,
-      email: json['email'] as String,
-      uploadsRemaining: json['uploads_remaining'] as int,
-      portfolioUrl: (json['portfolio_url'] as String)?.let(Uri.parse),
-      bio: json['bio'] as String,
-      location: json['location'] as String,
+      lastName: json['last_name'] as String?,
+      email: json['email'] as String?,
+      uploadsRemaining: json['uploads_remaining'] as int?,
+      portfolioUrl: (json['portfolio_url'] as String?)?.let(Uri.parse),
+      bio: json['bio'] as String?,
+      location: json['location'] as String?,
       totalLikes: json['total_likes'] as int,
       totalPhotos: json['total_photos'] as int,
       totalCollections: json['total_collections'] as int,
-      followedByUser: json['followed_by_user'] as bool,
-      followerCount: json['follower_count'] as int,
-      followingCount: json['following_count'] as int,
-      downloads: json['downloads'] as int,
-      instagramUsername: json['instagram_username'] as String,
-      twitterUsername: json['twitter_username'] as String,
+      followedByUser: json['followed_by_user'] as bool?,
+      followerCount: json['follower_count'] as int?,
+      followingCount: json['following_count'] as int?,
+      downloads: json['downloads'] as int?,
+      instagramUsername: json['instagram_username'] as String?,
+      twitterUsername: json['twitter_username'] as String?,
       profileImage: (json['profile_image'] as Map<String, dynamic>)
-          ?.let((it) => ProfileImage.fromJson(it)),
-      badge: (json['badge'] as Map<String, dynamic>)
+          .let((it) => ProfileImage.fromJson(it)),
+      badge: (json['badge'] as Map<String, dynamic>?)
           ?.let((it) => UserBadge.fromJson(it)),
       links: (json['links'] as Map<String, dynamic>)
-          ?.let((it) => UserLinks.fromJson(it)),
+          .let((it) => UserLinks.fromJson(it)),
     );
   }
 }
@@ -124,9 +122,9 @@ class User extends ModelBase {
 /// The profile image of a [User].
 class ProfileImage extends ModelBase {
   const ProfileImage({
-    @required this.small,
-    @required this.medium,
-    @required this.large,
+    required this.small,
+    required this.medium,
+    required this.large,
   });
 
   final Uri small;
@@ -136,17 +134,17 @@ class ProfileImage extends ModelBase {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'small': small?.toString(),
-      'medium': medium?.toString(),
-      'large': large?.toString(),
+      'small': small.toString(),
+      'medium': medium.toString(),
+      'large': large.toString(),
     };
   }
 
   factory ProfileImage.fromJson(Map<String, dynamic> json) {
     return ProfileImage(
-      small: (json['small'] as String)?.let(Uri.parse),
-      medium: (json['medium'] as String)?.let(Uri.parse),
-      large: (json['large'] as String)?.let(Uri.parse),
+      small: (json['small'] as String).let(Uri.parse),
+      medium: (json['medium'] as String).let(Uri.parse),
+      large: (json['large'] as String).let(Uri.parse),
     );
   }
 }
@@ -154,10 +152,10 @@ class ProfileImage extends ModelBase {
 /// A badge of a [User].
 class UserBadge extends ModelBase {
   const UserBadge({
-    @required this.title,
-    @required this.primary,
-    @required this.slug,
-    @required this.link,
+    required this.title,
+    required this.primary,
+    required this.slug,
+    required this.link,
   });
 
   final String title;
@@ -171,7 +169,7 @@ class UserBadge extends ModelBase {
       'title': title,
       'primary': primary,
       'slug': slug,
-      'link': link?.toString(),
+      'link': link.toString(),
     };
   }
 
@@ -180,7 +178,7 @@ class UserBadge extends ModelBase {
       title: json['title'] as String,
       primary: json['primary'] as bool,
       slug: json['slug'] as String,
-      link: (json['link'] as String)?.let(Uri.parse),
+      link: (json['link'] as String).let(Uri.parse),
     );
   }
 }
@@ -188,13 +186,13 @@ class UserBadge extends ModelBase {
 /// Links for a [User].
 class UserLinks extends ModelBase {
   const UserLinks({
-    @required this.self,
-    @required this.html,
-    @required this.photos,
-    @required this.likes,
-    @required this.portfolio,
-    @required this.followers,
-    @required this.following,
+    required this.self,
+    required this.html,
+    required this.photos,
+    required this.likes,
+    required this.portfolio,
+    required this.followers,
+    required this.following,
   });
 
   final Uri self;
@@ -208,25 +206,25 @@ class UserLinks extends ModelBase {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'self': self?.toString(),
-      'html': html?.toString(),
-      'photos': photos?.toString(),
-      'likes': likes?.toString(),
-      'portfolio': portfolio?.toString(),
-      'followers': followers?.toString(),
-      'following': following?.toString(),
+      'self': self.toString(),
+      'html': html.toString(),
+      'photos': photos.toString(),
+      'likes': likes.toString(),
+      'portfolio': portfolio.toString(),
+      'followers': followers.toString(),
+      'following': following.toString(),
     };
   }
 
   factory UserLinks.fromJson(Map<String, dynamic> json) {
     return UserLinks(
-      self: (json['self'] as String)?.let(Uri.parse),
-      html: (json['html'] as String)?.let(Uri.parse),
-      photos: (json['photos'] as String)?.let(Uri.parse),
-      likes: (json['likes'] as String)?.let(Uri.parse),
-      portfolio: (json['portfolio'] as String)?.let(Uri.parse),
-      followers: (json['followers'] as String)?.let(Uri.parse),
-      following: (json['following'] as String)?.let(Uri.parse),
+      self: (json['self'] as String).let(Uri.parse),
+      html: (json['html'] as String).let(Uri.parse),
+      photos: (json['photos'] as String).let(Uri.parse),
+      likes: (json['likes'] as String).let(Uri.parse),
+      portfolio: (json['portfolio'] as String).let(Uri.parse),
+      followers: (json['followers'] as String).let(Uri.parse),
+      following: (json['following'] as String).let(Uri.parse),
     );
   }
 }
@@ -234,10 +232,10 @@ class UserLinks extends ModelBase {
 /// Statistics for a [User]s [Photo]s.
 class UserStatistics extends ModelBase {
   const UserStatistics({
-    @required this.username,
-    @required this.downloads,
-    @required this.views,
-    @required this.likes,
+    required this.username,
+    required this.downloads,
+    required this.views,
+    required this.likes,
   });
 
   final String username;
@@ -268,7 +266,7 @@ class UserStatistics extends ModelBase {
 /// Response to request get a [User]s portfolio link.
 class UserPortfolioLink extends ModelBase {
   const UserPortfolioLink({
-    @required this.url,
+    required this.url,
   });
 
   final Uri url;

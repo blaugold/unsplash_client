@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 import 'model_base.dart';
 
 // ignore_for_file: public_member_api_docs
@@ -13,8 +11,8 @@ enum StatisticsResolution {
 /// A statistical metric.
 class Statistic extends ModelBase {
   const Statistic({
-    @required this.total,
-    @required this.historical,
+    required this.total,
+    required this.historical,
   });
 
   final int total;
@@ -40,15 +38,15 @@ class Statistic extends ModelBase {
 /// Historical data for a statistic for a [Photo].
 class HistoricalData extends ModelBase {
   const HistoricalData({
-    @required this.change,
-    @required this.average,
-    @required this.resolution,
-    @required this.quantity,
-    @required this.values,
+    required this.change,
+    required this.average,
+    required this.resolution,
+    required this.quantity,
+    required this.values,
   });
 
   final int change;
-  final int average;
+  final int? average;
   final String resolution;
   final int quantity;
   final List<HistoricalValue> values;
@@ -67,7 +65,7 @@ class HistoricalData extends ModelBase {
   factory HistoricalData.fromJson(Map<String, dynamic> json) {
     return HistoricalData(
       change: json['change'] as int,
-      average: json['average'] as int,
+      average: json['average'] as int?,
       resolution: json['resolution'] as String,
       quantity: json['quantity'] as int,
       values: (json['values'] as List<dynamic>)
@@ -81,8 +79,8 @@ class HistoricalData extends ModelBase {
 /// Historical data point in [HistoricalData].
 class HistoricalValue extends ModelBase {
   const HistoricalValue({
-    @required this.date,
-    @required this.value,
+    required this.date,
+    required this.value,
   });
 
   final DateTime date;
@@ -91,7 +89,7 @@ class HistoricalValue extends ModelBase {
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'date': date?.toIso8601String(),
+      'date': date.toIso8601String(),
       'value': value,
     };
   }
@@ -109,23 +107,23 @@ class HistoricalValue extends ModelBase {
 /// See: [Unsplash docs](https://unsplash.com/documentation#stats)
 class TotalStats extends ModelBase {
   const TotalStats({
-    @required this.photos,
-    @required this.downloads,
-    @required this.views,
-    @required this.likes,
-    @required this.photographers,
-    @required this.pixels,
-    @required this.downloadsPerSecond,
-    @required this.viewsPerSecond,
-    @required this.developers,
-    @required this.applications,
-    @required this.requests,
+    required this.photos,
+    required this.downloads,
+    required this.views,
+    required this.likes,
+    required this.photographers,
+    required this.pixels,
+    required this.downloadsPerSecond,
+    required this.viewsPerSecond,
+    required this.developers,
+    required this.applications,
+    required this.requests,
   });
 
   final int photos;
   final int downloads;
   final int views;
-  final int likes;
+  final int? likes;
   final int photographers;
   final int pixels;
   final int downloadsPerSecond;
@@ -156,7 +154,7 @@ class TotalStats extends ModelBase {
       photos: json['photos'] as int,
       downloads: json['downloads'] as int,
       views: json['views'] as int,
-      likes: json['likes'] as int,
+      likes: json['likes'] as int?,
       photographers: json['photographers'] as int,
       pixels: json['pixels'] as int,
       downloadsPerSecond: json['downloads_per_second'] as int,
@@ -173,20 +171,20 @@ class TotalStats extends ModelBase {
 /// See: [Unsplash docs](https://unsplash.com/documentation#stats)
 class MonthStats extends ModelBase {
   const MonthStats({
-    @required this.downloads,
-    @required this.views,
-    @required this.likes,
-    @required this.newPhotos,
-    @required this.newPhotographers,
-    @required this.newPixels,
-    @required this.newDevelopers,
-    @required this.newApplications,
-    @required this.newRequests,
+    required this.downloads,
+    required this.views,
+    required this.likes,
+    required this.newPhotos,
+    required this.newPhotographers,
+    required this.newPixels,
+    required this.newDevelopers,
+    required this.newApplications,
+    required this.newRequests,
   });
 
   final int downloads;
   final int views;
-  final int likes;
+  final int? likes;
   final int newPhotos;
   final int newPhotographers;
   final int newPixels;
@@ -213,7 +211,7 @@ class MonthStats extends ModelBase {
     return MonthStats(
       downloads: json['downloads'] as int,
       views: json['views'] as int,
-      likes: json['likes'] as int,
+      likes: json['likes'] as int?,
       newPhotos: json['new_photos'] as int,
       newPhotographers: json['new_photographers'] as int,
       newPixels: json['new_pixels'] as int,

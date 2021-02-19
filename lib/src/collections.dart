@@ -9,9 +9,7 @@ import 'utils.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#collections)
 class Collections {
   /// Creates a new instance which belongs to [client].
-  Collections(this.client)
-      : assert(client != null),
-        baseUrl = client.baseUrl.resolve('collections/');
+  Collections(this.client) : baseUrl = client.baseUrl.resolve('collections/');
 
   /// The parent [UnsplashClient].
   final UnsplashClient client;
@@ -30,8 +28,8 @@ class Collections {
   /// See: [Collections](https://unsplash.com/documentation#list-collections)
   /// [Featured Collections](https://unsplash.com/documentation#list-featured-collections)
   Request<List<Collection>> list({
-    int page,
-    int perPage,
+    int? page,
+    int? perPage,
     bool featured = false,
   }) {
     assert(page == null || page >= 0);
@@ -63,8 +61,6 @@ class Collections {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-collection)
   Request<Collection> get(String id) {
-    assert(id != null);
-
     final url = baseUrl.resolve(id);
 
     return Request(
@@ -85,9 +81,9 @@ class Collections {
   /// See: [Unsplash docs](https://unsplash.com/documentation#get-a-collections-photos)
   Request<List<Photo>> photos(
     String id, {
-    int page,
-    int perPage,
-    PhotoOrientation orientation,
+    int? page,
+    int? perPage,
+    PhotoOrientation? orientation,
   }) {
     assert(page == null || page >= 0);
     assert(perPage == null ||

@@ -48,7 +48,7 @@ void main(List<String> args) async {
 /// (`UNSPLASH_ACCESS_KEY`, `UNSPLASH_SECRET_KEY`).
 ///
 /// Returns `null` if the variables do not exist.
-AppCredentials loadAppCredentialsFromEnv() {
+AppCredentials? loadAppCredentialsFromEnv() {
   final accessKey = Platform.environment['UNSPLASH_ACCESS_KEY'];
   final secretKey = Platform.environment['UNSPLASH_SECRET_KEY'];
 
