@@ -1,3 +1,11 @@
+## 1.0.0
+
+- feat: migrate to null-safety
+- fix: fix spelling of `RequestExtension`
+- fix: only parse body of success response
+- fix: use correct url for `Collections.photos` and `Collections.related`
+- docs: use `goAndGet` in docs
+
 ## 0.3.0+1
 
 - docs: update description
@@ -18,16 +26,14 @@
 ## 0.2.0
 
 - feat(): improve client
-    - handle non json body
-    - add `Response.get` to get `Response.data` or throw an error
-    
+  - handle non json body
+  - add `Response.get` to get `Response.data` or throw an error
 - feat(): add various filtering options
-    - Photos.random: contentFilter
-    - Search.photos: color, orderBy, contentFilter
-    - Users.photos: orientation
-    - Users.likedPhotos: orientation
-    - PhotoOrder.relevant
-    
+  - Photos.random: contentFilter
+  - Search.photos: color, orderBy, contentFilter
+  - Users.photos: orientation
+  - Users.likedPhotos: orientation
+  - PhotoOrder.relevant
 - feat(): add collections api (public actions only)
 
 - fix(): include User.portfolio in json representation
