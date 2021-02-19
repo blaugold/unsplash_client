@@ -348,8 +348,8 @@ class Response<T> {
   }
 }
 
-/// Extensions on [Request].
-extension RequestExtentions<T> on Request<T> {
+/// Extension on [Request].
+extension RequestExtension<T> on Request<T> {
   /// Executes this request and returns the response's data, in one call.
   ///
   /// See: [Request.go], [Response.get]
