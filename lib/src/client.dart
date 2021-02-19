@@ -182,7 +182,9 @@ class Request<T> {
       // ignore: avoid_catches_without_on_clauses
     }
 
-    if (json != null && bodyDeserializer != null) {
+    if (httpResponse.statusCode < 400 &&
+        json != null &&
+        bodyDeserializer != null) {
       data = bodyDeserializer(json);
     }
 
