@@ -73,7 +73,7 @@ void main() {
         req.httpRequest,
         matchHttpRequest(
           method: 'GET',
-          path: client.collections.baseUrl.resolve('a').resolve('photos').path,
+          path: client.collections.baseUrl.resolve('a/photos').path,
           queryParameters: {
             'page': '1',
             'per_page': '2',
@@ -90,7 +90,7 @@ void main() {
         req.httpRequest,
         matchHttpRequest(
           method: 'GET',
-          path: client.collections.baseUrl.resolve('a').resolve('related').path,
+          path: client.collections.baseUrl.resolve('a/related').path,
         ),
       );
     });

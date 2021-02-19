@@ -99,8 +99,7 @@ class Collections {
       'orientation': orientation?.let(enumName),
     });
 
-    final url =
-        baseUrl.resolve(id).resolve('photos').replace(queryParameters: params);
+    final url = baseUrl.resolve('$id/photos').replace(queryParameters: params);
 
     return Request(
       client: client,
@@ -116,7 +115,7 @@ class Collections {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#list-a-collections-related-collections)
   Request<List<Collection>> related(String id) {
-    final url = baseUrl.resolve(id).resolve('related');
+    final url = baseUrl.resolve('$id/related');
 
     return Request(
       client: client,
