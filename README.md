@@ -33,16 +33,12 @@ final client = UnsplashClient(
 ### Get a random photo
 
 ```dart
-// Make the request.
-final response = await client.photos.random(count: 1).go();
-
-// Check that the request was successful.
-if (!response.isOk) {
-  throw 'Something is wrong: $response';
-}
+// Call `goAndGet` to execute the [Request] returned from `random`
+// and throw an exception if the [Response] is not ok.
+final photos = await client.photos.random(count: 1).goAndGet();
 
 // The api returns a `Photo` which contains metadata about the photo and urls to download it.
-final photo = response.data.first;
+final photo = photos.first;
 ```
 
 ### Photo variants 
