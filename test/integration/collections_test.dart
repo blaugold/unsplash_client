@@ -6,12 +6,21 @@ import 'integration_test_utils.dart';
 void main() {
   setupIntegrationTests('collections');
 
-  group('Integration', () {
-    group('Collections', () {
-      test('list', () async {
-        final response = await client.collections.list(perPage: 10).goAndGet();
-        expect(response, hasLength(10));
-      });
-    });
+  final testCollectionId = '3773378';
+
+  test('list', () async {
+    await client.collections.list().goAndGet();
+  });
+
+  test('get', () async {
+    await client.collections.get(testCollectionId).goAndGet();
+  });
+
+  test('photos', () async {
+    await client.collections.photos(testCollectionId).goAndGet();
+  });
+
+  test('related', () async {
+    await client.collections.related(testCollectionId).goAndGet();
   });
 }

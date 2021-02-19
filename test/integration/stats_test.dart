@@ -6,20 +6,11 @@ import 'integration_test_utils.dart';
 void main() {
   setupIntegrationTests('stats');
 
-  group('Integration', () {
-    group('Stats', () {
-      test('total', () async {
-        await client.stats.total().goAndGet();
-      });
+  test('total', () async {
+    await client.stats.total().goAndGet();
+  });
 
-      test(
-        'month',
-        () async {
-          await client.stats.month().goAndGet();
-        },
-        // TODO: getting 404 from api
-        skip: true,
-      );
-    });
+  test('month', () async {
+    await client.stats.month().goAndGet();
   });
 }

@@ -14,43 +14,39 @@ void main() {
     return resp.first;
   }
 
-  group('Integration', () {
-    group('Photos', () {
-      test('list', () async {
-        final photos = await client.photos.list(perPage: 2).goAndGet();
+  test('list', () async {
+    final photos = await client.photos.list(perPage: 2).goAndGet();
 
-        expect(photos, hasLength(2));
-      });
+    expect(photos, hasLength(2));
+  });
 
-      test('get', () async {
-        final photo = await getSinglePhoto();
-        final id = photo.id;
+  test('get', () async {
+    final photo = await getSinglePhoto();
+    final id = photo.id;
 
-        final data = await client.photos.get(id).goAndGet();
+    final data = await client.photos.get(id).goAndGet();
 
-        expect(data.id, equals(id));
-      });
+    expect(data.id, equals(id));
+  });
 
-      test('random', () async {
-        final photos = await client.photos.random(count: 2).goAndGet();
+  test('random', () async {
+    final photos = await client.photos.random(count: 2).goAndGet();
 
-        expect(photos, hasLength(2));
-      });
+    expect(photos, hasLength(2));
+  });
 
-      test('statistics', () async {
-        final photo = await getSinglePhoto();
-        final id = photo.id;
+  test('statistics', () async {
+    final photo = await getSinglePhoto();
+    final id = photo.id;
 
-        final stats = await client.photos.statistics(id).goAndGet();
+    final stats = await client.photos.statistics(id).goAndGet();
 
-        expect(stats.id, equals(id));
-      });
+    expect(stats.id, equals(id));
+  });
 
-      test('download', () async {
-        final photo = await getSinglePhoto();
+  test('download', () async {
+    final photo = await getSinglePhoto();
 
-        await client.photos.download(photo.id).goAndGet();
-      });
-    });
+    await client.photos.download(photo.id).goAndGet();
   });
 }
