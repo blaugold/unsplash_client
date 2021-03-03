@@ -1,3 +1,7 @@
+## 1.0.1+1
+
+- style: fix formatting
+
 ## 1.0.1
 
 - fix: fix short-circuiting issue
