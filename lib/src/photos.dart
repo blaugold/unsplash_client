@@ -9,9 +9,7 @@ import 'utils.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#photos)
 class Photos {
   /// Creates a new instance which belongs to [client].
-  Photos(this.client)
-      : 
-        baseUrl = client.baseUrl.resolve('photos/');
+  Photos(this.client) : baseUrl = client.baseUrl.resolve('photos/');
 
   /// The parent [UnsplashClient].
   final UnsplashClient client;

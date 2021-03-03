@@ -10,9 +10,7 @@ import 'utils.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#search)
 class Search {
   /// Creates a new instance which belongs to [client].
-  Search(this.client)
-      :
-        baseUrl = client.baseUrl.resolve('search/');
+  Search(this.client) : baseUrl = client.baseUrl.resolve('search/');
 
   /// The parent [UnsplashClient].
   final UnsplashClient client;

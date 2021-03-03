@@ -20,7 +20,7 @@ void main(List<String> args) async {
     settings: ClientSettings(credentials: appCredentials),
   );
 
-  // Fetch 5 random photos by calling `goAndGet` to execute the [Request] 
+  // Fetch 5 random photos by calling `goAndGet` to execute the [Request]
   // returned from `random` and throw an exception if the [Response] is not ok.
   final photos = await client.photos.random(count: 5).goAndGet();
 
