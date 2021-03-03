@@ -1,3 +1,7 @@
+## 1.0.1+2
+
+- revert to sdk constraint `>=2.12.0-0 <3.0.0`
+
 ## 1.0.1+1
 
 - style: fix formatting
