@@ -19,7 +19,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v0.5
         with:
-          sdk: beta
+          sdk: stable
 
       - name: Install dependencies
         run: pub get
