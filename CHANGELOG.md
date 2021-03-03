@@ -1,3 +1,7 @@
+## 1.0.1
+
+- fix: fix short-circuiting issue
+
 ## 1.0.0
 
 - feat: migrate to null-safety

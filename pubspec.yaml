@@ -2,13 +2,13 @@ name: unsplash_client
 description: >-
   An unofficial, platform independent, client for the Unsplash API.
   Unsplash provides royalty-free images.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/blaugold/unsplash_client
 issue_tracker: https://github.com/blaugold/unsplash_client/issues
 homepage: https://github.com/blaugold/unsplash_client
 
 environment:
-  sdk: '>=2.12.0-0 <3.0.0'
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   meta: ^1.2.4
