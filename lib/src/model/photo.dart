@@ -146,8 +146,8 @@ class Photo extends ModelBase {
             .let((it) => PhotoLinks.fromJson(it)),
         tags: (json['tags'] as List<dynamic>?)
             ?.cast<Map<String, dynamic>>()
-            ?.map((json) => Tag.fromJson(json))
-            ?.toList());
+            .map((json) => Tag.fromJson(json))
+            .toList());
   }
 }
 
