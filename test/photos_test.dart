@@ -18,7 +18,7 @@ void main() {
       final req = client.photos.list(
         page: 1,
         perPage: 2,
-        orderBy: PhotoOrder.popular,
+        orderBy: PhotoOrder.relevant,
       );
 
       expect(
@@ -29,7 +29,7 @@ void main() {
           queryParameters: {
             'page': '1',
             'per_page': '2',
-            'order_by': 'popular',
+            'order_by': 'relevant',
           },
         ),
       );

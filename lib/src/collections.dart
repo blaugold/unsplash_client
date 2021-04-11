@@ -21,16 +21,12 @@ class Collections {
   ///
   /// Get a single page from the list of all collections.
   ///
-  /// ## List featured collections
-  /// Get a single page from the list of featured collections, by setting
-  /// [featured] to `true`.
-  ///
   /// See: [Collections](https://unsplash.com/documentation#list-collections)
-  /// [Featured Collections](https://unsplash.com/documentation#list-featured-collections)
   Request<List<Collection>> list({
     int? page,
     int? perPage,
-    bool featured = false,
+    @Deprecated('Has no effect and will be removed in the future.')
+        bool featured = false,
   }) {
     assert(page == null || page >= 0);
     assert(perPage == null ||
@@ -41,8 +37,7 @@ class Collections {
       'per_page': perPage,
     });
 
-    final url = (featured ? baseUrl.resolve('featured') : baseUrl)
-        .replace(queryParameters: params);
+    final url = baseUrl.replace(queryParameters: params);
 
     return Request(
       client: client,

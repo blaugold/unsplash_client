@@ -33,22 +33,6 @@ void main() {
       );
     });
 
-    test('list featured', () async {
-      final req = client.collections.list(page: 1, perPage: 2, featured: true);
-
-      expect(
-        req.httpRequest,
-        matchHttpRequest(
-          method: 'GET',
-          path: client.collections.baseUrl.resolve('featured').path,
-          queryParameters: {
-            'page': '1',
-            'per_page': '2',
-          },
-        ),
-      );
-    });
-
     test('get', () async {
       final req = client.collections.get('a');
 

@@ -1,3 +1,10 @@
+## 1.1.0
+
+- feat: add `Photo.blurHash`
+- deprecation: `PhotoOrder.popular`
+- deprecation: `featured` parameter of `Collections.list`
+- deprecation: `UserStatistics.likes`
+
 ## 1.0.1+2
 
 - revert to sdk constraint `>=2.12.0-0 <3.0.0`

@@ -239,8 +239,14 @@ class UserStatistics extends ModelBase {
   });
 
   final String username;
+
   final Statistic downloads;
+
   final Statistic views;
+
+  @Deprecated(
+    'Does not contain actual data, and will be removed in the future.',
+  )
   final Statistic likes;
 
   @override
@@ -249,6 +255,7 @@ class UserStatistics extends ModelBase {
       'id': username,
       'downloads': downloads.toJson(),
       'views': views.toJson(),
+      // ignore: deprecated_member_use
       'likes': likes.toJson(),
     };
   }

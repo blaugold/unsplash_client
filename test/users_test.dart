@@ -43,7 +43,7 @@ void main() {
         'username',
         page: 2,
         perPage: 3,
-        orderBy: PhotoOrder.popular,
+        orderBy: PhotoOrder.relevant,
         stats: true,
         resolution: StatisticsResolution.days,
         orientation: PhotoOrientation.landscape,
@@ -58,7 +58,7 @@ void main() {
           queryParameters: {
             'page': '2',
             'per_page': '3',
-            'order_by': 'popular',
+            'order_by': 'relevant',
             'stats': 'true',
             'resolution': 'days',
             'orientation': 'landscape',
@@ -73,7 +73,7 @@ void main() {
         'username',
         page: 2,
         perPage: 3,
-        orderBy: PhotoOrder.popular,
+        orderBy: PhotoOrder.relevant,
         orientation: PhotoOrientation.landscape,
       );
 
@@ -85,7 +85,7 @@ void main() {
           queryParameters: {
             'page': '2',
             'per_page': '3',
-            'order_by': 'popular',
+            'order_by': 'relevant',
             'orientation': 'landscape',
           },
         ),
