@@ -83,7 +83,7 @@ class Photo extends ModelBase {
   final int width;
   final int height;
   final String color;
-  final String blurHash;
+  final String? blurHash;
   final int? downloads;
   final int likes;
   final bool likedByUser;
@@ -132,7 +132,7 @@ class Photo extends ModelBase {
         width: json['width'] as int,
         height: json['height'] as int,
         color: json['color'] as String,
-        blurHash: json['blur_hash'] as String,
+        blurHash: json['blur_hash'] as String?,
         downloads: json['downloads'] as int?,
         likes: json['likes'] as int,
         likedByUser: json['liked_by_user'] as bool,
