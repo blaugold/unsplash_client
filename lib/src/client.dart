@@ -5,9 +5,11 @@ import 'package:meta/meta.dart';
 
 import 'app_credentials.dart';
 import 'collections.dart';
+import 'model/model.dart';
 import 'photos.dart';
 import 'search.dart';
 import 'stats.dart';
+import 'topics.dart';
 import 'users.dart';
 
 /// The settings for the [UnsplashClient].
@@ -83,6 +85,9 @@ class UnsplashClient {
 
   /// Search for resources.
   Search get search => Search(this);
+
+  /// Provides access to resources related to [Topic].
+  Topics get topics => Topics(this);
 
   /// Provides access to the [TotalStats] and [MonthStats] resources.
   Stats get stats => Stats(this);

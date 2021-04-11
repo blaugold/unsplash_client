@@ -5,4 +5,5 @@ export 'src/model/model.dart';
 export 'src/photos.dart';
 export 'src/search.dart';
 export 'src/stats.dart';
+export 'src/topics.dart';
 export 'src/users.dart';
