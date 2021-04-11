@@ -13,7 +13,7 @@ class Stats {
   /// The parent [UnsplashClient].
   final UnsplashClient client;
 
-  /// The base url for all endpoints for [Photos].
+  /// The base url for all endpoints for [Stats].
   final Uri baseUrl;
 
   /// Get a list of counts for all of Unsplash.

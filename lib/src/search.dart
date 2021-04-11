@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:meta/meta.dart';
 
 import 'client.dart';
 import 'model/model.dart';

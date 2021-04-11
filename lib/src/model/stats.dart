@@ -35,7 +35,7 @@ class Statistic extends ModelBase {
   }
 }
 
-/// Historical data for a statistic for a [Photo].
+/// Historical data for a statistic.
 class HistoricalData extends ModelBase {
   const HistoricalData({
     required this.change,

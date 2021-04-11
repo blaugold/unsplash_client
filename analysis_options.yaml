@@ -1,10 +1,11 @@
 include: package:pedantic/analysis_options.yaml
 
-linter:
-  rules:
-    - prefer_relative_imports
-
 analyzer:
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
+
+linter:
+  rules:
+    - prefer_relative_imports
+    - comment_references

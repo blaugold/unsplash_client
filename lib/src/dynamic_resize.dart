@@ -96,7 +96,6 @@ extension DynamicResizeUrl on Uri {
   /// The officially supported parameters are:
   ///
   /// - [width], [height] : for adjusting the width and height of a photo
-  /// - [crop] : for applying cropping to the photo
   /// - [format] : for converting image format
   /// - [quality] : for changing the compression quality when using lossy file
   /// formats

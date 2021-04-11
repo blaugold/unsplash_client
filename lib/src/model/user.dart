@@ -229,7 +229,7 @@ class UserLinks extends ModelBase {
   }
 }
 
-/// Statistics for a [User]s [Photo]s.
+/// Statistics for a [User].
 class UserStatistics extends ModelBase {
   const UserStatistics({
     required this.username,
