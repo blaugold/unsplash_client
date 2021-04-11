@@ -1,3 +1,10 @@
+## 2.0.0
+
+- feat: add `Topic` resource
+- feat: add `lang` parameter to `Search.photos`
+- breaking change: remove `UserStatistics.likes`
+- breaking change: make `Photo.blurHash` nullable
+
 ## 1.1.0
 
 - feat: add `Photo.blurHash`

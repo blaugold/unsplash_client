@@ -42,7 +42,7 @@ final photos = await client.photos.random(count: 1).goAndGet();
 final photo = photos.first;
 ```
 
-### Photo variants 
+### Photo variants
 
 A `Photo` comes with a set of urls for variants of the photo of different sizes, such as `regular` and `thumb`:
 
@@ -62,16 +62,3 @@ final custom = photo.urls.raw.resizePhoto(width: 400, height: 400);
 ## Example
 
 See [examples tab](https://pub.dev/packages/unsplash_client/example) for a runnable example.
-
-## TODO
-
-- [ ] Get the user’s profile
-- [ ] Update the current user’s profile
-- [ ] Update a photo
-- [ ] Like a photo
-- [ ] Unlike a photo
-- [ ] Create a new collection
-- [ ] Update an existing collection
-- [ ] Delete a collection
-- [ ] Add a photo to a collection
-- [ ] Remove a photo from a collection
