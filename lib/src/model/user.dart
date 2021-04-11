@@ -235,7 +235,6 @@ class UserStatistics extends ModelBase {
     required this.username,
     required this.downloads,
     required this.views,
-    required this.likes,
   });
 
   final String username;
@@ -244,19 +243,12 @@ class UserStatistics extends ModelBase {
 
   final Statistic views;
 
-  @Deprecated(
-    'Does not contain actual data, and will be removed in the future.',
-  )
-  final Statistic likes;
-
   @override
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'id': username,
       'downloads': downloads.toJson(),
       'views': views.toJson(),
-      // ignore: deprecated_member_use
-      'likes': likes.toJson(),
     };
   }
 
@@ -265,7 +257,6 @@ class UserStatistics extends ModelBase {
       username: json['id'] as String,
       downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
       views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
-      likes: Statistic.fromMap(json['likes'] as Map<String, dynamic>),
     );
   }
 }
