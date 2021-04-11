@@ -24,6 +24,7 @@ void main() {
         orderBy: PhotoOrder.relevant,
         color: PhotoColor.red,
         contentFilter: ContentFilter.high,
+        lang: 'es',
       );
 
       expect(
@@ -40,6 +41,7 @@ void main() {
             'order_by': 'relevant',
             'color': 'red',
             'content_filter': 'high',
+            'lang': 'es',
           },
         ),
       );

@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:meta/meta.dart';
 
 import 'client.dart';
 import 'model/model.dart';
@@ -35,6 +36,7 @@ class Search {
     PhotoOrientation? orientation,
     PhotoOrder? orderBy,
     ContentFilter? contentFilter,
+    String? lang,
   }) {
     assert(page == null || page >= 0);
     assert(perPage == null ||
@@ -49,6 +51,7 @@ class Search {
       'order_by': orderBy?.let(enumName),
       'color': color?.let(enumName),
       'content_filter': contentFilter?.let(enumName),
+      'lang': lang,
     });
 
     final url = baseUrl.resolve('photos').replace(queryParameters: params);
