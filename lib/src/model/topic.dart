@@ -5,10 +5,15 @@ import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
+/// How to sort [Topic]s.
 enum TopicOrder {
+  /// Sort by features [Topic]s.
   featured,
+  /// Sort from new to old.
   latest,
+  /// Sort old new to new.
   oldest,
+  /// Sort by position.
   position,
 }
 
