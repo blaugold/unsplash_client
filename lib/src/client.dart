@@ -305,7 +305,7 @@ class Response<T> {
   /// The status code of [httpResponse].
   int get statusCode => httpResponse.statusCode;
 
-  /// Whether [statusCode] is bellow 400.
+  /// Whether [statusCode] is below 400.
   bool get isOk => statusCode < 400;
 
   /// Whether this response [isOk] and [data] is not `null`.

@@ -13,7 +13,7 @@ void main() {
     ),
   );
 
-  group('Topcis', () {
+  group('Topics', () {
     test('list', () async {
       final req = client.topics.list(
         idsOrSlugs: ['a', 'b'],
