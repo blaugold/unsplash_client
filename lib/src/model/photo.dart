@@ -56,6 +56,7 @@ enum PhotoColor {
 /// See: [Unsplash docs](https://unsplash.com/documentation#photos)
 class Photo extends ModelBase {
   const Photo({
+    Map<String, dynamic>? source,
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -74,7 +75,7 @@ class Photo extends ModelBase {
     required this.currentUserCollections,
     required this.links,
     required this.tags,
-  });
+  }) : super(source: source);
 
   final String id;
   final DateTime createdAt;
@@ -124,6 +125,7 @@ class Photo extends ModelBase {
 
   factory Photo.fromJson(Map<String, dynamic> json) {
     return Photo(
+        source: json,
         id: json['id'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
         updatedAt: DateTime.parse(json['updated_at'] as String),
@@ -159,8 +161,9 @@ class Photo extends ModelBase {
 /// Tag for a [Photo].
 class Tag extends ModelBase {
   const Tag({
+    Map<String, dynamic>? source,
     required this.title,
-  });
+  }) : super(source: source);
 
   final String title;
 
@@ -171,9 +174,10 @@ class Tag extends ModelBase {
     };
   }
 
-  factory Tag.fromJson(Map<String, dynamic> map) {
+  factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
-      title: map['title'] as String,
+      source: json,
+      title: json['title'] as String,
     );
   }
 }
@@ -181,11 +185,12 @@ class Tag extends ModelBase {
 /// Links for a [Photo].
 class PhotoLinks extends ModelBase {
   const PhotoLinks({
+    Map<String, dynamic>? source,
     required this.self,
     required this.html,
     required this.download,
     required this.downloadLocation,
-  });
+  }) : super(source: source);
 
   final Uri self;
   final Uri html;
@@ -202,12 +207,13 @@ class PhotoLinks extends ModelBase {
     };
   }
 
-  factory PhotoLinks.fromJson(Map<String, dynamic> map) {
+  factory PhotoLinks.fromJson(Map<String, dynamic> json) {
     return PhotoLinks(
-      self: (map['self'] as String).let(Uri.parse),
-      html: (map['html'] as String).let(Uri.parse),
-      download: (map['download'] as String).let(Uri.parse),
-      downloadLocation: (map['download_location'] as String).let(Uri.parse),
+      source: json,
+      self: (json['self'] as String).let(Uri.parse),
+      html: (json['html'] as String).let(Uri.parse),
+      download: (json['download'] as String).let(Uri.parse),
+      downloadLocation: (json['download_location'] as String).let(Uri.parse),
     );
   }
 }
@@ -215,13 +221,14 @@ class PhotoLinks extends ModelBase {
 /// Exif metadata for a [Photo].
 class Exif extends ModelBase {
   const Exif({
+    Map<String, dynamic>? source,
     required this.make,
     required this.model,
     required this.exposureTime,
     required this.aperture,
     required this.focalLength,
     required this.iso,
-  });
+  }) : super(source: source);
 
   final String? make;
   final String? model;
@@ -244,6 +251,7 @@ class Exif extends ModelBase {
 
   factory Exif.fromJson(Map<String, dynamic> json) {
     return Exif(
+      source: json,
       make: json['make'] as String?,
       model: json['model'] as String?,
       exposureTime: json['exposure_time'] as String?,
@@ -257,12 +265,13 @@ class Exif extends ModelBase {
 /// Photo urls for a [Photo].
 class PhotoUrls extends ModelBase {
   const PhotoUrls({
+    Map<String, dynamic>? source,
     required this.raw,
     required this.full,
     required this.regular,
     required this.small,
     required this.thumb,
-  });
+  }) : super(source: source);
 
   final Uri raw;
   final Uri full;
@@ -283,6 +292,7 @@ class PhotoUrls extends ModelBase {
 
   factory PhotoUrls.fromJson(Map<String, dynamic> json) {
     return PhotoUrls(
+      source: json,
       raw: (json['raw'] as String).let(Uri.parse),
       full: (json['full'] as String).let(Uri.parse),
       regular: (json['regular'] as String).let(Uri.parse),
@@ -295,11 +305,12 @@ class PhotoUrls extends ModelBase {
 /// Statistics for a [Photo].
 class PhotoStatistics extends ModelBase {
   const PhotoStatistics({
+    Map<String, dynamic>? source,
     required this.id,
     required this.downloads,
     required this.views,
     required this.likes,
-  });
+  }) : super(source: source);
 
   final String id;
   final Statistic downloads;
@@ -318,6 +329,7 @@ class PhotoStatistics extends ModelBase {
 
   factory PhotoStatistics.fromJson(Map<String, dynamic> json) {
     return PhotoStatistics(
+      source: json,
       id: json['id'] as String,
       downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
       views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
@@ -329,8 +341,9 @@ class PhotoStatistics extends ModelBase {
 /// Response to request to track photo download.
 class TrackPhotoDownload extends ModelBase {
   const TrackPhotoDownload({
+    Map<String, dynamic>? source,
     required this.url,
-  });
+  }) : super(source: source);
 
   final Uri url;
 
@@ -343,6 +356,7 @@ class TrackPhotoDownload extends ModelBase {
 
   factory TrackPhotoDownload.fromJson(Map<String, dynamic> json) {
     return TrackPhotoDownload(
+      source: json,
       url: Uri.parse(json['url'] as String),
     );
   }

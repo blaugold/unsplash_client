@@ -5,10 +5,11 @@ import 'model_base.dart';
 /// Results returned from a search request.
 class SearchResults<T extends ModelBase> extends ModelBase {
   const SearchResults({
+    Map<String, dynamic>? source,
     required this.total,
     required this.totalPages,
     required this.results,
-  });
+  }) : super(source: source);
 
   final int total;
   final int totalPages;
@@ -28,6 +29,7 @@ class SearchResults<T extends ModelBase> extends ModelBase {
     T Function(Map<String, dynamic>) mapResult,
   ) {
     return SearchResults(
+      source: json,
       total: json['total'] as int,
       totalPages: json['total_pages'] as int,
       results: (json['results'] as List<dynamic>)

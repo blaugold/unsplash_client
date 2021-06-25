@@ -9,6 +9,7 @@ import 'stats.dart';
 /// See: [Unsplash docs](https://unsplash.com/documentation#users)
 class User extends ModelBase {
   const User({
+    Map<String, dynamic>? source,
     required this.id,
     required this.updatedAt,
     required this.username,
@@ -32,7 +33,7 @@ class User extends ModelBase {
     required this.profileImage,
     required this.badge,
     required this.links,
-  });
+  }) : super(source: source);
 
   final String id;
   final DateTime updatedAt;
@@ -89,6 +90,7 @@ class User extends ModelBase {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
+      source: json,
       id: json['id'] as String,
       updatedAt: DateTime.parse(json['updated_at'] as String),
       username: json['username'] as String,
@@ -122,10 +124,11 @@ class User extends ModelBase {
 /// The profile image of a [User].
 class ProfileImage extends ModelBase {
   const ProfileImage({
+    Map<String, dynamic>? source,
     required this.small,
     required this.medium,
     required this.large,
-  });
+  }) : super(source: source);
 
   final Uri small;
   final Uri medium;
@@ -142,6 +145,7 @@ class ProfileImage extends ModelBase {
 
   factory ProfileImage.fromJson(Map<String, dynamic> json) {
     return ProfileImage(
+      source: json,
       small: (json['small'] as String).let(Uri.parse),
       medium: (json['medium'] as String).let(Uri.parse),
       large: (json['large'] as String).let(Uri.parse),
@@ -152,11 +156,12 @@ class ProfileImage extends ModelBase {
 /// A badge of a [User].
 class UserBadge extends ModelBase {
   const UserBadge({
+    Map<String, dynamic>? source,
     required this.title,
     required this.primary,
     required this.slug,
     required this.link,
-  });
+  }) : super(source: source);
 
   final String title;
   final bool primary;
@@ -175,6 +180,7 @@ class UserBadge extends ModelBase {
 
   factory UserBadge.fromJson(Map<String, dynamic> json) {
     return UserBadge(
+      source: json,
       title: json['title'] as String,
       primary: json['primary'] as bool,
       slug: json['slug'] as String,
@@ -186,6 +192,7 @@ class UserBadge extends ModelBase {
 /// Links for a [User].
 class UserLinks extends ModelBase {
   const UserLinks({
+    Map<String, dynamic>? source,
     required this.self,
     required this.html,
     required this.photos,
@@ -193,7 +200,7 @@ class UserLinks extends ModelBase {
     required this.portfolio,
     required this.followers,
     required this.following,
-  });
+  }) : super(source: source);
 
   final Uri self;
   final Uri html;
@@ -218,6 +225,7 @@ class UserLinks extends ModelBase {
 
   factory UserLinks.fromJson(Map<String, dynamic> json) {
     return UserLinks(
+      source: json,
       self: (json['self'] as String).let(Uri.parse),
       html: (json['html'] as String).let(Uri.parse),
       photos: (json['photos'] as String).let(Uri.parse),
@@ -232,10 +240,11 @@ class UserLinks extends ModelBase {
 /// Statistics for a [User].
 class UserStatistics extends ModelBase {
   const UserStatistics({
+    Map<String, dynamic>? source,
     required this.username,
     required this.downloads,
     required this.views,
-  });
+  }) : super(source: source);
 
   final String username;
 
@@ -254,6 +263,7 @@ class UserStatistics extends ModelBase {
 
   factory UserStatistics.fromJson(Map<String, dynamic> json) {
     return UserStatistics(
+      source: json,
       username: json['id'] as String,
       downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
       views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
@@ -264,8 +274,9 @@ class UserStatistics extends ModelBase {
 /// Response to request get a [User]s portfolio link.
 class UserPortfolioLink extends ModelBase {
   const UserPortfolioLink({
+    Map<String, dynamic>? source,
     required this.url,
-  });
+  }) : super(source: source);
 
   final Uri url;
 
@@ -278,6 +289,7 @@ class UserPortfolioLink extends ModelBase {
 
   factory UserPortfolioLink.fromJson(Map<String, dynamic> json) {
     return UserPortfolioLink(
+      source: json,
       url: Uri.parse(json['url'] as String),
     );
   }
