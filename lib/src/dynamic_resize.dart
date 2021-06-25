@@ -36,20 +36,36 @@ enum ResizeFitMode {
   scale,
 }
 
+/// Crop mode controls how the image is aligned when fit=crop is set.
+///
+/// The `width` and `height` parameters should also be set, so that the crop
+/// behavior is defined within specific image dimensions.
+///
+/// See: [Imgix docs](https://docs.imgix.com/apis/rendering/size/crop)
+enum CropMode {
+  top,
+  bottom,
+  left,
+  right,
+  faces,
+  focalpoint,
+  edges,
+  entropy,
+}
+
 /// Returns a new [Uri], Based on [photoUrl], under which a dynamically
 /// resized version of the original photo can be accessed.
 ///
 /// {@macro unsplash.client.photo.resize}
-///
-// TODO: auto=format: for automatically choosing the optimal image format
-// depending on user browser
 Uri resizePhotoUrl(
   Uri photoUrl, {
   int? quality,
   int? width,
   int? height,
+  CropMode? crop,
   int? devicePixelRatio,
   ImageFormat? format,
+  bool? autoFormat,
   ResizeFitMode? fit,
   Map<String, String>? imgixParams,
 }) {
@@ -64,9 +80,11 @@ Uri resizePhotoUrl(
     'q': quality?.toString(),
     'w': width?.toString(),
     'h': height?.toString(),
+    'crop': crop?.let(enumName),
     'dpi': devicePixelRatio?.toString(),
-    'fit': fit?.let(enumName),
     'fm': format?.let(enumName),
+    if (autoFormat == true) 'auto': 'format',
+    'fit': fit?.let(enumName),
   };
 
   if (imgixParams != null) {
@@ -96,11 +114,14 @@ extension DynamicResizeUrl on Uri {
   /// The officially supported parameters are:
   ///
   /// - [width], [height] : for adjusting the width and height of a photo
+  /// - [crop] : for applying cropping to the photo
   /// - [format] : for converting image format
+  /// - [autoFormat] : for automatically choosing the optimal image format
+  ///   depending on user browser
   /// - [quality] : for changing the compression quality when using lossy file
-  /// formats
+  ///   formats
   /// - [fit] : for changing the fit of the image within the specified
-  /// dimensions
+  ///   dimensions
   /// - [devicePixelRatio] : for adjusting the device pixel ratio of the image
   ///
   /// Under the hood unsplash uses [imgix](https://www.imgix.com/). The
@@ -114,8 +135,10 @@ extension DynamicResizeUrl on Uri {
     int? quality,
     int? width,
     int? height,
+    CropMode? crop,
     int? devicePixelRatio,
     ImageFormat? format,
+    bool? autoFormat,
     ResizeFitMode? fit,
     Map<String, String>? imgixParams,
   }) =>
@@ -124,9 +147,11 @@ extension DynamicResizeUrl on Uri {
         quality: quality,
         width: width,
         height: height,
+        crop: crop,
         devicePixelRatio: devicePixelRatio,
         format: format,
         fit: fit,
+        autoFormat: autoFormat,
         imgixParams: imgixParams,
       );
 }
