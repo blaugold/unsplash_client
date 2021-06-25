@@ -11,9 +11,10 @@ enum StatisticsResolution {
 /// A statistical metric.
 class Statistic extends ModelBase {
   const Statistic({
+    Map<String, dynamic>? source,
     required this.total,
     required this.historical,
-  });
+  }) : super(source: source);
 
   final int total;
   final HistoricalData historical;
@@ -28,6 +29,7 @@ class Statistic extends ModelBase {
 
   factory Statistic.fromMap(Map<String, dynamic> json) {
     return Statistic(
+      source: json,
       total: json['total'] as int,
       historical:
           HistoricalData.fromJson(json['historical'] as Map<String, dynamic>),
@@ -38,12 +40,13 @@ class Statistic extends ModelBase {
 /// Historical data for a statistic.
 class HistoricalData extends ModelBase {
   const HistoricalData({
+    Map<String, dynamic>? source,
     required this.change,
     required this.average,
     required this.resolution,
     required this.quantity,
     required this.values,
-  });
+  }) : super(source: source);
 
   final int change;
   final int? average;
@@ -64,6 +67,7 @@ class HistoricalData extends ModelBase {
 
   factory HistoricalData.fromJson(Map<String, dynamic> json) {
     return HistoricalData(
+      source: json,
       change: json['change'] as int,
       average: json['average'] as int?,
       resolution: json['resolution'] as String,
@@ -79,9 +83,10 @@ class HistoricalData extends ModelBase {
 /// Historical data point in [HistoricalData].
 class HistoricalValue extends ModelBase {
   const HistoricalValue({
+    Map<String, dynamic>? source,
     required this.date,
     required this.value,
-  });
+  }) : super(source: source);
 
   final DateTime date;
   final num value;
@@ -96,6 +101,7 @@ class HistoricalValue extends ModelBase {
 
   factory HistoricalValue.fromJson(Map<String, dynamic> json) {
     return HistoricalValue(
+      source: json,
       date: DateTime.parse(json['date'] as String),
       value: json['value'] as num,
     );
@@ -107,6 +113,7 @@ class HistoricalValue extends ModelBase {
 /// See: [Unsplash docs](https://unsplash.com/documentation#stats)
 class TotalStats extends ModelBase {
   const TotalStats({
+    Map<String, dynamic>? source,
     required this.photos,
     required this.downloads,
     required this.views,
@@ -118,7 +125,7 @@ class TotalStats extends ModelBase {
     required this.developers,
     required this.applications,
     required this.requests,
-  });
+  }) : super(source: source);
 
   final int photos;
   final int downloads;
@@ -151,6 +158,7 @@ class TotalStats extends ModelBase {
 
   factory TotalStats.fromJson(Map<String, dynamic> json) {
     return TotalStats(
+      source: json,
       photos: json['photos'] as int,
       downloads: json['downloads'] as int,
       views: json['views'] as int,
@@ -171,6 +179,7 @@ class TotalStats extends ModelBase {
 /// See: [Unsplash docs](https://unsplash.com/documentation#stats)
 class MonthStats extends ModelBase {
   const MonthStats({
+    Map<String, dynamic>? source,
     required this.downloads,
     required this.views,
     required this.likes,
@@ -180,7 +189,7 @@ class MonthStats extends ModelBase {
     required this.newDevelopers,
     required this.newApplications,
     required this.newRequests,
-  });
+  }) : super(source: source);
 
   final int downloads;
   final int views;
@@ -209,6 +218,7 @@ class MonthStats extends ModelBase {
 
   factory MonthStats.fromJson(Map<String, dynamic> json) {
     return MonthStats(
+      source: json,
       downloads: json['downloads'] as int,
       views: json['views'] as int,
       likes: json['likes'] as int?,

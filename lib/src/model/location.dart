@@ -6,11 +6,12 @@ import 'model_base.dart';
 /// A geographical location.
 class GeoLocation extends ModelBase {
   const GeoLocation({
+    Map<String, dynamic>? source,
     required this.name,
     required this.city,
     required this.country,
     required this.position,
-  });
+  }) : super(source: source);
 
   final String? name;
   final String? city;
@@ -29,6 +30,7 @@ class GeoLocation extends ModelBase {
 
   factory GeoLocation.fromJson(Map<String, dynamic> json) {
     return GeoLocation(
+      source: json,
       name: json['name'] as String?,
       city: json['city'] as String?,
       country: json['country'] as String?,
@@ -41,9 +43,10 @@ class GeoLocation extends ModelBase {
 /// A precise geographical position on earth, in [latitude] and [longitude].
 class GeoPosition extends ModelBase {
   const GeoPosition({
+    Map<String, dynamic>? source,
     required this.latitude,
     required this.longitude,
-  });
+  }) : super(source: source);
 
   final double? latitude;
   final double? longitude;
@@ -58,6 +61,7 @@ class GeoPosition extends ModelBase {
 
   factory GeoPosition.fromJson(Map<String, dynamic> json) {
     return GeoPosition(
+      source: json,
       latitude: json['latitude'] as double?,
       longitude: json['longitude'] as double?,
     );

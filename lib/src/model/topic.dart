@@ -9,10 +9,13 @@ import 'user.dart';
 enum TopicOrder {
   /// Sort by features [Topic]s.
   featured,
+
   /// Sort from new to old.
   latest,
+
   /// Sort old new to new.
   oldest,
+
   /// Sort by position.
   position,
 }
@@ -22,6 +25,7 @@ enum TopicOrder {
 /// See: [Unsplash docs](https://unsplash.com/documentation#topics)
 class Topic extends ModelBase {
   Topic({
+    Map<String, dynamic>? source,
     required this.id,
     required this.slug,
     required this.title,
@@ -37,7 +41,7 @@ class Topic extends ModelBase {
     required this.owners,
     required this.topContributors,
     required this.coverPhoto,
-  });
+  }) : super(source: source);
 
   final String id;
   final String slug;
@@ -78,6 +82,7 @@ class Topic extends ModelBase {
 
   static Topic fromJson(Map<String, dynamic> json) {
     return Topic(
+      source: json,
       id: json['id'] as String,
       slug: json['slug'] as String,
       title: json['title'] as String,
@@ -104,10 +109,11 @@ class Topic extends ModelBase {
 /// Links for a [Photo].
 class TopicLinks extends ModelBase {
   const TopicLinks({
+    Map<String, dynamic>? source,
     required this.self,
     required this.html,
     required this.photos,
-  });
+  }) : super(source: source);
 
   final Uri self;
   final Uri html;
@@ -122,11 +128,12 @@ class TopicLinks extends ModelBase {
     };
   }
 
-  factory TopicLinks.fromJson(Map<String, dynamic> map) {
+  factory TopicLinks.fromJson(Map<String, dynamic> json) {
     return TopicLinks(
-      self: (map['self'] as String).let(Uri.parse),
-      html: (map['html'] as String).let(Uri.parse),
-      photos: (map['photos'] as String).let(Uri.parse),
+      source: json,
+      self: (json['self'] as String).let(Uri.parse),
+      html: (json['html'] as String).let(Uri.parse),
+      photos: (json['photos'] as String).let(Uri.parse),
     );
   }
 }

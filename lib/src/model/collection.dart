@@ -23,6 +23,7 @@ class Collection extends ModelBase {
   final CollectionLinks links;
 
   const Collection({
+    Map<String, dynamic>? source,
     required this.id,
     required this.title,
     required this.description,
@@ -35,7 +36,7 @@ class Collection extends ModelBase {
     required this.private,
     required this.shareKey,
     required this.links,
-  });
+  }) : super(source: source);
 
   @override
   Map<String, dynamic> toJson() {
@@ -57,6 +58,7 @@ class Collection extends ModelBase {
 
   factory Collection.fromJson(Map<String, dynamic> json) {
     return Collection(
+      source: json,
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String?,
@@ -84,11 +86,12 @@ class CollectionLinks extends ModelBase {
   final Uri related;
 
   const CollectionLinks({
+    Map<String, dynamic>? source,
     required this.self,
     required this.html,
     required this.photos,
     required this.related,
-  });
+  }) : super(source: source);
 
   @override
   Map<String, dynamic> toJson() {
@@ -102,6 +105,7 @@ class CollectionLinks extends ModelBase {
 
   factory CollectionLinks.fromJson(Map<String, dynamic> json) {
     return CollectionLinks(
+      source: json,
       self: (json['self'] as String).let(Uri.parse),
       html: (json['html'] as String).let(Uri.parse),
       photos: (json['photos'] as String).let(Uri.parse),
