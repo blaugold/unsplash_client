@@ -1,3 +1,10 @@
+## 2.1.0
+
+- feat: log through `logging` package
+- feat: add `crop` and `autoFormat` options for image resizing
+- feat: add `source` property to models
+- docs: add docs for `TopicOrder`
+
 ## 2.0.0
 
 - feat: add `Topic` resource
