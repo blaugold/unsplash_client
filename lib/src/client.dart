@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
 import 'app_credentials.dart';
@@ -21,13 +22,20 @@ class ClientSettings {
   const ClientSettings({
     required this.credentials,
     this.debug = false,
+    this.loggerName = 'unsplash_client',
   });
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
   final AppCredentials credentials;
 
   /// Whether to log debug information.
+  @Deprecated(
+    'Set [UnsplashClient.logger.level] to Level.FINE for debug logging',
+  )
   final bool debug;
+
+  /// The name of the [Logger] used by the [UnsplashClient].
+  final String loggerName;
 
   /// The maximum number of items a list request can return.
   ///
@@ -66,7 +74,11 @@ class UnsplashClient {
   UnsplashClient({
     required this.settings,
     http.Client? httpClient,
-  }) : _http = httpClient ?? http.Client();
+  })  : _http = httpClient ?? http.Client(),
+        logger = Logger(settings.loggerName);
+
+  /// The [Logger] used by this instance.
+  final Logger logger;
 
   /// The base url of the unsplash api.
   final Uri baseUrl = Uri.parse('https://api.unsplash.com/');
@@ -166,14 +178,24 @@ class Request<T> {
     dynamic json;
     T? data;
 
+    // ignore: deprecated_member_use_from_same_package
     if (client.settings.debug) {
       print('Sending request:\n${_printRequest(httpRequest)}\n');
     }
 
+    if (client.logger.isLoggable(Level.FINE)) {
+      client.logger.fine('Sending request:\n${_printRequest(httpRequest)}');
+    }
+
     httpResponse = await client._http.send(httpRequest);
 
+    // ignore: deprecated_member_use_from_same_package
     if (client.settings.debug) {
       print('Received response:\n${_printResponse(httpResponse)}\n');
+    }
+
+    if (client.logger.isLoggable(Level.FINE)) {
+      client.logger.fine('Received response:\n${_printResponse(httpResponse)}');
     }
 
     body = await httpResponse.stream.bytesToString();
