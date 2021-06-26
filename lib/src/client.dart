@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
@@ -413,4 +414,154 @@ String _printHeaders(Map<String, String> headers) {
   return headers.entries
       .map((header) => '${header.key}: ${header.value}')
       .join('\n');
+}
+
+/// An exception which is thrown when the Unsplash API returns an error
+/// response.
+class UnsplashApiException implements Exception {
+  /// Creates an exception which is thrown when the Unsplash API returns an
+  /// error response.
+  UnsplashApiException({
+    this.message,
+    required this.response,
+    this.body,
+  });
+
+  /// An optional message which describes the context of the failed request.
+  final String? message;
+
+  /// The status code of the [response].
+  int get statusCode => response.statusCode;
+
+  /// The response received from the API.
+  final http.BaseResponse response;
+
+  /// The body of the response as a [String], if available.
+  final String? body;
+
+  @override
+  String toString() {
+    return [
+      'UnsplashApiException: $statusCode ${response.reasonPhrase}',
+      if (message != null) message,
+      if (body != null) body,
+    ].join('\n');
+  }
+}
+
+/// An event which is emitted when a [Download] makes progress.
+///
+/// The last event emitted by a [Download] stream contains the [result].
+@immutable
+class DownloadEvent<T> {
+  /// Creates an event which is emitted when a [Download] makes progress.
+  DownloadEvent({
+    required this.totalBytes,
+    required this.downloadedBytes,
+    this.result,
+  });
+
+  /// The total number of bytes of the [Download].
+  final int totalBytes;
+
+  /// The number of bytes downloaded up to now.
+  final int downloadedBytes;
+
+  /// The progress of the [Download] from `0.0` to `1.0`.
+  double get progress => downloadedBytes / totalBytes;
+
+  /// Whether the [Download] has finished.
+  bool get finished => result != null;
+
+  /// The result of the [Download] if it is [finished].
+  final T? result;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      runtimeType == other.runtimeType &&
+          other is DownloadEvent &&
+          totalBytes == other.totalBytes &&
+          downloadedBytes == other.downloadedBytes &&
+          result == other.result;
+
+  @override
+  int get hashCode =>
+      totalBytes.hashCode ^ downloadedBytes.hashCode ^ result.hashCode;
+
+  @override
+  String toString() {
+    return 'DownloadEvent<$T>{totalBytes: $totalBytes, '
+        'downloadedBytes: $downloadedBytes, progress: $progress, '
+        'finished: $finished}';
+  }
+}
+
+/// An object through which a download can be initiated.
+abstract class Download<T> {
+  /// Starts the download and returns a [Stream] which emits progress events
+  /// until the download is completed.
+  ///
+  /// Each time this method is called a new download is started.
+  ///
+  /// If the download fails because of an unexpected response from the API,
+  /// the stream emits an [UnsplashApiException].
+  Stream<DownloadEvent<T>> start();
+}
+
+class DownloadImpl<T> extends Download<T> {
+  DownloadImpl({
+    required this.client,
+    required this.url,
+    required this.downloadStarted,
+    required this.resultConverter,
+  });
+
+  final UnsplashClient client;
+  final Uri url;
+  final void Function()? downloadStarted;
+  final T Function(Uint8List) resultConverter;
+
+  @override
+  Stream<DownloadEvent<T>> start() {
+    downloadStarted?.call();
+
+    var request = _prepareRequest();
+
+    return client._http.send(request).asStream().asyncExpand((response) {
+      if (response.statusCode != 200) {
+        return response.stream.bytesToString().asStream().map((body) {
+          throw UnsplashApiException(
+            message: 'Download failed (expected status 200)',
+            response: response,
+            body: body,
+          );
+        });
+      }
+
+      final totalBytes = response.contentLength!;
+      var downloadedBytes = 0;
+      final bytes = BytesBuilder(copy: false);
+
+      return response.stream.map((event) {
+        downloadedBytes += event.length;
+        bytes.add(event);
+
+        T? result;
+        if (totalBytes == downloadedBytes) {
+          result = resultConverter(bytes.toBytes());
+        }
+
+        return DownloadEvent(
+          totalBytes: totalBytes,
+          downloadedBytes: downloadedBytes,
+          result: result,
+        );
+      });
+    });
+  }
+
+  http.Request _prepareRequest() {
+    return http.Request('GET', url);
+  }
 }

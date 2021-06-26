@@ -262,6 +262,15 @@ class Exif extends ModelBase {
   }
 }
 
+/// One of the variants of a [Photo] in [PhotoUrls].
+enum PhotoVariant {
+  raw,
+  full,
+  regular,
+  small,
+  thumb,
+}
+
 /// Photo urls for a [Photo].
 class PhotoUrls extends ModelBase {
   const PhotoUrls({
@@ -278,6 +287,21 @@ class PhotoUrls extends ModelBase {
   final Uri regular;
   final Uri small;
   final Uri thumb;
+
+  Uri operator [](PhotoVariant variant) {
+    switch (variant) {
+      case PhotoVariant.raw:
+        return raw;
+      case PhotoVariant.full:
+        return full;
+      case PhotoVariant.regular:
+        return regular;
+      case PhotoVariant.small:
+        return small;
+      case PhotoVariant.thumb:
+        return thumb;
+    }
+  }
 
   @override
   Map<String, dynamic> toJson() {

@@ -27,4 +27,9 @@ void main() {
   test('download', () async {
     await client.photos.download(testPhotoId).goAndGet();
   });
+
+  test('downloadImage', () async {
+    final photo = await client.photos.get(testPhotoId).goAndGet();
+    await client.photos.downloadImage(photo).start().last;
+  });
 }

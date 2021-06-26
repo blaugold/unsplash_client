@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:http/http.dart' as http;
 
 import 'client.dart';
+import 'dynamic_resize.dart';
 import 'model/model.dart';
 import 'utils.dart';
 
@@ -155,6 +158,67 @@ class Photos {
       isPublicAction: true,
       bodyDeserializer: (dynamic json) =>
           TrackPhotoDownload.fromJson(json as Map<String, dynamic>),
+    );
+  }
+
+  /// Downloads the image file for [photo].
+  ///
+  /// Per default the download with tracked through the [download] endpoint.
+  /// [trackDownload] can be set to `false` to disable tracking, but should not
+  /// be done without good reason.
+  ///
+  /// [variant] also you to chose between one of the predefined [PhotoVariant]s.
+  /// Additional resizing options will be added to the predefined options of
+  /// the variant. Existing options will be overridden. [PhotoVariant.raw] has
+  /// no predefined options and is the default.
+  ///
+  /// ## Resizing
+  ///
+  /// {@macro unsplash.client.photo.resize}
+  ///
+  /// When no options are given the raw image is downloaded.
+  Download<Uint8List> downloadImage(
+    Photo photo, {
+    bool trackDownload = true,
+    PhotoVariant variant = PhotoVariant.raw,
+    int? quality,
+    int? width,
+    int? height,
+    CropMode? crop,
+    int? devicePixelRatio,
+    ImageFormat? format,
+    bool? autoFormat,
+    ResizeFitMode? fit,
+    Map<String, String>? imgixParams,
+  }) {
+    final imageUrl = photo.urls[variant].resizePhoto(
+      quality: quality,
+      width: width,
+      height: height,
+      crop: crop,
+      devicePixelRatio: devicePixelRatio,
+      format: format,
+      autoFormat: autoFormat,
+      fit: fit,
+      imgixParams: imgixParams,
+    );
+
+    void _trackDownload() {
+      download(photo.id).go().then((response) {
+        if (!response.isOk) {
+          client.logger.warning(
+            'Failed to track download: ${response.statusCode}\n'
+            '${response.body}',
+          );
+        }
+      });
+    }
+
+    return DownloadImpl(
+      client: client,
+      url: imageUrl,
+      downloadStarted: trackDownload ? _trackDownload : null,
+      resultConverter: (bytes) => bytes,
     );
   }
 }

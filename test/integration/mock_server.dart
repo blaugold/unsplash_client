@@ -93,6 +93,7 @@ class MockServer {
       ..setTrustedCertificatesBytes(_mockServerCertificate.codeUnits);
 
     return HttpClient(context: securityContext)
+      ..badCertificateCallback =( (_, __, ___) => true)
       ..findProxy = (_) => 'PROXY $host:$port';
   }
 
