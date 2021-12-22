@@ -1,3 +1,7 @@
+## 2.1.0+1
+
+- docs: rewrite README
+
 ## 2.1.0
 
 - feat: log through `logging` package

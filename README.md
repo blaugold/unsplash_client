@@ -1,22 +1,27 @@
-[![](https://badgen.net/pub/v/unsplash_client)](https://pub.dev/packages/unsplash_client)
-[![](https://badgen.net/pub/license/unsplash_client)](./LICENSE)
-![](https://badgen.net/pub/dart-platform/unsplash_client)
-![](https://badgen.net/pub/flutter-platform/unsplash_client)
-[![CI](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml/badge.svg)](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml)
+[![pub.dev package page](https://badgen.net/pub/v/unsplash_client)](https://pub.dev/packages/unsplash_client)
+[![GitHub Actions CI](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml/badge.svg)](https://github.com/blaugold/unsplash_client/actions/workflows/ci.yml)
+[![GitHub Stars](https://badgen.net/github/stars/blaugold/unsplash_client)](https://github.com/blaugold/unsplash_client/stargazers)
 
-# unsplash_client
+[Unsplash][unsplash] provides free high-resolution photos. This is a client for
+their [REST API][unsplash api].
 
-An unofficial, platform independent, client for the [Unsplash](https://unsplash.com) API.
-Unsplash provides royalty-free images.
+# Limitations
 
-The client is platform independent, since it uses [http](https://pub.dev/packages/http) to make
-requests.
+Endpoints that act on behalf of a user are not implemented, yet.If that is
+something you need, please comment on
+[this issue](https://github.com/blaugold/unsplash_client/issues/5).
 
-## Setup
+# Requirements
 
-1. You need to [register](https://unsplash.com/developers) as a developer and create an unsplash app to access the API.
+You need to [register as a developer][unsplash developer portal] and create an
+Unsplash app to access the API.
 
-1. Obtain the credentials for your app from the developer portal and create an `UnsplashClient`:
+# Getting started
+
+## Create an `UnsplashClient`
+
+Use the credentials for your app, obtained from the developer portal, to create
+an `UnsplashClient`:
 
 ```dart
 final client = UnsplashClient(
@@ -27,11 +32,10 @@ final client = UnsplashClient(
 );
 ```
 
-> :warning: When you are done using a client instance, make sure to call it's `close` method.
+> :warning: When you are done using a client instance, make sure to call it's
+> `close` method.
 
-## Usage
-
-### Get a random photo
+## Get a random photo
 
 ```dart
 // Call `goAndGet` to execute the [Request] returned from `random`
@@ -42,23 +46,37 @@ final photos = await client.photos.random(count: 1).goAndGet();
 final photo = photos.first;
 ```
 
-### Photo variants
+## Photo variants
 
-A `Photo` comes with a set of urls for variants of the photo of different sizes, such as `regular` and `thumb`:
+A `Photo` comes with a set of urls for variants of the photo of different sizes,
+such as `regular` and `thumb`:
 
 ```dart
 final thumb = photo.urls.thumb;
 ```
 
-If the provided variants are not a good fit for your use, you can generate urls where you specify size, quality,
-fit and other parameters.
+If the provided variants are not a good fit for your use, you can generate urls
+where you specify size, quality, fit and other parameters.
 
-Call the extension method `Uri.resizePhoto` on `photo.urls.raw` to generate an `Uri` for a custom variant:
+Call the extension method `Uri.resizePhoto` on `photo.urls.raw` to generate an
+`Uri` for a custom variant:
 
 ```dart
 final custom = photo.urls.raw.resizePhoto(width: 400, height: 400);
 ```
 
-## Example
+# Example
 
-See [examples tab](https://pub.dev/packages/unsplash_client/example) for a runnable example.
+The [example](https://pub.dev/packages/unsplash_client/example) is a simple CLI
+app that fetches a few random photos.
+
+---
+
+**Gabriel Terwesten** &bullet; **GitHub**
+**[@blaugold](https://github.com/blaugold)** &bullet; **Twitter**
+**[@GTerwesten](https://twitter.com/GTerwesten)** &bullet; **Medium**
+**[@gabriel.terwesten](https://medium.com/@gabriel.terwesten)**
+
+[unsplash api]: https://unsplash.com/documentation
+[unsplash]: https://unsplash.com/
+[unsplash developer portal]: https://unsplash.com/developers
