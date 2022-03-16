@@ -7,7 +7,7 @@ their [REST API][unsplash api].
 
 ---
 
-If you're looking for a <u>database solution</u>, check out
+If you're looking for a **database solution**, check out
 [`cbl`](https://pub.dev/packages/cbl), another project of mine. It brings
 Couchbase Lite to **standalone Dart** and **Flutter**, with support for:
 

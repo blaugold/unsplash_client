@@ -2,7 +2,7 @@ name: unsplash_client
 description:
   Unsplash provides free high-resolution photos. This is a client for their REST
   API.
-version: 2.1.0+2
+version: 2.1.0+3
 repository: https://github.com/blaugold/unsplash_client
 issue_tracker: https://github.com/blaugold/unsplash_client/issues
 homepage: https://github.com/blaugold/unsplash_client

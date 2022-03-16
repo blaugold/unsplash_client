@@ -1,3 +1,7 @@
+## 2.1.0+3
+
+- docs: fix formatting
+
 ## 2.1.0+2
 
 - docs: add mention of `cbl`
