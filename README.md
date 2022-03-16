@@ -5,6 +5,21 @@
 [Unsplash][unsplash] provides free high-resolution photos. This is a client for
 their [REST API][unsplash api].
 
+---
+
+If you're looking for a <u>database solution</u>, check out
+[`cbl`](https://pub.dev/packages/cbl), another project of mine. It brings
+Couchbase Lite to **standalone Dart** and **Flutter**, with support for:
+
+- **Full-Text Search**,
+- **Expressive Queries**,
+- **Data Sync**,
+- **Change Notifications**
+
+and more.
+
+---
+
 # Limitations
 
 Endpoints that act on behalf of a user are not implemented, yet.If that is

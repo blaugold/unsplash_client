@@ -1,3 +1,7 @@
+## 2.1.0+2
+
+- docs: add mention of `cbl`
+
 ## 2.1.0+1
 
 - docs: rewrite README
