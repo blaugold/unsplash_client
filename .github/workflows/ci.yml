@@ -19,15 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - uses: dart-lang/setup-dart@v0.5
+      - uses: dart-lang/setup-dart@v1
         with:
           sdk: stable
 
       - name: Install dependencies
-        run: pub get
+        run: dart pub get
 
       - name: Run tests
-        run: pub run test
+        run: dart pub run test
 
       - name: Run example
         run: dart example/lib/main.dart
