@@ -189,13 +189,13 @@ class PhotoLinks extends ModelBase {
     required this.self,
     required this.html,
     required this.download,
-    required this.downloadLocation,
+    required this.download_location,
   }) : super(source: source);
 
   final Uri self;
   final Uri html;
   final Uri download;
-  final Uri downloadLocation;
+  final Uri download_location;
 
   @override
   Map<String, dynamic> toJson() {
@@ -203,7 +203,7 @@ class PhotoLinks extends ModelBase {
       'self': self.toString(),
       'html': html.toString(),
       'download': download.toString(),
-      'download_location': downloadLocation.toString(),
+      'download_location': download_location.toString(),
     };
   }
 
@@ -213,7 +213,7 @@ class PhotoLinks extends ModelBase {
       self: (json['self'] as String).let(Uri.parse),
       html: (json['html'] as String).let(Uri.parse),
       download: (json['download'] as String).let(Uri.parse),
-      downloadLocation: (json['download_location'] as String).let(Uri.parse),
+      download_location: (json['download_location'] as String).let(Uri.parse),
     );
   }
 }
