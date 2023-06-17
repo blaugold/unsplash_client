@@ -17,7 +17,7 @@ void main(List<String> args) async {
 
   // Create a client.
   final client = UnsplashClient(
-    settings: ClientSettings(credentials: appCredentials),
+    settings: ClientSettings(credentials: appCredentials, debug: true),
   );
 
   // Fetch 5 random photos by calling `goAndGet` to execute the [Request]

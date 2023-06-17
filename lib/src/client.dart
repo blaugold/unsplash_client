@@ -389,6 +389,7 @@ Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
 }
 
 Map<String, String> _sanitizeHeaders(Map<String, String> headers) {
+  return headers;
   return headers.map((key, value) {
     final isAuthorization = key.toLowerCase() == 'authorization';
     return MapEntry(key, isAuthorization ? 'HIDDEN' : value);
