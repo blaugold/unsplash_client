@@ -1,3 +1,7 @@
+## 2.1.1
+
+- chore: allow 1.0.0 in version constraint for http (#18)
+
 ## 2.1.0+3
 
 - docs: fix formatting
