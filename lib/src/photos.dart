@@ -146,16 +146,12 @@ class Photos {
   /// photo.urls.full instead), it is for tracking purposes only.
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#track-a-photo-download)
-  Request<TrackPhotoDownload> download(String id) {
-    final url = baseUrl.resolve('$id/download');
-
-    return Request(
-      client: client,
-      httpRequest: http.Request('GET', url),
-      isPublicAction: true,
-      bodyDeserializer: (dynamic json) =>
-          TrackPhotoDownload.fromJson(json as Map<String, dynamic>),
+  Request<TrackPhotoDownload> download(String downloadUrl) async {
+    final response = await http.get(
+      Uri.parse("${downloadUrl}&client_id=${client.settings.credentials.accessKey}"),
     );
+
+    return response;
   }
 }
 
