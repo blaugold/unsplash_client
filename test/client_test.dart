@@ -5,7 +5,7 @@ void main() {
   test('executing requests after client has been closed should throw', () async {
     final client = UnsplashClient(
       settings: ClientSettings(
-        credentials: AppCredentials(
+        unsplashCredentials: AppCredentials(
           secretKey: '',
           accessKey: '',
         ),
@@ -20,42 +20,44 @@ void main() {
   });
 
   test('standard client functions work without app credentials as expected', () {
-    final clientWithSettings = UnsplashClient(
+    final clientWithUnsplashCredentials = UnsplashClient(
       settings: const ClientSettings(
-        credentials: AppCredentials(
+        unsplashCredentials: AppCredentials(
           secretKey: '1234',
           accessKey: '5678',
         ),
       ),
     );
 
-    final clientWithoutSettings = UnsplashClient(
-      settings: const ClientSettings(),
+    final clientWithoutUnsplashCredentials = UnsplashClient(
+      settings: const ClientSettings(bearerToken: '1234'),
     );
 
-    expect(clientWithSettings.settings == clientWithSettings.settings, true);
-    expect(clientWithSettings.settings == clientWithoutSettings.settings, false);
-    expect(clientWithoutSettings.settings == clientWithSettings.settings, false);
-    expect(clientWithoutSettings.settings == clientWithoutSettings.settings, true);
+    expect(clientWithUnsplashCredentials.settings == clientWithUnsplashCredentials.settings, true);
+    expect(clientWithUnsplashCredentials.settings == clientWithoutUnsplashCredentials.settings, false);
+    expect(clientWithoutUnsplashCredentials.settings == clientWithUnsplashCredentials.settings, false);
+    expect(clientWithoutUnsplashCredentials.settings == clientWithoutUnsplashCredentials.settings, true);
 
-    var clientWithSettingsHashCode = clientWithSettings.settings.hashCode;
-    expect(clientWithSettingsHashCode == 1043090474, true);
+    var clientWithSettingsHashCode = clientWithUnsplashCredentials.settings.hashCode;
+    expect(clientWithSettingsHashCode == 1043090417, true);
 
-    var clientWithoutSettingsHashCode = clientWithoutSettings.settings.hashCode;
-    expect(clientWithoutSettingsHashCode == 346277, true);
+    var clientWithoutUnsplashCredentialsHashCode = clientWithoutUnsplashCredentials.settings.hashCode;
+    expect(clientWithoutUnsplashCredentialsHashCode == 759431771, true);
 
-    var clientWithSettingsString = clientWithSettings.settings.toString();
+    var clientWithUnsplashCredentialsString = clientWithUnsplashCredentials.settings.toString();
     expect(
-        clientWithSettingsString ==
+        clientWithUnsplashCredentialsString ==
             'ClientSettings{credentials: Credentials{accessKey: 5678, '
                 'secretKey: HIDDEN}, '
+                'bearerToken: null, '
                 'maxPageSize: 30}',
         true);
 
-    var clientWithoutSettingsString = clientWithoutSettings.settings.toString();
+    var clientWithoutUnsplashCredentialsString = clientWithoutUnsplashCredentials.settings.toString();
     expect(
-        clientWithoutSettingsString ==
+        clientWithoutUnsplashCredentialsString ==
             'ClientSettings{credentials: null, '
+                'bearerToken: 1234, '
                 'maxPageSize: 30}',
         true);
   });

@@ -18,16 +18,20 @@ import 'users.dart';
 class ClientSettings {
   /// Creates new [ClientSettings].
   ///
-  /// [credentials] must not be `null` if using no proxy URL.
+  /// [unsplashCredentials] must not be `null` if using no proxy URL.
+  /// [bearerToken] must not be 'null' if using a proxy that requires authentication
   const ClientSettings({
-    this.credentials,
+    this.unsplashCredentials,
+    this.bearerToken,
     this.debug = false,
     this.loggerName = 'unsplash_client',
   });
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
   /// These can be null in case a proxy for authentication is being used
-  final AppCredentials? credentials;
+  final AppCredentials? unsplashCredentials;
+
+  final String? bearerToken;
 
   /// Whether to log debug information.
   @Deprecated(
@@ -48,15 +52,17 @@ class ClientSettings {
       identical(this, other) ||
       other is ClientSettings &&
           runtimeType == other.runtimeType &&
-          credentials == other.credentials &&
+          unsplashCredentials == other.unsplashCredentials &&
+          bearerToken == other.bearerToken &&
           maxPageSize == other.maxPageSize;
 
   @override
-  int get hashCode => credentials.hashCode ^ maxPageSize.hashCode;
+  int get hashCode => unsplashCredentials.hashCode ^ bearerToken.hashCode ^ maxPageSize.hashCode;
 
   @override
   String toString() {
-    return 'ClientSettings{credentials: $credentials, '
+    return 'ClientSettings{credentials: $unsplashCredentials, '
+        'bearerToken: $bearerToken, '
         'maxPageSize: $maxPageSize}';
   }
 }
@@ -260,8 +266,10 @@ class Request<T> {
     // Auth
     // TODO implement oauth
     assert(isPublicAction);
-    if (client.settings.credentials != null) {
-      headers.addAll(_publicActionAuthHeader(client.settings.credentials!));
+    if (client.settings.unsplashCredentials != null) {
+      headers.addAll(_publicActionAuthHeader(client.settings.unsplashCredentials!));
+    } else if (client.settings.bearerToken != null) {
+      headers.addAll(_bearerTokenAuthHeader(client.settings.bearerToken!));
     }
 
     return headers;
@@ -380,6 +388,10 @@ extension RequestExtension<T> on Request<T> {
 
 Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
   return {'Authorization': 'Client-ID ${credentials.accessKey}'};
+}
+
+Map<String, String> _bearerTokenAuthHeader(String bearerToken) {
+  return {'Authorization': 'Bearer $bearerToken'};
 }
 
 Map<String, String> _sanitizeHeaders(Map<String, String> headers) {
