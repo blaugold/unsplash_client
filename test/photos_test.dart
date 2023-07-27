@@ -6,7 +6,7 @@ import 'test_utils.dart';
 void main() {
   final client = UnsplashClient(
     settings: ClientSettings(
-      credentials: AppCredentials(
+      unsplashCredentials: AppCredentials(
         secretKey: '',
         accessKey: '',
       ),
