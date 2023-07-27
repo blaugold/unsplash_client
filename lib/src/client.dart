@@ -18,15 +18,20 @@ import 'users.dart';
 class ClientSettings {
   /// Creates new [ClientSettings].
   ///
-  /// [credentials] must not be `null`.
+  /// [unsplashCredentials] must not be `null` if using no proxy URL.
+  /// [bearerToken] must not be 'null' if using a proxy that requires authentication
   const ClientSettings({
-    required this.credentials,
+    this.unsplashCredentials,
+    this.bearerToken,
     this.debug = false,
     this.loggerName = 'unsplash_client',
   });
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
-  final AppCredentials credentials;
+  /// These can be null in case a proxy for authentication is being used
+  final AppCredentials? unsplashCredentials;
+
+  final String? bearerToken;
 
   /// Whether to log debug information.
   @Deprecated(
@@ -47,15 +52,17 @@ class ClientSettings {
       identical(this, other) ||
       other is ClientSettings &&
           runtimeType == other.runtimeType &&
-          credentials == other.credentials &&
+          unsplashCredentials == other.unsplashCredentials &&
+          bearerToken == other.bearerToken &&
           maxPageSize == other.maxPageSize;
 
   @override
-  int get hashCode => credentials.hashCode ^ maxPageSize.hashCode;
+  int get hashCode => unsplashCredentials.hashCode ^ bearerToken.hashCode ^ maxPageSize.hashCode;
 
   @override
   String toString() {
-    return 'ClientSettings{credentials: $credentials, '
+    return 'ClientSettings{credentials: $unsplashCredentials, '
+        'bearerToken: $bearerToken, '
         'maxPageSize: $maxPageSize}';
   }
 }
@@ -71,17 +78,19 @@ class UnsplashClient {
   /// [settings] must not be `null`.
   ///
   /// If no [httpClient] is provided, one is created.
-  UnsplashClient({
-    required this.settings,
-    http.Client? httpClient,
-  })  : _http = httpClient ?? http.Client(),
-        logger = Logger(settings.loggerName);
+  ///
+  /// If no [proxyBaseUrl] is provided the Unsplash standard base URL
+  /// https://api.unsplash.com/ is used
+  UnsplashClient({required this.settings, http.Client? httpClient, Uri? proxyBaseUrl})
+      : _http = httpClient ?? http.Client(),
+        logger = Logger(settings.loggerName),
+        baseUrl = proxyBaseUrl ?? Uri.parse('https://api.unsplash.com/');
 
   /// The [Logger] used by this instance.
   final Logger logger;
 
-  /// The base url of the unsplash api.
-  final Uri baseUrl = Uri.parse('https://api.unsplash.com/');
+  /// The base url of the unsplash api or its proxy.
+  final Uri baseUrl;
 
   /// The [ClientSettings] used by this client.
   final ClientSettings settings;
@@ -206,9 +215,7 @@ class Request<T> {
       // ignore: avoid_catches_without_on_clauses
     }
 
-    if (httpResponse.statusCode < 400 &&
-        json != null &&
-        bodyDeserializer != null) {
+    if (httpResponse.statusCode < 400 && json != null && bodyDeserializer != null) {
       data = bodyDeserializer!(json);
     }
 
@@ -259,7 +266,11 @@ class Request<T> {
     // Auth
     // TODO implement oauth
     assert(isPublicAction);
-    headers.addAll(_publicActionAuthHeader(client.settings.credentials));
+    if (client.settings.unsplashCredentials != null) {
+      headers.addAll(_publicActionAuthHeader(client.settings.unsplashCredentials!));
+    } else if (client.settings.bearerToken != null) {
+      headers.addAll(_bearerTokenAuthHeader(client.settings.bearerToken!));
+    }
 
     return headers;
   }
@@ -277,11 +288,7 @@ class Request<T> {
 
   @override
   int get hashCode =>
-      client.hashCode ^
-      httpRequest.hashCode ^
-      jsonBody.hashCode ^
-      isPublicAction.hashCode ^
-      bodyDeserializer.hashCode;
+      client.hashCode ^ httpRequest.hashCode ^ jsonBody.hashCode ^ isPublicAction.hashCode ^ bodyDeserializer.hashCode;
 
   @override
   String toString() {
@@ -361,12 +368,7 @@ class Response<T> {
 
   @override
   int get hashCode =>
-      request.hashCode ^
-      httpRequest.hashCode ^
-      httpResponse.hashCode ^
-      body.hashCode ^
-      json.hashCode ^
-      data.hashCode;
+      request.hashCode ^ httpRequest.hashCode ^ httpResponse.hashCode ^ body.hashCode ^ json.hashCode ^ data.hashCode;
 
   @override
   String toString() {
@@ -386,6 +388,10 @@ extension RequestExtension<T> on Request<T> {
 
 Map<String, String> _publicActionAuthHeader(AppCredentials credentials) {
   return {'Authorization': 'Client-ID ${credentials.accessKey}'};
+}
+
+Map<String, String> _bearerTokenAuthHeader(String bearerToken) {
+  return {'Authorization': 'Bearer $bearerToken'};
 }
 
 Map<String, String> _sanitizeHeaders(Map<String, String> headers) {
@@ -410,7 +416,5 @@ ${_printHeaders(response.headers)}
 }
 
 String _printHeaders(Map<String, String> headers) {
-  return headers.entries
-      .map((header) => '${header.key}: ${header.value}')
-      .join('\n');
+  return headers.entries.map((header) => '${header.key}: ${header.value}').join('\n');
 }
