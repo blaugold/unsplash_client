@@ -18,7 +18,7 @@ import 'users.dart';
 class ClientSettings {
   /// Creates new [ClientSettings].
   ///
-  /// [credentials] must not be `null`.
+  /// [credentials] must not be `null` if using no proxy URL.
   const ClientSettings({
     this.credentials,
     this.debug = false,
@@ -26,6 +26,7 @@ class ClientSettings {
   });
 
   /// The credentials used by the [UnsplashClient] to authenticate the app.
+  /// These can be null in case a proxy for authentication is being used
   final AppCredentials? credentials;
 
   /// Whether to log debug information.
