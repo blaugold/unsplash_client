@@ -15,8 +15,7 @@ void setupIntegrationTests(String name) {
   }
   _hasSetupIntegrationTests = true;
 
-  _recordedExpectations =
-      File.fromUri(_recordedExpectationsDir.uri.resolve('$name.json'));
+  _recordedExpectations = File.fromUri(_recordedExpectationsDir.uri.resolve('$name.json'));
 
   _setupRecordedExpectationsTestHooks();
   _setupTestClientTestHooks();
@@ -26,11 +25,9 @@ bool get isCI => Platform.environment['CI'] != null;
 
 // === Recorded Expectations ===================================================
 
-bool get _updateRecordedExpectations =>
-    Platform.environment['UPDATE_RECORDED_EXPECTATIONS'] != null;
+bool get _updateRecordedExpectations => Platform.environment['UPDATE_RECORDED_EXPECTATIONS'] != null;
 
-final _recordedExpectationsDir =
-    Directory('test/fixtures/recorded_expectations');
+final _recordedExpectationsDir = Directory('test/fixtures/recorded_expectations');
 late File _recordedExpectations;
 
 late MockServer mockServer;
@@ -49,8 +46,7 @@ void _setupRecordedExpectationsTestHooks() {
         'There are no recorded expectations.',
       );
 
-      final recordedExpectations =
-          decodeExpectations(await _recordedExpectations.readAsString());
+      final recordedExpectations = decodeExpectations(await _recordedExpectations.readAsString());
 
       // If the content of `User-Agent` changes we can still use the recorded
       // expectations, since the header does not change the expected response.
@@ -87,8 +83,7 @@ void _setupRecordedExpectationsTestHooks() {
 
       await _recordedExpectations.parent.create(recursive: true);
       final jsonEncoder = const JsonEncoder.withIndent('  ');
-      await _recordedExpectations
-          .writeAsString(jsonEncoder.convert(recordedExpectations));
+      await _recordedExpectations.writeAsString(jsonEncoder.convert(recordedExpectations));
     }
 
     mockServer.close();
@@ -141,12 +136,10 @@ void _setupTestClientTestHooks() {
   setUpAll(() async {
     // In CI we run tests always against recorded responses and need not
     // credentials.
-    final credentials = isCI
-        ? AppCredentials(accessKey: '', secretKey: '')
-        : await getTestAppCredentials();
+    final credentials = isCI ? AppCredentials(accessKey: '', secretKey: '') : await getTestAppCredentials();
 
     client = UnsplashClient(
-      settings: ClientSettings(credentials: credentials),
+      settings: ClientSettings(unsplashCredentials: credentials),
       httpClient: IOClient(mockServer.createProxiedHttpClient()),
     );
   });
