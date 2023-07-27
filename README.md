@@ -50,6 +50,20 @@ final client = UnsplashClient(
 > :warning: When you are done using a client instance, make sure to call it's
 > `close` method.
 
+### Moving authentication to an authentication proxy
+
+If you would like to use an authentication proxy and want to change the URL of the 
+Unsplash API endpoint you can use the following code:
+
+```dart
+final client = UnsplashClient(
+  settings: const ClientSettings()),
+  proxyBaseUrl: Uri.parse('YOUR_PROXY_URL'));
+);
+```
+You can omit the `credentials` parameter and provide your own endpoint by 
+using the `proxyBaseUrl` parameter.
+
 ## Get a random photo
 
 ```dart
