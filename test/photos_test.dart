@@ -107,5 +107,19 @@ void main() {
         ),
       );
     });
+
+    test('download with location', () async {
+      final req = client.photos
+          .download('id', location: Uri(queryParameters: {'a': 'b'}));
+
+      expect(
+        req.httpRequest,
+        matchHttpRequest(
+          method: 'GET',
+          path: client.photos.baseUrl.resolve('id/download').path,
+          queryParameters: {'a': 'b'},
+        ),
+      );
+    });
   });
 }
