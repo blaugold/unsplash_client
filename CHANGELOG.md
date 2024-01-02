@@ -1,3 +1,7 @@
+## 2.2.0
+
+- feat: add `Photos.download(location)` (#22)
+
 ## 2.1.1
 
 - chore: allow 1.0.0 in version constraint for http (#18)
