@@ -145,9 +145,15 @@ class Photos {
   /// properties instead) or to direct the user to the downloaded photo (use the
   /// photo.urls.full instead), it is for tracking purposes only.
   ///
+  /// To follow the [guidelines](https://help.unsplash.com/en/articles/2511258-guideline-triggering-a-download)
+  /// you should pass the [Photo.links.downloadLocation] to [location], to
+  /// include all the necessary information.
+  ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#track-a-photo-download)
-  Request<TrackPhotoDownload> download(String id) {
-    final url = baseUrl.resolve('$id/download');
+  Request<TrackPhotoDownload> download(String id, {Uri? location}) {
+    final url = baseUrl
+        .resolve('$id/download')
+        .replace(queryParameters: location?.queryParameters ?? const {});
 
     return Request(
       client: client,
