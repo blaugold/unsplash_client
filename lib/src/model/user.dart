@@ -111,12 +111,9 @@ class User extends ModelBase {
       downloads: json['downloads'] as int?,
       instagramUsername: json['instagram_username'] as String?,
       twitterUsername: json['twitter_username'] as String?,
-      profileImage: (json['profile_image'] as Map<String, dynamic>)
-          .let((it) => ProfileImage.fromJson(it)),
-      badge: (json['badge'] as Map<String, dynamic>?)
-          ?.let((it) => UserBadge.fromJson(it)),
-      links: (json['links'] as Map<String, dynamic>)
-          .let((it) => UserLinks.fromJson(it)),
+      profileImage: (json['profile_image'] as Map<String, dynamic>).let((it) => ProfileImage.fromJson(it)),
+      badge: (json['badge'] as Map<String, dynamic>?)?.let((it) => UserBadge.fromJson(it)),
+      links: (json['links'] as Map<String, dynamic>).let((it) => UserLinks.fromJson(it)),
     );
   }
 }
@@ -223,7 +220,19 @@ class UserLinks extends ModelBase {
     };
   }
 
-  factory UserLinks.fromJson(Map<String, dynamic> json) {
+  factory UserLinks.fromJson(Map<String, dynamic>? json) {
+    if (json == null) {
+      return UserLinks(
+        self: Uri(),
+        html: Uri(),
+        photos: Uri(),
+        likes: Uri(),
+        portfolio: Uri(),
+        followers: Uri(),
+        following: Uri(),
+      );
+    }
+
     return UserLinks(
       source: json,
       self: (json['self'] as String?)?.let(Uri.parse) ?? Uri(),
