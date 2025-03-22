@@ -6,9 +6,6 @@ on:
       - main
   pull_request:
 
-env:
-  CI: true
-
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -31,6 +28,9 @@ jobs:
 
       - name: Run tests
         run: dart pub run test
+        env:
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
+          UNSPLASH_SECRET_KEY: ${{ secrets.UNSPLASH_SECRET_KEY }}
 
       - name: Run example
         run: dart example/lib/main.dart
