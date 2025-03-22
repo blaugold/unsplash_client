@@ -1,3 +1,8 @@
+## 3.0.0
+
+- breaking change: make `UserLinks.{likes,followers,following}` and
+  `PhotoStatistics.likes` nullable to adapt to changed API response (#23)
+
 ## 2.2.0
 
 - feat: add `Photos.download(location)` (#22)

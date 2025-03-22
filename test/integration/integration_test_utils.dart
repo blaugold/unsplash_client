@@ -139,7 +139,7 @@ late UnsplashClient client;
 
 void _setupTestClientTestHooks() {
   setUpAll(() async {
-    // In CI we run tests always against recorded responses and need not
+    // In CI we run tests always against recorded responses and need no
     // credentials.
     final credentials = isCI
         ? AppCredentials(accessKey: '', secretKey: '')

@@ -1,9 +1,5 @@
 import '../utils.dart';
-import 'collection.dart';
-import 'location.dart';
 import 'model.dart';
-import 'model_base.dart';
-import 'user.dart';
 
 // ignore_for_file: public_member_api_docs
 
@@ -315,7 +311,7 @@ class PhotoStatistics extends ModelBase {
   final String id;
   final Statistic downloads;
   final Statistic views;
-  final Statistic likes;
+  final Statistic? likes;
 
   @override
   Map<String, dynamic> toJson() {
@@ -323,7 +319,7 @@ class PhotoStatistics extends ModelBase {
       'id': id,
       'downloads': downloads.toJson(),
       'views': views.toJson(),
-      'likes': likes.toJson(),
+      if (likes != null) 'likes': likes!.toJson(),
     };
   }
 
@@ -333,7 +329,8 @@ class PhotoStatistics extends ModelBase {
       id: json['id'] as String,
       downloads: Statistic.fromMap(json['downloads'] as Map<String, dynamic>),
       views: Statistic.fromMap(json['views'] as Map<String, dynamic>),
-      likes: Statistic.fromMap(json['likes'] as Map<String, dynamic>),
+      likes: (json['likes'] as Map<String, dynamic>?)
+          ?.let((json) => Statistic.fromMap(json)),
     );
   }
 }

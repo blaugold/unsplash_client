@@ -111,12 +111,9 @@ class User extends ModelBase {
       downloads: json['downloads'] as int?,
       instagramUsername: json['instagram_username'] as String?,
       twitterUsername: json['twitter_username'] as String?,
-      profileImage: (json['profile_image'] as Map<String, dynamic>)
-          .let((it) => ProfileImage.fromJson(it)),
-      badge: (json['badge'] as Map<String, dynamic>?)
-          ?.let((it) => UserBadge.fromJson(it)),
-      links: (json['links'] as Map<String, dynamic>)
-          .let((it) => UserLinks.fromJson(it)),
+      profileImage: (json['profile_image'] as Map<String, dynamic>).let((it) => ProfileImage.fromJson(it)),
+      badge: (json['badge'] as Map<String, dynamic>?)?.let((it) => UserBadge.fromJson(it)),
+      links: (json['links'] as Map<String, dynamic>).let((it) => UserLinks.fromJson(it)),
     );
   }
 }
@@ -205,10 +202,10 @@ class UserLinks extends ModelBase {
   final Uri self;
   final Uri html;
   final Uri photos;
-  final Uri likes;
+  final Uri? likes;
   final Uri portfolio;
-  final Uri followers;
-  final Uri following;
+  final Uri? followers;
+  final Uri? following;
 
   @override
   Map<String, dynamic> toJson() {
@@ -229,10 +226,10 @@ class UserLinks extends ModelBase {
       self: (json['self'] as String).let(Uri.parse),
       html: (json['html'] as String).let(Uri.parse),
       photos: (json['photos'] as String).let(Uri.parse),
-      likes: (json['likes'] as String).let(Uri.parse),
+      likes: (json['likes'] as String?)?.let(Uri.parse),
       portfolio: (json['portfolio'] as String).let(Uri.parse),
-      followers: (json['followers'] as String).let(Uri.parse),
-      following: (json['following'] as String).let(Uri.parse),
+      followers: (json['followers'] as String?)?.let(Uri.parse),
+      following: (json['following'] as String?)?.let(Uri.parse),
     );
   }
 }
