@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/io_client.dart';
 import 'package:test/test.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
@@ -147,7 +146,7 @@ void _setupTestClientTestHooks() {
 
     client = UnsplashClient(
       settings: ClientSettings(credentials: credentials),
-      httpClient: IOClient(mockServer.createProxiedHttpClient()),
+      // httpClient: IOClient(mockServer.createProxiedHttpClient()),
     );
   });
 
