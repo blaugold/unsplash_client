@@ -29,8 +29,7 @@ jobs:
       - name: Run tests
         run: dart pub run test
         env:
-          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
-          UNSPLASH_SECRET_KEY: ${{ secrets.UNSPLASH_SECRET_KEY }}
+          CI: true
 
       - name: Run example
         run: dart example/lib/main.dart

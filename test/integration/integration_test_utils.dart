@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:http/io_client.dart';
 import 'package:test/test.dart';
 import 'package:unsplash_client/unsplash_client.dart';
 
@@ -140,15 +141,13 @@ void _setupTestClientTestHooks() {
   setUpAll(() async {
     // In CI we run tests always against recorded responses and need no
     // credentials.
-    // final credentials = isCI
-    //     ? AppCredentials(accessKey: '', secretKey: '')
-    //     : await getTestAppCredentials();
-    final credentials = await getTestAppCredentials();
-    print('credentials: $credentials');
+    final credentials = isCI
+        ? AppCredentials(accessKey: '', secretKey: '')
+        : await getTestAppCredentials();
 
     client = UnsplashClient(
       settings: ClientSettings(credentials: credentials),
-      // httpClient: IOClient(mockServer.createProxiedHttpClient()),
+      httpClient: IOClient(mockServer.createProxiedHttpClient()),
     );
   });
 
