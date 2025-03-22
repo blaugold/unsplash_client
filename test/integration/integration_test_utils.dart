@@ -144,6 +144,7 @@ void _setupTestClientTestHooks() {
     //     ? AppCredentials(accessKey: '', secretKey: '')
     //     : await getTestAppCredentials();
     final credentials = await getTestAppCredentials();
+    print('credentials: $credentials');
 
     client = UnsplashClient(
       settings: ClientSettings(credentials: credentials),
