@@ -6,6 +6,9 @@ on:
       - main
   pull_request:
 
+env:
+  CI: true
+
 jobs:
   build:
     runs-on: ubuntu-20.04

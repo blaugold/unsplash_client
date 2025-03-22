@@ -1,7 +1,7 @@
 ## 3.0.0
 
-- breaking change: make `likes`, `followers` and `following` of `UserLinks`
-  nullable to adapt to changed API response (#23)
+- breaking change: make `UserLinks.{likes,followers,following}` and
+  `PhotoStatistics.likes` nullable to adapt to changed API response (#23)
 
 ## 2.2.0
 
