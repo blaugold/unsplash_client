@@ -140,9 +140,10 @@ void _setupTestClientTestHooks() {
   setUpAll(() async {
     // In CI we run tests always against recorded responses and need no
     // credentials.
-    final credentials = isCI
-        ? AppCredentials(accessKey: '', secretKey: '')
-        : await getTestAppCredentials();
+    // final credentials = isCI
+    //     ? AppCredentials(accessKey: '', secretKey: '')
+    //     : await getTestAppCredentials();
+    final credentials = await getTestAppCredentials();
 
     client = UnsplashClient(
       settings: ClientSettings(credentials: credentials),
