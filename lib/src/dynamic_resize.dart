@@ -6,6 +6,7 @@ import 'utils.dart';
 ///
 /// See: [Imgix docs](https://docs.imgix.com/apis/url/format/fm)
 enum ImageFormat {
+  avif,
   gif,
   jp2,
   jpg,
@@ -18,6 +19,7 @@ enum ImageFormat {
   png32,
   webm,
   webp,
+  blurhash
 }
 
 /// Controls how the output image is fit to its target dimensions after
