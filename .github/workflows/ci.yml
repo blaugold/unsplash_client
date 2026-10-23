@@ -6,33 +6,38 @@ on:
       - main
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     services:
       mockserver:
-        image: mockserver/mockserver
+        image: mockserver/mockserver:5.15.0
         ports:
           - 1080:1080
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: dart-lang/setup-dart@v1
+      - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1.8.1
         with:
-          sdk: stable
+          sdk: '2.19.6'
 
       - name: Install dependencies
         run: dart pub get
 
+      - name: Analyze
+        run: dart analyze --fatal-infos
+
       - name: Run tests
-        run: dart pub run test
+        # Integration test files reset the same MockServer instance.
+        run: dart test --concurrency=1
         env:
           CI: true
 
-      - name: Run example
-        run: dart example/lib/main.dart
-        env:
-          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
-          UNSPLASH_SECRET_KEY: ${{ secrets.UNSPLASH_SECRET_KEY }}
+      - name: Compile example
+        run: dart compile exe example/lib/main.dart -o "$RUNNER_TEMP/unsplash-example"
