@@ -1,4 +1,4 @@
-## Unreleased
+## 4.0.0
 
 - breaking change: make `UserLinks.portfolio` nullable to handle omitted or null
   values in API responses (#27). Callers reading this field must handle `null`.
