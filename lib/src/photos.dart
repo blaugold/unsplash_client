@@ -151,9 +151,9 @@ class Photos {
   ///
   /// See: [Unsplash docs](https://unsplash.com/documentation#track-a-photo-download)
   Request<TrackPhotoDownload> download(String id, {Uri? location}) {
-    final url = baseUrl
-        .resolve('$id/download')
-        .replace(queryParameters: location?.queryParameters ?? const {});
+    final url = baseUrl.resolve('$id/download').replace(
+          queryParameters: location?.queryParameters ?? const <String, String>{},
+        );
 
     return Request(
       client: client,

@@ -109,8 +109,10 @@ void main() {
     });
 
     test('download with location', () async {
-      final req = client.photos
-          .download('id', location: Uri(queryParameters: {'a': 'b'}));
+      final req = client.photos.download(
+        'id',
+        location: Uri(queryParameters: <String, String>{'a': 'b'}),
+      );
 
       expect(
         req.httpRequest,

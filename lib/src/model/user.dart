@@ -203,7 +203,7 @@ class UserLinks extends ModelBase {
   final Uri html;
   final Uri photos;
   final Uri? likes;
-  final Uri portfolio;
+  final Uri? portfolio;
   final Uri? followers;
   final Uri? following;
 
@@ -214,7 +214,7 @@ class UserLinks extends ModelBase {
       'html': html.toString(),
       'photos': photos.toString(),
       'likes': likes.toString(),
-      'portfolio': portfolio.toString(),
+      'portfolio': portfolio?.toString(),
       'followers': followers.toString(),
       'following': following.toString(),
     };
@@ -227,7 +227,7 @@ class UserLinks extends ModelBase {
       html: (json['html'] as String).let(Uri.parse),
       photos: (json['photos'] as String).let(Uri.parse),
       likes: (json['likes'] as String?)?.let(Uri.parse),
-      portfolio: (json['portfolio'] as String).let(Uri.parse),
+      portfolio: (json['portfolio'] as String?)?.let(Uri.parse),
       followers: (json['followers'] as String?)?.let(Uri.parse),
       following: (json['following'] as String?)?.let(Uri.parse),
     );
